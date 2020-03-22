@@ -1,0 +1,4 @@
+# added by user
+__pycache__
+*.pyc
+*.exe.stackdump
