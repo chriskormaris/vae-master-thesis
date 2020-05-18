@@ -1,9 +1,3 @@
-# force the result of divisions to be float numbers
-from __future__ import division
-
-import sys
-sys.path.append('../vaes_original/Utilities')
-
 from Utilities import *
 import pandas as pd
 import numpy as np
