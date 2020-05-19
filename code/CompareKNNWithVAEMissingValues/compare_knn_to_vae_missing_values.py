@@ -6,7 +6,7 @@ import numpy as np
 missing_value = 0
 
 mask_df = pd.read_csv('users_movies_ratings_mask.csv', sep='\t', header=None)
-mask_df = mask_df.as_matrix()
+mask_df = mask_df.values
 
 non_missing_values_percentage = np.count_nonzero(mask_df) / np.size(mask_df) * 100
 print('non missing values percentage: ' + str(non_missing_values_percentage) + ' %')
@@ -18,7 +18,7 @@ knn_predicted_values_df = knn_predicted_values_df.replace(to_replace='---', valu
 knn_predicted_values_df = knn_predicted_values_df.astype(float)
 
 # convert to numpy matrix
-knn_predicted_values = knn_predicted_values_df.as_matrix()
+knn_predicted_values = knn_predicted_values_df.values
 
 no_users = knn_predicted_values.shape[0]
 no_movies = knn_predicted_values.shape[1]
@@ -42,11 +42,11 @@ vae_pytorch_predicted_values_df.columns = range(1, no_movies + 1)
 # print(vae_pytorch_predicted_values_df.head(2))
 
 # convert to numpy matrix
-vae_pytorch_predicted_values = vae_pytorch_predicted_values_df.as_matrix()
+vae_pytorch_predicted_values = vae_pytorch_predicted_values_df.values
 
 print('')
 
-print('Comparison between K-NN and VAE in PyTorch Missing Values algorithms')
+print('Comparison between K-NN and VAE in PyTorch Missing Values algorithm')
 
 error1 = rmse(knn_predicted_values, vae_pytorch_predicted_values)
 print('root mean squared error: ' + str(error1))
@@ -74,11 +74,11 @@ vae_tensorflow_predicted_values_df.columns = range(1, no_movies + 1)
 # print(vae_tensorflow_predicted_values_df.head(2))
 
 # convert to numpy matrix
-vae_tensorflow_predicted_values = vae_tensorflow_predicted_values_df.as_matrix()
+vae_tensorflow_predicted_values = vae_tensorflow_predicted_values_df.values
 
 print('')
 
-print('Comparison between VAE in PyTorch and VAE in TensorFlow Missing Values algorithms')
+print('Comparison between VAE in PyTorch and VAE in TensorFlow Missing Values algorithm')
 
 error1 = rmse(vae_pytorch_predicted_values, vae_tensorflow_predicted_values)
 print('root mean squared error: ' + str(error1))
@@ -97,7 +97,7 @@ print('vae in tensorflow mean rating: ' + str(vae_tensorflow_predicted_values[in
 print('')
 print('')
 
-print('Comparison between K-NN and VAE in TensorFlow Missing Values algorithms')
+print('Comparison between K-NN and VAE in TensorFlow Missing Values algorithm')
 
 error1 = rmse(knn_predicted_values, vae_tensorflow_predicted_values)
 print('root mean squared error: ' + str(error1))
