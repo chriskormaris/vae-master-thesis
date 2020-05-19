@@ -2,18 +2,18 @@
 
 Programming Language: Python 3
 
-Made by Christos Kormaris
+Made by Christos Kormaris, April-May 2018
 
 Supervisor Professor: Michalis Titsias
 
-This repository was created as a part of my Master Thesis, while studying in Athens University of Economics & Business (AUEB).
+This repository was created as a part of my Master Thesis, while studying Computer Science at Athens University of Economics & Business (AUEB).
 
 ## Description ##
 
-This is an implementation of variational autoencoders, using various datasets.
-The datasets included are: MNIST, Binarized MNIST, CIFAR-10 and OMNIGLOT.
-There is also an implementation on the "Database of Faces" dataset, but the data are very few to get good results.
-The autoencoder creates new artificial data and to be precise images, from the given original image data.
+The variational autoencoder is a process that creates new artificial data, which are in many cases images, from the original data.
+This repository contains implementations of variational autoencoders, on various datasets.
+The datasets included are: MNIST, Binarized MNIST, CIFAR-10 and OMNIGLOT, ORL Face Database & Yale Faces.
+On the **ORL Face Database** & **Yale Faces** datasets, the data are very few and the variational autoencoder implementations do not have good results.
 
 You can download all the datasets here:
 [https://www.dropbox.com/sh/ucvad0dkcbxuyho/AAAjjrRPYiGLLPc_VKru4-Uva?dl=0](https://www.dropbox.com/sh/ucvad0dkcbxuyho/AAAjjrRPYiGLLPc_VKru4-Uva?dl=0)
@@ -21,20 +21,14 @@ You can download all the datasets here:
 
 ## How to set up and run the VAEs GUI
 
-A graphical user interface (GUI) has been implemented for the project of this thesis, using Python and the Tkinter library.
+A graphical user interface (GUI) has been implemented for the project of this thesis, using Python 3 and the Tkinter library.
 
-First, browse to the directory "code" and install the required Python dependencies, by typing:
-```python
-pip install −r depencencies .txt
-```
+Browse to the directory **executable**. Extract the **vaes_gui.zip** archive in the same directory.
+Open the **vaes_gui** folder, find the file **vaes_gui.exe** and execute it.
 
-Then, extract the "EXE.zip" archive in the same directory.
-Open the EXE folder, find the file vaes_gui.exe and execute it.
+Then, download all the datasets from the URL in the file **datasets_urls.txt** and move them to the **executable** folder.
 
-Finally, download all the datasets from the URL in the file "datasets_urls.txt" and move them to the newly created "dist" folder.
-Inside, there should be a folder with the name "vaes_gui", which contains the executable file "vaes_gui.exe".
-
-The GUI will make it all easier for you now.
+The GUI will make it all easier for you.
 
 ### Screenshot
 
@@ -43,36 +37,32 @@ The GUI will make it all easier for you now.
 
 ### MNIST Dataset ###
 
-Extract the compressed file "MNIST_dataset.zip".
-A folder named "MNIST_dataset" should appear, which contains the files of the MNIST dataset, along with their labels.
+Extract the compressed file **MNIST_dataset.zip**.
+A folder named **MNIST_dataset** should appear, which contains the files of the MNIST dataset, along with their labels.
 
 ### Binarized MNIST Dataset ###
 
-Extract the compressed file "Binarized_MNIST_dataset.zip".
-A folder named "Binarized_MNIST_dataset" should appear, which contains the TRAIN, TEST and VALIDATION files of the Binarized MNIST dataset, along with labels only for the TEST data.
+Extract the compressed file **Binarized_MNIST_dataset.zip**.
+A folder named **Binarized_MNIST_dataset** should appear, which contains the TRAIN, TEST and VALIDATION files of the Binarized MNIST dataset, along with labels only for the TEST data.
 
-
-**Note: ** Uncomment the command *language = 'english'* or *language = 'greek'* to use the english or greek alphabet respectively.
 
 ### CIFAR-10 Dataset ###
 
-Extract the compressed file "CIFAR_daset.zip".
-A folder named "CIFAR_dataset" should appear, which contains the TRAIN and TEST files of the CIFAR-10 and CIFAR-100 dataset, along with their labels. The CIFAR-10 dataset contains data from 10 classes, while the CIFAR-100 dataset contains data from 100 classes.
+Extract the compressed file **CIFAR_daset.zip**.
+A folder named **CIFAR_dataset** should appear, which contains the TRAIN and TEST files of the CIFAR-10 and CIFAR-100 dataset, along with their labels. The CIFAR-10 dataset contains data from 10 classes, while the CIFAR-100 dataset contains data from 100 classes.
 
-
-**Note: ** Uncomment the command *RGBOrGrayscale = 'RGB'* or *RGBOrGrayscale = 'grayscale'* to use the colored or grayscaled images respectively. In the TensorFlow implementation, the results are good only if the images are grayscaled!
 
 ### OMNIGLOT Dataset ###
 
-Extract the compressed file "OMNIGLOT_daset.zip".
-A folder named "OMNIGLOT_dataset" should appear, which contains the TRAIN and TEST files of the OMNIGLOT dataset, from 50 different alphabets, along with their labels.
+Extract the compressed file **OMNIGLOT_daset.zip**.
+A folder named **OMNIGLOT_dataset** should appear, which contains the TRAIN and TEST files of the OMNIGLOT dataset, from 50 different alphabets, along with their labels.
 Two alphabets are used, the Greek and the English.
 The Greek alphabet has 24 characters, which means 24 are the classes.
 The Greek alphabet has 26 characters, which means 26 are the classes.
 The classes are not important for the algorithm, but they are used for plotting purposes.
 
 
-# K-NN Missing Values algorithms #
+# K-NN Missing Values algorithm #
 
 These are implementations of K-NN Missing Values algorithms on various datasets with missing values.
 The datasets included are: MNIST, Binarized MNIST, CIFAR-10 and OMNIGLOT.
@@ -94,55 +84,66 @@ The results of the algorithm will be new images of cats and dogs, with their mis
 
 The results of the algorithm will be new images of alphabet characters, with their missing halves predicted.
 
-### The Database of Faces Dataset ###
+### ORL Face Database Dataset ###
 
-[//]: # (### How to set up and run the K-NN Missing Values algorithm on the 'The Database of Faces' Dataset ###)
-[//]: # (Extract the compressed file "TheDatabaseOfFaces_dataset.zip".)
-[//]: # (A folder named "TheDatabaseOfFaces_dataset" should appear, which contains a file with 'The Database of Faces' dataset.)
+[//]: # (### How to set up and run the K-NN Missing Values algorithm on the ORL Face Database dataset ###)
+[//]: # (Extract the compressed file **ORL_Face_Dataset.zip**.)
+[//]: # (Create a folder named **ORL_Face_Dataset** and unzip there the contents of the zip file.)
 [//]: # (In the dataset, there are 400 face images in total, from 40 different persons and 10 images from each person, 40 * 10 = 400.)
 [//]: # (The results of the algorithm will be new images of the faces, with their missing halves predicted.)
 
 
-# VAE Missing Values algorithms #
+# VAE Missing Values algorithm #
 
-There are also implementations of Variational Autoencoder Missing Values algorithms, on various datasets with missing values.
-There are two different implementations of VAEs included: 1) using TensorFlow and 2) using PyTorch
-The datasets included are: MNIST, Binarized MNIST, CIFAR-10 and OMNIGLOT.
+There are also two different implementations of the Variational Autoencoder Missing Values algorithm of the VAEs included: 
+1) using TensorFlow and 
+2) using PyTorch
+The datasets included are: MNIST, Binarized MNIST, CIFAR-10, OMNIGLOT, ORL Face Database, Yale Faces & the Movielens dataset.
 The algorithm uses a Variational Autoencoder to predict only the missing pixel values, based on the training data.
 
 **Note: ** In some datasets, e.g. in the CIFAR-10 dataset, the results are good only if the images are grayscaled!
 
 ### Tensorboard ###
 
-To open and examine a visualization of the autoencoder Missing Values,
-change your working directory to the location "VAEsMissingValuesInTensorFlow"
+To open and examine a visualization of the autoencoders, change your working directory to the executable files folder **vaes_gui**
 and run the following commands from the command prompt on Windows, or the terminal on Linux:
 
 ```shell
-tensorboard --logdir=./logs/mnist
+tensorboard --logdir=./tensorflow_logs/mnist_vae
 ```
 
 ```shell
-tensorboard --logdir=./logs/binarized_mnist
+tensorboard --logdir=./tensorflow_logs/binarized_mnist_vae
 ```
 
 ```shell
-tensorboard --logdir=./logs/cifar10_rgb
+tensorboard --logdir=./tensorflow_logs/cifar10_rgb_vae
 ```
 
 ```shell
-tensorboard --logdir=./logs/cifar10_grayscale
+tensorboard --logdir=./tensorflow_logs/cifar10_grayscale_vae
 ```
 
 ```shell
-tensorboard --logdir=./logs/omniglot_english
+tensorboard --logdir=./tensorflow_logs/omniglot_english_vae
 ```
 
 ```shell
-tensorboard --logdir=./logs/omniglot_greek
+tensorboard --logdir=./tensorflow_logs/omniglot_greek_vae
+```
+
+```shell
+tensorboard --logdir=./tensorflow_logs/orl_faces_vae
+```
+
+```shell
+tensorboard --logdir=./tensorflow_logs/yale_faces_vae
 ```
 
 Then, open your browser ang navigate to -> http://localhost:6006
+
+Similarly, you can open tensorboards for the implementation of VAE missing values algorithm in TensorFlow, by replacing the **_vae** postfix with **_vae_missing_values**.
+In addition, the Keras implementation of the VAEs has its own logs, located in the folder **keras_logs**.
 
 ### Small Tensorboard screenshot
 ![vae_tensorboard_graph_with_reconstructed_data](/screenshots/tensorboard/vae_tensorboard_graph_with_reconstructed_data.png)

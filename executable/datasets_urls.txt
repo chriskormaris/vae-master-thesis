@@ -3,6 +3,9 @@ You can download all the datasets one by one from these URLs:
 * MNIST dataset:
 http://yann.lecun.com/exdb/mnist
 
+* FASHION MNIST dataset:
+https://github.com/zalandoresearch/fashion-mnist
+
 * Binarized MNIST dataset
 https://github.com/yburda/iwae/tree/master/datasets/BinaryMNIST
 
