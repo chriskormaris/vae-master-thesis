@@ -25,6 +25,6 @@ https://www.dropbox.com/s/qu6zbqr2eamsp76/ORL_Face_dataset.zip?dl=1
 https://grouplens.org/datasets/movielens
 
 
-ALTERNATIVELY, you can download all the datasets altogether from this URL:
+ALTERNATIVELY, you can download all the datasets together from this URL:
 
 https://www.dropbox.com/sh/ucvad0dkcbxuyho/AAAjjrRPYiGLLPc_VKru4-Uva?dl=0
