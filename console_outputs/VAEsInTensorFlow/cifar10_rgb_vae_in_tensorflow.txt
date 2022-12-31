@@ -1,0 +1,56 @@
+Using TensorFlow backend.
+2018-02-14 00:22:59.444333: I C:\tf_jenkins\home\workspace\rel-win\M\windows\PY\36\tensorflow\core\platform\cpu_feature_guard.cc:137] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX
+Initializing parameters
+
+Epoch 1 | Loss (ELBO): 2105.9619140625
+Epoch 2 | Loss (ELBO): 2106.082763671875
+Epoch 3 | Loss (ELBO): 2103.837646484375
+Epoch 4 | Loss (ELBO): 2104.87548828125
+Epoch 5 | Loss (ELBO): 2105.234130859375
+Epoch 6 | Loss (ELBO): 2103.7392578125
+Epoch 7 | Loss (ELBO): 2104.5234375
+Epoch 8 | Loss (ELBO): 2105.04736328125
+Epoch 9 | Loss (ELBO): 2104.589111328125
+Epoch 10 | Loss (ELBO): 2105.877197265625
+Epoch 11 | Loss (ELBO): 2105.357177734375
+Epoch 12 | Loss (ELBO): 2107.51708984375
+Epoch 13 | Loss (ELBO): 2105.8193359375
+Epoch 14 | Loss (ELBO): 2104.68310546875
+Epoch 15 | Loss (ELBO): 2104.39404296875
+Epoch 16 | Loss (ELBO): 2105.1435546875
+Epoch 17 | Loss (ELBO): 2105.32666015625
+Epoch 18 | Loss (ELBO): 2105.308349609375
+Epoch 19 | Loss (ELBO): 2105.1494140625
+Epoch 20 | Loss (ELBO): 2104.99365234375
+Epoch 21 | Loss (ELBO): 2105.07373046875
+Epoch 22 | Loss (ELBO): 2104.455078125
+Epoch 23 | Loss (ELBO): 2104.78369140625
+Epoch 24 | Loss (ELBO): 2105.14013671875
+Epoch 25 | Loss (ELBO): 2104.915771484375
+Epoch 26 | Loss (ELBO): 2106.00439453125
+Epoch 27 | Loss (ELBO): 2104.771240234375
+Epoch 28 | Loss (ELBO): 2104.95263671875
+Epoch 29 | Loss (ELBO): 2105.022216796875
+Epoch 30 | Loss (ELBO): 2105.016357421875
+Epoch 31 | Loss (ELBO): 2105.160400390625
+Epoch 32 | Loss (ELBO): 2105.081298828125
+Epoch 33 | Loss (ELBO): 2105.299072265625
+Epoch 34 | Loss (ELBO): 2103.356201171875
+Epoch 35 | Loss (ELBO): 2105.650390625
+Epoch 36 | Loss (ELBO): 2104.209716796875
+Epoch 37 | Loss (ELBO): 2104.506591796875
+Epoch 38 | Loss (ELBO): 2105.773193359375
+Epoch 39 | Loss (ELBO): 2104.343994140625
+Epoch 40 | Loss (ELBO): 2104.6064453125
+Epoch 41 | Loss (ELBO): 2104.9775390625
+Epoch 42 | Loss (ELBO): 2104.557861328125
+Epoch 43 | Loss (ELBO): 2105.740478515625
+Epoch 44 | Loss (ELBO): 2104.94873046875
+Epoch 45 | Loss (ELBO): 2103.6806640625
+Epoch 46 | Loss (ELBO): 2103.785888671875
+Epoch 47 | Loss (ELBO): 2104.315185546875
+Epoch 48 | Loss (ELBO): 2104.73486328125
+Epoch 49 | Loss (ELBO): 2104.32861328125
+Epoch 50 | Loss (ELBO): 2104.97265625
+
+root mean squared error: 0.520281627439

@@ -2,3 +2,7 @@
 __pycache__
 *.pyc
 *.exe.stackdump
+build
+dist
+save
+tensorflow_logs

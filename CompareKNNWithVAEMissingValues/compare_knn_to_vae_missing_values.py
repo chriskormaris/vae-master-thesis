@@ -54,7 +54,8 @@ print('root mean squared error: ' + str(error1))
 error2 = mae(knn_predicted_values, vae_pytorch_predicted_values)
 print('mean absolute error: ' + str(error2))
 
-match = np.sum(np.equal(vae_pytorch_predicted_values, knn_predicted_values)) / np.size(vae_pytorch_predicted_values) * 100
+match = np.sum(np.equal(vae_pytorch_predicted_values, knn_predicted_values)) / \
+        np.size(vae_pytorch_predicted_values) * 100
 print('match percentage = ' + str(match) + ' %')
 
 indices = np.where(knn_predicted_values != missing_value)
@@ -64,7 +65,11 @@ print('vae in pytorch mean rating: ' + str(vae_pytorch_predicted_values[indices]
 
 print('')
 
-vae_tensorflow_predicted_values_df = pd.read_csv('users_movies_ratings_vae_tensorflow_predicted_values.csv', sep='\t', header=None)
+vae_tensorflow_predicted_values_df = pd.read_csv(
+    '../movielens_output_data/VAEsMissingValuesInTensorFlow/users_movies_ratings_predicted_values.csv',
+    sep='\t',
+    header=None
+)
 vae_tensorflow_predicted_values_df = vae_tensorflow_predicted_values_df.replace(to_replace='---', value=1.0)
 vae_tensorflow_predicted_values_df = vae_tensorflow_predicted_values_df.astype(float)
 # round dataframe
@@ -86,7 +91,8 @@ print('root mean squared error: ' + str(error1))
 error2 = mae(vae_pytorch_predicted_values, vae_tensorflow_predicted_values)
 print('mean absolute error: ' + str(error2))
 
-match = np.sum(np.equal(vae_pytorch_predicted_values, vae_tensorflow_predicted_values)) / np.size(vae_pytorch_predicted_values) * 100
+match = np.sum(np.equal(vae_pytorch_predicted_values, vae_tensorflow_predicted_values)) / \
+        np.size(vae_pytorch_predicted_values) * 100
 print('match = ' + str(match) + ' %')
 
 indices = np.where(vae_pytorch_predicted_values != missing_value)
@@ -105,7 +111,8 @@ print('root mean squared error: ' + str(error1))
 error2 = mae(knn_predicted_values, vae_tensorflow_predicted_values)
 print('mean absolute error: ' + str(error2))
 
-match = np.sum(np.equal(knn_predicted_values, vae_tensorflow_predicted_values)) / np.size(vae_pytorch_predicted_values) * 100
+match = np.sum(np.equal(knn_predicted_values, vae_tensorflow_predicted_values)) / \
+        np.size(vae_pytorch_predicted_values) * 100
 print('match = ' + str(match) + ' %')
 
 indices = np.where(knn_predicted_values != missing_value)

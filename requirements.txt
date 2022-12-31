@@ -1,0 +1,7 @@
+numpy
+matplotlib
+tensorflow
+keras
+torchvision
+cx_Freeze
+pyinstaller

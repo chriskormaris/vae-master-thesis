@@ -1,0 +1,24 @@
+Using TensorFlow backend.
+2018-02-14 18:42:32.008508: I C:\tf_jenkins\home\workspace\rel-win\M\windows\PY\36\tensorflow\core\platform\cpu_feature_guard.cc:137] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX
+Epoch 1 | Loss (ELBO): 45.34531021118164
+Epoch 2 | Loss (ELBO): 43.263607025146484
+Epoch 3 | Loss (ELBO): 42.52516555786133
+Epoch 4 | Loss (ELBO): 41.98871612548828
+Epoch 5 | Loss (ELBO): 41.59142303466797
+Epoch 6 | Loss (ELBO): 41.16789627075195
+Epoch 7 | Loss (ELBO): 41.04859161376953
+Epoch 8 | Loss (ELBO): 40.9408073425293
+Epoch 9 | Loss (ELBO): 40.75291061401367
+Epoch 10 | Loss (ELBO): 40.734153747558594
+Epoch 11 | Loss (ELBO): 40.64900207519531
+Epoch 12 | Loss (ELBO): 40.608856201171875
+Epoch 13 | Loss (ELBO): 40.60150146484375
+Epoch 14 | Loss (ELBO): 40.5571174621582
+Epoch 15 | Loss (ELBO): 40.51711654663086
+Epoch 16 | Loss (ELBO): 40.491943359375
+Epoch 17 | Loss (ELBO): 40.52649688720703
+Epoch 18 | Loss (ELBO): 40.509071350097656
+Epoch 19 | Loss (ELBO): 40.48906326293945
+Epoch 20 | Loss (ELBO): 40.490760803222656
+
+root mean squared error: 0.00100799908352

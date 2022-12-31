@@ -1,0 +1,60 @@
+Using TensorFlow backend.
+2018-02-15 14:09:59.011957: I C:\tf_jenkins\home\workspace\rel-win\M\windows\PY\36\tensorflow\core\platform\cpu_feature_guard.cc:137] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX
+
+non missing values percentage: 50.0 %
+Initializing parameters
+
+Epoch 1 | Loss (ELBO): 2129.24658203125
+Epoch 2 | Loss (ELBO): 2107.035400390625
+Epoch 3 | Loss (ELBO): 2081.71337890625
+Epoch 4 | Loss (ELBO): 2052.923828125
+Epoch 5 | Loss (ELBO): 2214.425537109375
+Epoch 6 | Loss (ELBO): nan
+Epoch 7 | Loss (ELBO): nan
+Epoch 8 | Loss (ELBO): nan
+Epoch 9 | Loss (ELBO): nan
+Epoch 10 | Loss (ELBO): nan
+D:\Programs\Anaconda3\lib\site-packages\matplotlib\cm.py:256: RuntimeWarning: invalid value encountered in less
+  if norm and xx.max() > 1 or xx.min() < 0:
+Epoch 11 | Loss (ELBO): nan
+Epoch 12 | Loss (ELBO): nan
+Epoch 13 | Loss (ELBO): nan
+Epoch 14 | Loss (ELBO): nan
+Epoch 15 | Loss (ELBO): nan
+Epoch 16 | Loss (ELBO): nan
+Epoch 17 | Loss (ELBO): nan
+Epoch 18 | Loss (ELBO): nan
+Epoch 19 | Loss (ELBO): nan
+Epoch 20 | Loss (ELBO): nan
+Epoch 21 | Loss (ELBO): nan
+Epoch 22 | Loss (ELBO): nan
+Epoch 23 | Loss (ELBO): nan
+Epoch 24 | Loss (ELBO): nan
+Epoch 25 | Loss (ELBO): nan
+Epoch 26 | Loss (ELBO): nan
+Epoch 27 | Loss (ELBO): nan
+Epoch 28 | Loss (ELBO): nan
+Epoch 29 | Loss (ELBO): nan
+Epoch 30 | Loss (ELBO): nan
+Epoch 31 | Loss (ELBO): nan
+Epoch 32 | Loss (ELBO): nan
+Epoch 33 | Loss (ELBO): nan
+Epoch 34 | Loss (ELBO): nan
+Epoch 35 | Loss (ELBO): nan
+Epoch 36 | Loss (ELBO): nan
+Epoch 37 | Loss (ELBO): nan
+Epoch 38 | Loss (ELBO): nan
+Epoch 39 | Loss (ELBO): nan
+Epoch 40 | Loss (ELBO): nan
+Epoch 41 | Loss (ELBO): nan
+Epoch 42 | Loss (ELBO): nan
+Epoch 43 | Loss (ELBO): nan
+Epoch 44 | Loss (ELBO): nan
+Epoch 45 | Loss (ELBO): nan
+Epoch 46 | Loss (ELBO): nan
+Epoch 47 | Loss (ELBO): nan
+Epoch 48 | Loss (ELBO): nan
+Epoch 49 | Loss (ELBO): nan
+Epoch 50 | Loss (ELBO): nan
+
+root mean squared error: nan

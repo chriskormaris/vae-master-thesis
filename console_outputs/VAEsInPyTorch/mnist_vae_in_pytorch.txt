@@ -1,0 +1,27 @@
+Extracting ../../MNIST_dataset/train-images-idx3-ubyte.gz
+Extracting ../../MNIST_dataset/train-labels-idx1-ubyte.gz
+Extracting ../../MNIST_dataset/t10k-images-idx3-ubyte.gz
+Extracting ../../MNIST_dataset/t10k-labels-idx1-ubyte.gz
+
+Epoch 1 | Loss (ELBO): 147.2353515625
+Epoch 2 | Loss (ELBO): 129.32579040527344
+Epoch 3 | Loss (ELBO): 120.6055679321289
+Epoch 4 | Loss (ELBO): 116.59066772460938
+Epoch 5 | Loss (ELBO): 113.8665542602539
+Epoch 6 | Loss (ELBO): 113.142578125
+Epoch 7 | Loss (ELBO): 112.30783081054688
+Epoch 8 | Loss (ELBO): 111.21749114990234
+Epoch 9 | Loss (ELBO): 110.211181640625
+Epoch 10 | Loss (ELBO): 109.485107421875
+Epoch 11 | Loss (ELBO): 110.18543243408203
+Epoch 12 | Loss (ELBO): 109.10015869140625
+Epoch 13 | Loss (ELBO): 109.85285949707031
+Epoch 14 | Loss (ELBO): 108.7723388671875
+Epoch 15 | Loss (ELBO): 107.28325653076172
+Epoch 16 | Loss (ELBO): 109.26753997802734
+Epoch 17 | Loss (ELBO): 107.1064224243164
+Epoch 18 | Loss (ELBO): 107.77288818359375
+Epoch 19 | Loss (ELBO): 107.32657623291016
+Epoch 20 | Loss (ELBO): 108.19317626953125
+
+root mean squared error: 0.333437658205

@@ -1,0 +1,63 @@
+non missing values percentage: 60.0 %
+Initializing parameters
+
+Epoch 1 | Loss (ELBO): 7142.08544921875
+Warning: QT_DEVICE_PIXEL_RATIO is deprecated. Instead use:
+    QT_AUTO_SCREEN_SCALE_FACTOR to enable platform plugin controlled per-screen factors.
+    QT_SCREEN_SCALE_FACTORS to set per-screen factors.
+    QT_SCALE_FACTOR to set the application global scale factor.
+Epoch 2 | Loss (ELBO): 37060276224.0
+Epoch 3 | Loss (ELBO): 6539.4951171875
+Epoch 4 | Loss (ELBO): 52452.94140625
+Epoch 5 | Loss (ELBO): 35419.48046875
+Epoch 6 | Loss (ELBO): 15291.0693359375
+Epoch 7 | Loss (ELBO): 8455.099609375
+Epoch 8 | Loss (ELBO): 9733.017578125
+Epoch 9 | Loss (ELBO): 11949.384765625
+Epoch 10 | Loss (ELBO): 14450.37109375
+Epoch 11 | Loss (ELBO): 16738.630859375
+Epoch 12 | Loss (ELBO): 18434.708984375
+Epoch 13 | Loss (ELBO): 19239.607421875
+Epoch 14 | Loss (ELBO): 19021.982421875
+Epoch 15 | Loss (ELBO): 17784.509765625
+Epoch 16 | Loss (ELBO): 15842.2578125
+Epoch 17 | Loss (ELBO): 13522.794921875
+Epoch 18 | Loss (ELBO): 11345.7109375
+Epoch 19 | Loss (ELBO): 9674.51953125
+Epoch 20 | Loss (ELBO): 10353.71484375
+Epoch 21 | Loss (ELBO): 10158.921875
+Epoch 22 | Loss (ELBO): nan
+Epoch 23 | Loss (ELBO): nan
+Epoch 24 | Loss (ELBO): nan
+Epoch 25 | Loss (ELBO): nan
+Epoch 26 | Loss (ELBO): nan
+Epoch 27 | Loss (ELBO): nan
+Epoch 28 | Loss (ELBO): nan
+Epoch 29 | Loss (ELBO): nan
+Epoch 30 | Loss (ELBO): nan
+/home/chris/anaconda3/lib/python3.6/site-packages/matplotlib/colors.py:823: UserWarning: Warning: converting a masked element to nan.
+  dtype = np.min_scalar_type(value)
+/home/chris/anaconda3/lib/python3.6/site-packages/numpy/ma/core.py:2809: UserWarning: Warning: converting a masked element to nan.
+  order=order, subok=True, ndmin=ndmin)
+Epoch 31 | Loss (ELBO): nan
+Epoch 32 | Loss (ELBO): nan
+Epoch 33 | Loss (ELBO): nan
+Epoch 34 | Loss (ELBO): nan
+Epoch 35 | Loss (ELBO): nan
+Epoch 36 | Loss (ELBO): nan
+Epoch 37 | Loss (ELBO): nan
+Epoch 38 | Loss (ELBO): nan
+Epoch 39 | Loss (ELBO): nan
+Epoch 40 | Loss (ELBO): nan
+Epoch 41 | Loss (ELBO): nan
+Epoch 42 | Loss (ELBO): nan
+Epoch 43 | Loss (ELBO): nan
+Epoch 44 | Loss (ELBO): nan
+Epoch 45 | Loss (ELBO): nan
+Epoch 46 | Loss (ELBO): nan
+Epoch 47 | Loss (ELBO): nan
+Epoch 48 | Loss (ELBO): nan
+Epoch 49 | Loss (ELBO): nan
+Epoch 50 | Loss (ELBO): nan
+
+root mean squared error: nan

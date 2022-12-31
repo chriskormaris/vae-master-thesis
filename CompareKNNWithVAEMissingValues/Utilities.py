@@ -15,6 +15,7 @@ def non_zero_percentage(X):
 def rmse(X, X_recon):
     return np.sqrt(np.mean(np.square(X - X_recon)))
 
+
 # mean absolute error
 def mae(X, X_recon):
     return np.mean(np.abs(X - X_recon))
