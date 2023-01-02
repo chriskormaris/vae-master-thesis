@@ -38,9 +38,9 @@ The GUI will make it all easier for you.
 pip install pyinstaller
 ```
 
-2) Then, make an executable file using the settings from the file [my_vaes_gui_spec.spec](my_vaes_gui_spec.spec)
+2) Then, make an executable file using the settings from the file [vaes_gui.spec](vaes_gui.spec)
 ```shell
-pyinstaller my_vaes_gui_spec.spec
+pyinstaller vaes_gui.spec
 ```
 
 ### Screenshot
