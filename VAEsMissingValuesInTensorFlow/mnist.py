@@ -6,7 +6,7 @@ import time
 import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
-from tensorflow.contrib.learn.python.learn.datasets.mnist import read_data_sets
+from keras.datasets.mnist import load_data
 
 current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parent_dir = os.path.dirname(current_dir)
@@ -47,18 +47,23 @@ if __name__ == '__main__':
     if not os.path.exists(save_dir):
             os.makedirs(save_dir)
 
-    mnist = read_data_sets(mnist_dataset_dir)
+    mnist = load_data(mnist_dataset_dir)
+
+    X_train = mnist[0][0]
+    X_train = X_train.reshape(-1, 784)
+    y_train = mnist[0][1]
 
     #####
-
-    X_train = mnist.train.images
-    y_train = mnist.train.labels
 
     # Reduce data to avoid memory error.
     X_train, y_train, _ = Utilities.reduce_data(X_train, X_train.shape[0], 30000, y=y_train)
 
     # construct data with missing values
-    X_train_missing, X_train, y_train = Utilities.construct_missing_data(X_train, y_train, structured_or_random=sys.argv[5])
+    X_train_missing, X_train, y_train = Utilities.construct_missing_data(
+        X_train,
+        y_train,
+        structured_or_random=sys.argv[5]
+    )
 
     print('')
 
@@ -81,8 +86,14 @@ if __name__ == '__main__':
 
     #####
 
-    x, loss_summ, apply_updates, summary_op, saver, elbo, x_recon_samples = \
-        vae_in_tensorflow.vae(batch_size, input_dim, hidden_encoder_dim, hidden_decoder_dim, latent_dim, lr=learning_rate)
+    x, loss_summ, apply_updates, summary_op, saver, elbo, x_recon_samples = vae_in_tensorflow.vae(
+        batch_size,
+        input_dim,
+        hidden_encoder_dim,
+        hidden_decoder_dim,
+        latent_dim,
+        lr=learning_rate
+    )
 
     start_index = None
     end_index = None
@@ -103,14 +114,14 @@ if __name__ == '__main__':
     X_filled = np.array(X_train_missing)
 
     start_time = time.time()
-    with tf.Session() as sess:
-        summary_writer = tf.summary.FileWriter(log_dir, graph=sess.graph)
+    with tf.compat.v1.Session() as sess:
+        summary_writer = tf.compat.v1.summary.FileWriter(log_dir, graph=sess.graph)
         if os.path.isfile(save_dir + '/model.ckpt'):
             print('Restoring saved parameters')
             saver.restore(sess, save_dir + '/model.ckpt')
         else:
             print('Initializing parameters')
-            sess.run(tf.global_variables_initializer())
+            sess.run(tf.compat.v1.global_variables_initializer())
 
         print('')
 

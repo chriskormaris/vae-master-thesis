@@ -6,7 +6,7 @@ import time
 import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
-from tensorflow.contrib.learn.python.learn.datasets.mnist import read_data_sets
+from keras.datasets.mnist import load_data
 
 current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parent_dir = os.path.dirname(current_dir)
@@ -46,10 +46,11 @@ if __name__ == '__main__':
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
 
-    mnist = read_data_sets(mnist_dataset_dir)
+    mnist = load_data(mnist_dataset_dir)
 
-    X_train = mnist.train.images
-    y_train = mnist.train.labels
+    X_train = mnist[0][0]
+    X_train = X_train.reshape(-1, 784)
+    y_train = mnist[0][1]
 
     print('')
 
@@ -78,8 +79,14 @@ if __name__ == '__main__':
 
     #####
 
-    x, loss_summ, apply_updates, summary_op, saver, elbo, x_recon_samples = \
-        vae_in_tensorflow.vae(batch_size, input_dim, hidden_encoder_dim, hidden_decoder_dim, latent_dim, lr=learning_rate)
+    x, loss_summ, apply_updates, summary_op, saver, elbo, x_recon_samples = vae_in_tensorflow.vae(
+        batch_size,
+        input_dim,
+        hidden_encoder_dim,
+        hidden_decoder_dim,
+        latent_dim,
+        lr=learning_rate
+    )
 
     batch_labels = None
     cur_samples = None
@@ -87,14 +94,14 @@ if __name__ == '__main__':
     X_recon = np.zeros((N, input_dim))
 
     start_time = time.time()
-    with tf.Session() as sess:
-        summary_writer = tf.summary.FileWriter(log_dir, graph=sess.graph)
+    with tf.compat.v1.Session() as sess:
+        summary_writer = tf.compat.v1.summary.FileWriter(log_dir, graph=sess.graph)
         if os.path.isfile(save_dir + '/model.ckpt'):
             print('Restoring saved parameters')
             saver.restore(sess, save_dir + '/model.ckpt')
         else:
             print('Initializing parameters')
-            sess.run(tf.global_variables_initializer())
+            sess.run(tf.compat.v1.global_variables_initializer())
 
         print('')
 
@@ -111,7 +118,9 @@ if __name__ == '__main__':
 
                 feed_dict = {x: batch_data}
                 loss_str, _, summary_str, cur_elbo, cur_samples = sess.run(
-                    [loss_summ, apply_updates, summary_op, elbo, x_recon_samples], feed_dict=feed_dict)
+                    [loss_summ, apply_updates, summary_op, elbo, x_recon_samples],
+                    feed_dict=feed_dict
+                )
 
                 X_recon[start_index:end_index, :] = cur_samples
 
@@ -122,7 +131,11 @@ if __name__ == '__main__':
 
             if epoch % 10 == 0 or epoch == 1:
 
-                fig = plot_dataset_samples.plot_mnist_or_omniglot_data(cur_samples, batch_labels, title='Epoch {}'.format(str(epoch).zfill(3)))
+                fig = plot_dataset_samples.plot_mnist_or_omniglot_data(
+                    cur_samples,
+                    batch_labels,
+                    title='Epoch {}'.format(str(epoch).zfill(3))
+                )
                 fig.savefig(output_images_dir + '/epoch_{}.png'.format(str(epoch).zfill(3)), bbox_inches='tight')
                 plt.close()
 
@@ -138,7 +151,6 @@ if __name__ == '__main__':
 
     error2 = Utilities.mae(X_train, X_recon)
     print('mean absolute error: ' + str(error2))
-
 
     # TENSORBOARD
     # Open a console and run 'tensorboard --logdir=../tensorflow_logs/mnist_vae' OR

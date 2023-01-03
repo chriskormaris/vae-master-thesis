@@ -5,7 +5,7 @@ import time
 
 import matplotlib.pyplot as plt
 import numpy as np
-from tensorflow.contrib.learn.python.learn.datasets.mnist import read_data_sets
+from keras.datasets.mnist import load_data
 
 current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parent_dir = os.path.dirname(current_dir)
@@ -38,10 +38,11 @@ if __name__ == '__main__':
     if not os.path.exists(output_images_dir):
         os.makedirs(output_images_dir)
 
-    mnist = read_data_sets(mnist_dataset_dir)
+    mnist = load_data(mnist_dataset_dir)
 
-    X_train = mnist.train.images
-    y_train = mnist.train.labels
+    X_train = mnist[0][0]
+    X_train = X_train.reshape(-1, 784)
+    y_train = mnist[0][1]
 
     print('')
 

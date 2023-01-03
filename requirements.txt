@@ -5,3 +5,4 @@ keras
 torchvision
 cx_Freeze
 pyinstaller
+scipy

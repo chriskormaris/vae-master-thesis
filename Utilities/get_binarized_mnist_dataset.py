@@ -19,23 +19,18 @@ K = 10  # number of output layers (or number of categories or number of digits)
 ###############
 
 
-def get_binarized_mnist_dataset(mnist_file, trainOrTestOrValid):
-    print('Reading ' + trainOrTestOrValid + ' data...')
-
+def get_binarized_mnist_dataset(mnist_file, train_or_test_or_valid):
+    print('Reading ' + train_or_test_or_valid + ' data...')
     df = pd.read_csv(mnist_file, delimiter=' ', header=None)
     X = df.values()
-
     X = X.astype(np.float)
-
     return X
 
 
-def get_binarized_mnist_labels(mnist_labels_file, trainOrTestOrValid):
-    print('Reading ' + trainOrTestOrValid + ' labels...')
-
+def get_binarized_mnist_labels(mnist_labels_file, train_or_test_or_valid):
+    print('Reading ' + train_or_test_or_valid + ' labels...')
     with open(mnist_labels_file) as f:
         y = np.array(f.readlines())
-
     return y.astype(np.int8)
 
 
@@ -43,14 +38,18 @@ def obtain(dir_path):
     '''
     Downloads the dataset to ``dir_path``.
     '''
-
     dir_path = os.path.expanduser(dir_path)
     print('Downloading the dataset')
-    urlretrieve('http://www.cs.toronto.edu/~larocheh/public/datasets/binarized_mnist/binarized_mnist_train.amat',
-                os.path.join(dir_path, 'binarized_mnist_train.amat'))
-    urlretrieve('http://www.cs.toronto.edu/~larocheh/public/datasets/binarized_mnist/binarized_mnist_valid.amat',
-                os.path.join(dir_path, 'binarized_mnist_valid.amat'))
-    urlretrieve('http://www.cs.toronto.edu/~larocheh/public/datasets/binarized_mnist/binarized_mnist_test.amat',
-                os.path.join(dir_path, 'binarized_mnist_test.amat'))
-
+    urlretrieve(
+        'http://www.cs.toronto.edu/~larocheh/public/datasets/binarized_mnist/binarized_mnist_train.amat',
+        os.path.join(dir_path, 'binarized_mnist_train.amat')
+    )
+    urlretrieve(
+        'http://www.cs.toronto.edu/~larocheh/public/datasets/binarized_mnist/binarized_mnist_valid.amat',
+        os.path.join(dir_path, 'binarized_mnist_valid.amat')
+    )
+    urlretrieve(
+        'http://www.cs.toronto.edu/~larocheh/public/datasets/binarized_mnist/binarized_mnist_test.amat',
+        os.path.join(dir_path, 'binarized_mnist_test.amat')
+    )
     print('Done                     ')

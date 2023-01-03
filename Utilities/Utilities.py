@@ -1,5 +1,6 @@
 import numpy as np
 
+
 #####
 
 
@@ -71,21 +72,21 @@ def construct_missing_data(X, y=None, missing_value=0.5, structured_or_random='s
 
             # make the upper half pixels missing
             X_missing[
-                int(X_missing.shape[0] / 5):int(X_missing.shape[0] * 2 / 5),
-                :int(X_missing.shape[1] / 2),
-                :] = missing_value
+            int(X_missing.shape[0] / 5):int(X_missing.shape[0] * 2 / 5),
+            :int(X_missing.shape[1] / 2),
+            :] = missing_value
 
             # make the left half pixels missing
             X_missing[
-                int(X_missing.shape[0] * 2 / 5):int(X_missing.shape[0] * 3 / 5),
-                :,
-                :int(X_missing.shape[2] / 2)] = missing_value
+            int(X_missing.shape[0] * 2 / 5):int(X_missing.shape[0] * 3 / 5),
+            :,
+            :int(X_missing.shape[2] / 2)] = missing_value
 
             # make the right half pixels missing
             X_missing[
-                int(X_missing.shape[0] * 3 / 5):int(X_missing.shape[0] * 4 / 5),
-                :,
-                int(X_missing.shape[2] / 2):] = missing_value
+            int(X_missing.shape[0] * 3 / 5):int(X_missing.shape[0] * 4 / 5),
+            :,
+            int(X_missing.shape[2] / 2):] = missing_value
 
             # reshape data back to 2 dimensions
             X_missing = np.reshape(X_missing, newshape=(-1, int(np.square(X_missing.shape[1]))))
@@ -99,24 +100,24 @@ def construct_missing_data(X, y=None, missing_value=0.5, structured_or_random='s
 
             # make the upper half pixels missing
             X_missing[
-                int(X_missing.shape[0] / 5):int(X_missing.shape[0] * 2 / 5),
-                :int(X_missing.shape[1] / 2),
-                :,
-                :] = missing_value
+            int(X_missing.shape[0] / 5):int(X_missing.shape[0] * 2 / 5),
+            :int(X_missing.shape[1] / 2),
+            :,
+            :] = missing_value
 
             # make the left half pixels missing
             X_missing[
-                int(X_missing.shape[0] * 2 / 5):int(X_missing.shape[0] * 3 / 5),
-                :,
-                :int(X_missing.shape[2] / 2),
-                :] = missing_value
+            int(X_missing.shape[0] * 2 / 5):int(X_missing.shape[0] * 3 / 5),
+            :,
+            :int(X_missing.shape[2] / 2),
+            :] = missing_value
 
             # make the right half pixels missing
             X_missing[
-                int(X_missing.shape[0] * 3 / 5):int(X_missing.shape[0] * 4 / 5),
-                :,
-                int(X_missing.shape[2] / 2):,
-                :] = missing_value
+            int(X_missing.shape[0] * 3 / 5):int(X_missing.shape[0] * 4 / 5),
+            :,
+            int(X_missing.shape[2] / 2):,
+            :] = missing_value
 
             # reshape data back to 2 dimensions
             X_missing = np.reshape(X_missing, newshape=(-1, 3072))
@@ -131,21 +132,21 @@ def construct_missing_data(X, y=None, missing_value=0.5, structured_or_random='s
 
             # make the upper half pixels missing
             X_missing[
-                int(X_missing.shape[0] / 5):int(X_missing.shape[0] * 2 / 5),
-                :int(X_missing.shape[1] / 2),
-                :] = missing_value
+            int(X_missing.shape[0] / 5):int(X_missing.shape[0] * 2 / 5),
+            :int(X_missing.shape[1] / 2),
+            :] = missing_value
 
             # make the left half pixels missing
             X_missing[
-                int(X_missing.shape[0] * 2 / 5):int(X_missing.shape[0] * 3 / 5),
-                :,
-                :int(X_missing.shape[2] / 2)] = missing_value
+            int(X_missing.shape[0] * 2 / 5):int(X_missing.shape[0] * 3 / 5),
+            :,
+            :int(X_missing.shape[2] / 2)] = missing_value
 
             # make the right half pixels missing
             X_missing[
-                int(X_missing.shape[0] * 3 / 5):int(X_missing.shape[0] * 4 / 5),
-                :,
-                int(X_missing.shape[2] / 2):] = missing_value
+            int(X_missing.shape[0] * 3 / 5):int(X_missing.shape[0] * 4 / 5),
+            :,
+            int(X_missing.shape[2] / 2):] = missing_value
 
             # reshape data back to 2 dimensions
             X_missing = np.transpose(X_missing, axes=[0, 2, 1])
@@ -160,21 +161,21 @@ def construct_missing_data(X, y=None, missing_value=0.5, structured_or_random='s
 
             # make the upper half pixels missing
             X_missing[
-                int(X_missing.shape[0] / 5):int(X_missing.shape[0] * 2 / 5),
-                :int(X_missing.shape[1] / 2),
-                :] = missing_value
+            int(X_missing.shape[0] / 5):int(X_missing.shape[0] * 2 / 5),
+            :int(X_missing.shape[1] / 2),
+            :] = missing_value
 
             # make the left half pixels missing
             X_missing[
-                int(X_missing.shape[0] * 2 / 5):int(X_missing.shape[0] * 3 / 5),
-                :,
-                :int(X_missing.shape[2] / 2)] = missing_value
+            int(X_missing.shape[0] * 2 / 5):int(X_missing.shape[0] * 3 / 5),
+            :,
+            :int(X_missing.shape[2] / 2)] = missing_value
 
             # make the right half pixels missing
             X_missing[
-                int(X_missing.shape[0] * 3 / 5):int(X_missing.shape[0] * 4 / 5),
-                :,
-                int(X_missing.shape[2] / 2):] = missing_value
+            int(X_missing.shape[0] * 3 / 5):int(X_missing.shape[0] * 4 / 5),
+            :,
+            int(X_missing.shape[2] / 2):] = missing_value
 
             # reshape data back to 2 dimensions
             X_missing = np.transpose(X_missing, axes=[0, 2, 1])

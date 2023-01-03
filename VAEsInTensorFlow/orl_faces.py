@@ -76,14 +76,14 @@ if __name__ == '__main__':
     X_recon = np.zeros((N, input_dim))
 
     start_time = time.time()
-    with tf.Session() as sess:
-        summary_writer = tf.summary.FileWriter(log_dir, graph=sess.graph)
+    with tf.compat.v1.Session() as sess:
+        summary_writer = tf.compat.v1.summary.FileWriter(log_dir, graph=sess.graph)
         if os.path.isfile(save_dir + '/model.ckpt'):
             print('Restoring saved parameters')
             saver.restore(sess, save_dir + '/model.ckpt')
         else:
             print('Initializing parameters')
-            sess.run(tf.global_variables_initializer())
+            sess.run(tf.compat.v1.global_variables_initializer())
 
         print('')
 

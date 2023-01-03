@@ -30,7 +30,7 @@ def plot_mnist_or_omniglot_data(X, y, categories=list(range(10)), n=10, title=''
                     plt.imshow(image)
 
                 i = i + 1
-    fig.canvas.set_window_title(title)
+    # fig.canvas.set_window_title(title)
     if show_plot:
         plt.show()
     return fig
@@ -63,7 +63,7 @@ def plot_cifar10_data(X, y, categories=list(range(10)), n=10, title='', grayscal
                     plt.imshow(image)
 
                 i = i + 1
-    fig.canvas.set_window_title(title)
+    # fig.canvas.set_window_title(title)
     if show_plot:
         plt.show()
     return fig
@@ -96,7 +96,7 @@ def plot_orl_faces(X, y, categories=list(range(1, 11)), n=10, title='', grayscal
 
                 i = i + 1
 
-    fig.canvas.set_window_title(title)
+    # fig.canvas.set_window_title(title)
     if show_plot:
         plt.show()
     return fig
@@ -129,7 +129,7 @@ def plot_yale_faces(X, y, categories=list(range(1, 11)), n=10, title='', graysca
 
                 i = i + 1
 
-    fig.canvas.set_window_title(title)
+    # fig.canvas.set_window_title(title)
     if show_plot:
         plt.show()
     return fig

@@ -5,7 +5,7 @@ import time
 
 import matplotlib.pyplot as plt
 import numpy as np
-from tensorflow.contrib.learn.python.learn.datasets.mnist import read_data_sets
+from keras.datasets.mnist import load_data
 
 current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parent_dir = os.path.dirname(current_dir)
@@ -39,19 +39,23 @@ if __name__ == '__main__':
     if not os.path.exists(output_images_dir):
         os.makedirs(output_images_dir)
 
-    mnist = read_data_sets(mnist_dataset_dir)
+    mnist = load_data(mnist_dataset_dir)
+
+    X_train = mnist[0][0]
+    X_train = X_train.reshape(-1, 784)
+    y_train = mnist[0][1]
 
     #####
-
-    X_train = mnist.train.images
-    y_train = mnist.train.labels
 
     # Reduce data to avoid memory error.
     X_train, y_train, _ = Utilities.reduce_data(X_train, X_train.shape[0], 30000, y=y_train)
 
     # construct data with missing values
-    X_train_missing, X_train, y_train = Utilities.construct_missing_data(X_train, y_train,
-                                                                         structured_or_random=sys.argv[5])
+    X_train_missing, X_train, y_train = Utilities.construct_missing_data(
+        X_train,
+        y_train,
+        structured_or_random=sys.argv[5]
+    )
 
     print('')
 
@@ -74,8 +78,13 @@ if __name__ == '__main__':
 
     #####
 
-    params, solver = initialize_weights_in_pytorch.initialize_weights(input_dim, hidden_encoder_dim,
-                                                                      hidden_decoder_dim, latent_dim, lr=learning_rate)
+    params, solver = initialize_weights_in_pytorch.initialize_weights(
+        input_dim,
+        hidden_encoder_dim,
+        hidden_decoder_dim,
+        latent_dim,
+        lr=learning_rate
+    )
 
     start_index = None
     end_index = None
@@ -117,11 +126,19 @@ if __name__ == '__main__':
 
         if epoch == 1:
 
-            fig = plot_dataset_samples.plot_mnist_or_omniglot_data(X_train[start_index:end_index, :], batch_labels, title='Original Data')
+            fig = plot_dataset_samples.plot_mnist_or_omniglot_data(
+                X_train[start_index:end_index, :],
+                batch_labels,
+                title='Original Data'
+            )
             fig.savefig(output_images_dir + '/original_data.png', bbox_inches='tight')
             plt.close()
 
-            fig = plot_dataset_samples.plot_mnist_or_omniglot_data(X_train_missing[start_index:end_index, :], batch_labels, title='Original Data')
+            fig = plot_dataset_samples.plot_mnist_or_omniglot_data(
+                X_train_missing[start_index:end_index, :],
+                batch_labels,
+                title='Original Data'
+            )
             fig.savefig(output_images_dir + '/missing_data.png', bbox_inches='tight')
             plt.close()
 
@@ -131,7 +148,11 @@ if __name__ == '__main__':
 
         if epoch % 10 == 0 or epoch == 1:
 
-            fig = plot_dataset_samples.plot_mnist_or_omniglot_data(cur_samples, batch_labels, title='Epoch {}'.format(str(epoch).zfill(3)))
+            fig = plot_dataset_samples.plot_mnist_or_omniglot_data(
+                cur_samples,
+                batch_labels,
+                title='Epoch {}'.format(str(epoch).zfill(3))
+            )
             fig.savefig(output_images_dir + '/epoch_{}.png'.format(str(epoch).zfill(3)), bbox_inches='tight')
             plt.close()
     elapsed_time = time.time() - start_time

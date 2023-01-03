@@ -10,11 +10,11 @@ elif sys.platform == 'win32':
     base = 'Win32GUI'
 
 icons_path = 'icons\\'
-executables = [cx_Freeze.Executable('vaes_gui.py', base=base, icon=icons_path + 'vaes.png')]
-# executables = [cx_Freeze.Executable('vaes_gui.py', icon='icons/vaes.png')]
-include_files = [icons_path + x for x in ['vaes.png', 'help.png', 'info.png', 'aueb_logo_256.png']]
+executables = [cx_Freeze.Executable('vaes_gui.py', base=base, icon=icons_path + 'vaes.ico')]
+# executables = [cx_Freeze.Executable('vaes_gui.py', icon=icons_path + 'vaes.ico')]
+include_files = [icons_path + x for x in ['aueb_logo.png', 'info.ico', 'help.ico', 'vaes.ico']]
 includes = []
-excludes = ['Tkinter']
+excludes = ['tk']
 packages = ['numpy', 'matplotlib', 'tensorflow', 'keras', 'torchvision']
 build_exe_options = {'includes': includes, 'packages': packages, 'excludes': excludes, 'include_files': include_files}
 

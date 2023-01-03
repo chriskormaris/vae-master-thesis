@@ -5,7 +5,7 @@ import time
 
 import matplotlib.pyplot as plt
 import numpy as np
-from tensorflow.contrib.learn.python.learn.datasets.mnist import read_data_sets
+from keras.datasets.mnist import load_data
 
 current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parent_dir = os.path.dirname(current_dir)
@@ -36,7 +36,19 @@ if __name__ == '__main__':
                 output_images_dir = './output_images/kNNMissingValues/fashion_mnist'
                 mnist_dataset_dir = '../FASHION_MNIST_dataset'
 
-        mnist = read_data_sets(mnist_dataset_dir, one_hot=True)
+        mnist = load_data(mnist_dataset_dir, one_hot=True)
+
+        X_train = mnist[0][0]
+        X_train.reshape((-1, 784))
+        y_train = mnist[0][1]
+        t_train = np.zeros((y_train.size, 10))
+        t_train[np.arange(y_train.size), y_train] = 1
+
+        X_test = mnist[1][0]
+        X_test.reshape((-1, 784))
+        y_test = mnist[1][1]
+        t_test = np.zeros((y_test.size, 10))
+        t_test[np.arange(y_test.size), y_test] = 1
 
         if not os.path.exists(output_images_dir):
                 os.makedirs(output_images_dir)
@@ -47,7 +59,6 @@ if __name__ == '__main__':
 
         # build train data
         print('Building TRAIN data...')
-        X_train, t_train = mnist.train.images, mnist.train.labels
         y_train = np.argmax(t_train, axis=1)
         # reduce the number of train examples from 55000 to 10000
         X_train, y_train, _ = Utilities.reduce_data(X_train, X_train.shape[0], 10000, y_train)
@@ -55,7 +66,6 @@ if __name__ == '__main__':
 
         # build test data
         print('Building TEST data...')
-        X_test, t_test = mnist.test.images, mnist.test.labels
         y_test = np.argmax(t_test, axis=1)
         # reduce the number of test examples from 10000 to 250
         X_test, y_test, _ = Utilities.reduce_data(X_test, X_test.shape[0], 250, y_test)

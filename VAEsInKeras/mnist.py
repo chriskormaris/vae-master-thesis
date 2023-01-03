@@ -6,7 +6,7 @@ import time
 import matplotlib.pyplot as plt
 import numpy as np
 from keras.callbacks import TensorBoard
-from tensorflow.contrib.learn.python.learn.datasets.mnist import read_data_sets
+from keras.datasets.mnist import load_data
 
 current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parent_dir = os.path.dirname(current_dir)
@@ -38,20 +38,19 @@ if __name__ == '__main__':
     # We're using MNIST images, and we're discarding the labels
     # (since we're only interested in encoding/decoding the input images).
 
-    mnist = read_data_sets(mnist_dataset_dir)
-    X_train = mnist.train.images
-    X_test = mnist.test.images
-    X_valid = mnist.validation.images
+    mnist = load_data(mnist_dataset_dir)
+
+    X_train = mnist[0][0]
+    X_test = mnist[1][0]
 
     # We will normalize all values between 0 and 1
     # and we will flatten the 28x28 images into vectors of size 784.
 
     X_train = X_train.astype('float32') / 255.
     X_test = X_test.astype('float32') / 255.
-    X_valid = X_valid.astype('float32') / 255.
+
     X_train = X_train.reshape((len(X_train), np.prod(X_train.shape[1:])))
     X_test = X_test.reshape((len(X_test), np.prod(X_test.shape[1:])))
-    X_valid = X_valid.reshape((len(X_valid), np.prod(X_valid.shape[1:])))
 
     # Now let's train our autoencoder for a given number of epochs. #
     epochs = int(sys.argv[2])
@@ -62,12 +61,15 @@ if __name__ == '__main__':
         batch_size = int(batch_size)
 
     start_time = time.time()
-    autoencoder.fit(X_train, X_train,
-                    epochs=epochs,
-                    batch_size=batch_size,
-                    shuffle=True,
-                    validation_data=(X_valid, X_valid),
-                    callbacks=[TensorBoard(log_dir=log_dir, histogram_freq=0, write_graph=False)])
+    autoencoder.fit(
+        X_train,
+        X_train,
+        epochs=epochs,
+        batch_size=batch_size,
+        shuffle=True,
+        validation_data=(X_test, X_test),
+        callbacks=[TensorBoard(log_dir=log_dir, histogram_freq=0, write_graph=False)]
+    )
     elapsed_time = time.time() - start_time
 
     print('training time: ' + str(elapsed_time))

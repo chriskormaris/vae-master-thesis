@@ -11,9 +11,9 @@ root = tk.Tk(className='vaes')
 
 # change window size
 root.geometry('800x810')
+
 # change icon
-icon = tk.PhotoImage(file=icons_path + 'vaes.png')
-root.tk.call('wm', 'iconphoto', root._w, icon)
+root.iconbitmap(icons_path + 'vaes.ico')
 
 version = 2.0
 
@@ -270,8 +270,7 @@ def about_window():
     version_label.pack()
 
     # change icon
-    icon = tk.PhotoImage(file=icons_path + 'info.png')
-    window.tk.call('wm', 'iconphoto', window._w, icon)
+    window.iconbitmap(icons_path + 'info.ico')
 
     okButton = tk.Button(
         window,
@@ -399,8 +398,7 @@ def datasets_details_window():
     download_all_datasets_link.bind("<Button-1>", download_all_datasets_command)
 
     # change icon
-    icon = tk.PhotoImage(file=icons_path + 'help.png')
-    window.tk.call('wm', 'iconphoto', window._w, icon)
+    window.iconbitmap(icons_path + 'help.ico')
 
     # make the child window transient to the root
     window.transient(root)
@@ -466,7 +464,7 @@ runFrame = tk.Frame(root)
 empty_line_label = tk.Label(welcomeFrame, text='\n')
 empty_line_label.pack()
 
-aueb_logo = tk.PhotoImage(file=icons_path + 'aueb_logo_256.png')
+aueb_logo = tk.PhotoImage(file=icons_path + 'aueb_logo.png')
 image_label = tk.Label(welcomeFrame, image=aueb_logo, anchor=tk.CENTER)
 image_label.pack()
 

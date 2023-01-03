@@ -5,18 +5,18 @@ import numpy as np
 # The dataset contains 50 alphabets. Each alphabet has 60 characters.
 # The alphabet number 20 (the 21st) is the Greek one
 # The alphabet number 31 (the 32nd) is the English one
-def get_omniglot_dataset(filepath, TrainOrTest, alphabet, binarize=False):
+def get_omniglot_dataset(filepath, train_or_test, alphabet, binarize=False):
     all = sio.loadmat(filepath)
 
     X = None
     alphabet_labels_one_hot = None
     y = None
 
-    if TrainOrTest.lower() == 'train':
+    if train_or_test.lower() == 'train':
         X = all.get('data').T  # X: 24345 x 784
         alphabet_labels_one_hot = all.get('target').T  # X: 24345 x 50
         y = np.squeeze(all.get('targetchar'))  # X: 24345 x 1, takes values in the range [1, 26]
-    elif TrainOrTest.lower() == 'test':
+    elif train_or_test.lower() == 'test':
         X = all.get('testdata').T  # X: 8070 x 784
         alphabet_labels_one_hot = all.get('testtarget').T  # X: 8070 x 50
         y = np.squeeze(all.get('testtargetchar'))  # X: 8070 x 1, takes values in the range [1, 26]
