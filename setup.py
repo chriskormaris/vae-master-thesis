@@ -11,7 +11,6 @@ elif sys.platform == 'win32':
 
 icons_path = 'icons\\'
 executables = [cx_Freeze.Executable('vaes_gui.py', base=base, icon=icons_path + 'vaes.ico')]
-# executables = [cx_Freeze.Executable('vaes_gui.py', icon=icons_path + 'vaes.ico')]
 include_files = [icons_path + x for x in ['aueb_logo.png', 'info.ico', 'help.ico', 'vaes.ico']]
 includes = []
 excludes = ['tk']
