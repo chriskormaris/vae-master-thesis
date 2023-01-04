@@ -5,8 +5,6 @@ import torch
 import torch.nn.functional as nn
 from torch.autograd import Variable
 
-__author__ = 'c.kormaris'
-
 
 #####
 

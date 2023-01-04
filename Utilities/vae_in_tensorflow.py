@@ -3,8 +3,6 @@
 
 import tensorflow as tf
 
-__author__ = 'c.kormaris'
-
 
 #####
 

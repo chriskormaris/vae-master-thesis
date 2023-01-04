@@ -1,7 +1,5 @@
 import numpy as np
 
-__author__ = 'c.kormaris'
-
 # ignore errors
 np.seterr(all='ignore')
 

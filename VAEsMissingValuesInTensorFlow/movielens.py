@@ -16,8 +16,6 @@ from __init__ import *
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # hide tensorflow warnings
 
-__author__ = 'c.kormaris'
-
 missing_value = 0
 
 #####

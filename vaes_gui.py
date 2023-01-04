@@ -2,8 +2,6 @@ import os
 import tkinter as tk
 import webbrowser
 
-__author__ = 'c.kormaris'
-
 icons_path = 'icons\\'
 
 # create window and set title
@@ -23,24 +21,24 @@ python_script_file = tk.StringVar(root, '')
 selectedAlgorithm = ''
 selectedDataset = ''
 
-algorithmNames = ['VAE in TensorFlow',
-                  'VAE in PyTorch',
-                  'VAE in Keras',
-                  'VAE Missing Values completion algorithm in TensorFlow',
-                  'VAE Missing Values completion algorithm in PyTorch',
-                  'K-NN Missing Values completion algorithm']
+algorithms = {
+    'VAEsInTensorFlow': 'VAE in TensorFlow',
+    'VAEsInPyTorch': 'VAE in PyTorch',
+    'VAEsInKeras': 'VAE in Keras',
+    'VAEsMissingValuesInTensorFlow': 'VAE Missing Values completion algorithm in TensorFlow',
+    'VAEsMissingValuesInPyTorch': 'VAE Missing Values completion algorithm in PyTorch',
+    'kNNMissingValues': 'K-NN Missing Values completion algorithm'
+}
 
-algorithms = ['VAEsInTensorFlow',
-              'VAEsInPyTorch',
-              'VAEsInKeras',
-              'VAEsMissingValuesInTensorFlow',
-              'VAEsMissingValuesInPyTorch',
-              'kNNMissingValues']
-
-datasetNames = ['MNIST', 'Binarized MNIST', 'CIFAR-10', 'OMNIGLOT', 'YALE Faces', 'ORL Face Database', 'MovieLens']
-
-datasets = ['mnist', 'binarized_mnist', 'cifar10', 'omniglot', 'yale_faces', 'orl_faces', 'movielens']
-
+datasets = {
+    'mnist': 'MNIST',
+    'binarized_mnist': 'Binarized MNIST',
+    'cifar10': 'CIFAR-10',
+    'omniglot': 'OMNIGLOT',
+    'yale_faces': 'YALE Faces',
+    'orl_faces': 'ORL Face Database',
+    'movielens': 'MovieLens'
+}
 
 variables = []
 
@@ -65,15 +63,15 @@ def run(variables):
 
 
 def get_algorithm_name(algorithm):
-    for i, algorithm_name in enumerate(algorithmNames):
-        if algorithm == algorithms[i]:
-            return algorithmNames[i]
+    for name in algorithms:
+        if algorithm == name:
+            return name
 
 
 def get_dataset_name(dataset):
-    for i, dataset_name in enumerate(datasetNames):
-        if dataset == datasets[i]:
-            return datasetNames[i]
+    for name in datasets:
+        if dataset == name:
+            return name
 
 
 def hide_extra_options():
@@ -630,7 +628,6 @@ empty_line_label.pack()
 status = tk.Label(runFrame, bd=1, relief=tk.SUNKEN, anchor=tk.S)
 status.pack(side=tk.BOTTOM, fill=tk.X)
 
-
 # Menus #
 
 menu = tk.Menu(root)
@@ -638,40 +635,42 @@ root.config(menu=menu)
 
 algorithmsMenu = tk.Menu(menu, tearoff=False)
 menu.add_cascade(label='Algorithms', menu=algorithmsMenu)  # adds drop-down menu
-for i in range(len(algorithms)):
-    if algorithms[i] == 'VAEsMissingValuesInTensorFlow':
+for name in algorithms:
+    description = algorithms[name]
+    if name == 'VAEsMissingValuesInTensorFlow':
         algorithmsMenu.add_separator()
-    if 'knn' in algorithms[i].lower():
+    if 'knn' in name.lower():
         algorithmsMenu.add_radiobutton(
-            label=algorithmNames[i],
+            label=description,
             variable=python_script_folder,
-            value=algorithms[i],
+            value=name,
             command=check_algorithm_and_show_knn_frame
         )
     else:
         algorithmsMenu.add_radiobutton(
-            label=algorithmNames[i],
+            label=description,
             variable=python_script_folder,
-            value=algorithms[i],
+            value=name,
             command=check_algorithm_and_show_vae_frame
         )
 
 datasetsMenu = tk.Menu(menu, tearoff=False)
 menu.add_cascade(label='Datasets', menu=datasetsMenu)  # adds drop-down menu
-for i in range(len(datasets)):
-    if datasets[i] != 'movielens':
+for name in datasets:
+    description = datasets[name]
+    if name != 'movielens':
         datasetsMenu.add_radiobutton(
-            label=datasetNames[i],
+            label=description,
             variable=python_script_file,
-            value=datasets[i],
+            value=name,
             command=check_dataset
         )
     else:
         # Leave 'MovieLens' dataset disabled initially.
         datasetsMenu.add_radiobutton(
-            label=datasetNames[i],
+            label=description,
             variable=python_script_file,
-            value=datasets[i],
+            value=name,
             command=check_dataset,
             state='disabled'
         )
@@ -681,7 +680,6 @@ menu.add_cascade(label='About', menu=aboutMenu)  # adds drop-down menu
 aboutMenu.add_command(label='About', command=about_window)
 aboutMenu.add_command(label='Datasets Details', command=datasets_details_window)
 aboutMenu.add_command(label="Exit", command=root.quit)
-
 
 runButton = tk.Button(
     runFrame,
@@ -693,7 +691,6 @@ runButton = tk.Button(
     command=lambda: run(variables)
 )
 runButton.pack(side=tk.BOTTOM)
-
 
 #####
 

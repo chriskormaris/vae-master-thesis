@@ -13,8 +13,6 @@ sys.path.append(parent_dir)
 from __init__ import *
 
 
-__author__ = 'c.kormaris'
-
 missing_value = 0.5
 K = int(sys.argv[1])
 
