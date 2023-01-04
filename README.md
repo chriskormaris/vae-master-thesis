@@ -1,12 +1,14 @@
-# Variational Autoencoder Thesis #
+# Variational Autoencoders & Applications Master Thesis #
 
 Programming Language: Python 3
+
+GUI toolkit: tkinter
 
 Made by Christos Kormaris, April-May 2018
 
 Supervisor Professor: Michalis Titsias
 
-This repository was created as a part of my Master Thesis, while studying Computer Science at Athens University of Economics & Business (AUEB).
+This repository was created for the purposes of my Master Thesis for the MSc in Computer Science at Athens University of Economics & Business (AUEB).
 
 
 ## Description ##
@@ -24,24 +26,29 @@ You can download all the datasets here:
 
 A graphical user interface (GUI) has been implemented for the project of this thesis, using Python 3 and the Tkinter library.
 
-Browse to the directory `executable`. Extract the `vaes_gui.zip` archive in the same directory.
-Open the `vaes_gui` folder, find the file `vaes_gui.exe` and execute it.
-
-Then, download all the datasets from the URL in the file `datasets_urls.txt` and move them to the `executable` folder.
-
-The GUI will make it all easier for you.
+First install all requirements:
+```shell
+pip install -r requirements.txt
+```
+Then, run:
+```shell
+python vaes_gui.py
+```
 
 ## How to create an executable for the GUI
 
-1) First, install the `pyinstaller` dependency.
-```shell
-pip install pyinstaller
-```
+1. First, install the `pyinstaller` dependency.
+   ```shell
+   pip install pyinstaller
+   ```
+2. Then, make an executable file using the settings from the file [vaes_gui.spec](vaes_gui.spec)
+   ```shell
+   pyinstaller vaes_gui.spec
+   ```
 
-2) Then, make an executable file using the settings from the file [vaes_gui.spec](vaes_gui.spec)
-```shell
-pyinstaller vaes_gui.spec
-```
+Then, download all the datasets from the URL in the file `datasets_urls.md`, extract them and move them to the `dist` folder.
+Now, browse to the directory `dist/vaes_gui`. Find the file `vaes_gui.exe` and run it.
+The GUI will make it all easier for you!
 
 ### Screenshot
 
