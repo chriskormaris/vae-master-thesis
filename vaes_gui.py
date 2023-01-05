@@ -5,7 +5,8 @@ import webbrowser
 icons_path = 'icons\\'
 
 # create window and set title
-root = tk.Tk(className='vaes')
+root = tk.Tk()
+root.title('vaes')
 
 # change window size
 root.geometry('800x810')
