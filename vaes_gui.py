@@ -1,8 +1,46 @@
-import os
 import tkinter as tk
 import webbrowser
 
-icons_path = 'icons\\'
+import VAEsInKeras.binarized_mnist
+import VAEsInKeras.cifar10
+import VAEsInKeras.mnist
+import VAEsInKeras.omniglot
+import VAEsInKeras.orl_faces
+import VAEsInKeras.yale_faces
+import VAEsInPyTorch.binarized_mnist
+import VAEsInPyTorch.cifar10
+import VAEsInPyTorch.mnist
+import VAEsInPyTorch.omniglot
+import VAEsInPyTorch.orl_faces
+import VAEsInPyTorch.yale_faces
+import VAEsInTensorFlow.binarized_mnist
+import VAEsInTensorFlow.cifar10
+import VAEsInTensorFlow.mnist
+import VAEsInTensorFlow.omniglot
+import VAEsInTensorFlow.orl_faces
+import VAEsInTensorFlow.yale_faces
+import VAEsMissingValuesInPyTorch.binarized_mnist
+import VAEsMissingValuesInPyTorch.cifar10
+import VAEsMissingValuesInPyTorch.mnist
+import VAEsMissingValuesInPyTorch.movielens
+import VAEsMissingValuesInPyTorch.omniglot
+import VAEsMissingValuesInPyTorch.orl_faces
+import VAEsMissingValuesInPyTorch.yale_faces
+import VAEsMissingValuesInTensorFlow.binarized_mnist
+import VAEsMissingValuesInTensorFlow.cifar10
+import VAEsMissingValuesInTensorFlow.mnist
+import VAEsMissingValuesInTensorFlow.movielens
+import VAEsMissingValuesInTensorFlow.omniglot
+import VAEsMissingValuesInTensorFlow.orl_faces
+import VAEsMissingValuesInTensorFlow.yale_faces
+import kNNMissingValues.binarized_mnist
+import kNNMissingValues.cifar10
+import kNNMissingValues.mnist
+import kNNMissingValues.movielens
+import kNNMissingValues.omniglot
+import kNNMissingValues.orl_faces
+import kNNMissingValues.yale_faces
+from Utilities.constants import *
 
 # create window and set title
 root = tk.Tk()
@@ -13,8 +51,6 @@ root.geometry('800x810')
 
 # change icon
 root.iconbitmap(icons_path + 'vaes.ico')
-
-version = 2.0
 
 python_script_folder = tk.StringVar(root, '')
 python_script_file = tk.StringVar(root, '')
@@ -53,14 +89,100 @@ isDatasetSelected = False
 def run(variables):
     arguments = []
     for variable in variables:
-        arguments.append(variable.get())
-    arguments = ' '.join(arguments)
-    python_script = './' + python_script_folder.get() + '/' + python_script_file.get() + '.py'
-    print('Running ' + python_script + '...')
-    print('arguments: ' + arguments)
-    # os.environ('PATH')
-    os.system('python ' + python_script + ' ' + arguments)
-    print('')
+        argument = variable.get()
+        if argument.isdigit():
+            argument = int(argument)
+        else:
+            try:
+                argument = float(argument)
+            except:
+                pass
+        arguments.append(argument)
+    print('arguments: ' + str(arguments))
+    if python_script_folder.get() == 'kNNMissingValues':
+        if python_script_file.get() == 'binarized_mnist':
+            kNNMissingValues.binarized_mnist.binarized_mnist(*arguments)
+        elif python_script_file.get() == 'cifar10':
+            kNNMissingValues.cifar10.cifar10(*arguments)
+        elif python_script_file.get() == 'mnist':
+            kNNMissingValues.mnist.mnist(*arguments)
+        elif python_script_file.get() == 'movielens':
+            kNNMissingValues.movielens.movielens(*arguments)
+        elif python_script_file.get() == 'omniglot':
+            kNNMissingValues.omniglot.omniglot(*arguments)
+        elif python_script_file.get() == 'orl_faces':
+            kNNMissingValues.orl_faces.orl_faces(*arguments)
+        elif python_script_file.get() == 'yale_faces':
+            kNNMissingValues.yale_faces.yale_faces(*arguments)
+    elif python_script_folder.get() == 'VAEsInKeras':
+        if python_script_file.get() == 'binarized_mnist':
+            VAEsInKeras.binarized_mnist.binarized_mnist(*arguments)
+        elif python_script_file.get() == 'cifar10':
+            VAEsInKeras.cifar10.cifar10(*arguments)
+        elif python_script_file.get() == 'mnist':
+            VAEsInKeras.mnist.mnist(*arguments)
+        elif python_script_file.get() == 'omniglot':
+            VAEsInKeras.omniglot.omniglot(*arguments)
+        elif python_script_file.get() == 'orl_faces':
+            VAEsInKeras.orl_faces.orl_faces(*arguments)
+        elif python_script_file.get() == 'yale_faces':
+            VAEsInKeras.yale_faces.yale_faces(*arguments)
+    elif python_script_folder.get() == 'VAEsInPyTorch':
+        if python_script_file.get() == 'binarized_mnist':
+            VAEsInPyTorch.binarized_mnist.binarized_mnist(*arguments)
+        elif python_script_file.get() == 'cifar10':
+            VAEsInPyTorch.cifar10.cifar10(*arguments)
+        elif python_script_file.get() == 'mnist':
+            VAEsInPyTorch.mnist.mnist(*arguments)
+        elif python_script_file.get() == 'omniglot':
+            VAEsInPyTorch.omniglot.omniglot(*arguments)
+        elif python_script_file.get() == 'orl_faces':
+            VAEsInPyTorch.orl_faces.orl_faces(*arguments)
+        elif python_script_file.get() == 'yale_faces':
+            VAEsInPyTorch.yale_faces.yale_faces(*arguments)
+    elif python_script_folder.get() == 'VAEsInTensorFlow':
+        if python_script_file.get() == 'binarized_mnist':
+            VAEsInTensorFlow.binarized_mnist.binarized_mnist(*arguments)
+        elif python_script_file.get() == 'cifar10':
+            VAEsInTensorFlow.cifar10.cifar10(*arguments)
+        elif python_script_file.get() == 'mnist':
+            VAEsInTensorFlow.mnist.mnist(*arguments)
+        elif python_script_file.get() == 'omniglot':
+            VAEsInTensorFlow.omniglot.omniglot(*arguments)
+        elif python_script_file.get() == 'orl_faces':
+            VAEsInTensorFlow.orl_faces.orl_faces(*arguments)
+        elif python_script_file.get() == 'yale_faces':
+            VAEsInTensorFlow.yale_faces.yale_faces(*arguments)
+    elif python_script_folder.get() == 'VAEsMissingValuesInPyTorch':
+        if python_script_file.get() == 'binarized_mnist':
+            VAEsMissingValuesInPyTorch.binarized_mnist.binarized_mnist(*arguments)
+        elif python_script_file.get() == 'cifar10':
+            VAEsMissingValuesInPyTorch.cifar10.cifar10(*arguments)
+        elif python_script_file.get() == 'mnist':
+            VAEsMissingValuesInPyTorch.mnist.mnist(*arguments)
+        elif python_script_file.get() == 'movielens':
+            VAEsMissingValuesInPyTorch.movielens.movielens(*arguments)
+        elif python_script_file.get() == 'omniglot':
+            VAEsMissingValuesInPyTorch.omniglot.omniglot(*arguments)
+        elif python_script_file.get() == 'orl_faces':
+            VAEsMissingValuesInPyTorch.orl_faces.orl_faces(*arguments)
+        elif python_script_file.get() == 'yale_faces':
+            VAEsMissingValuesInPyTorch.yale_faces.yale_faces(*arguments)
+    elif python_script_folder.get() == 'VAEsMissingValuesInTensorFlow':
+        if python_script_file.get() == 'binarized_mnist':
+            VAEsMissingValuesInTensorFlow.binarized_mnist.binarized_mnist(*arguments)
+        elif python_script_file.get() == 'cifar10':
+            VAEsMissingValuesInTensorFlow.cifar10.cifar10(*arguments)
+        elif python_script_file.get() == 'mnist':
+            VAEsMissingValuesInTensorFlow.mnist.mnist(*arguments)
+        elif python_script_file.get() == 'movielens':
+            VAEsMissingValuesInTensorFlow.movielens.movielens(*arguments)
+        elif python_script_file.get() == 'omniglot':
+            VAEsMissingValuesInTensorFlow.omniglot.omniglot(*arguments)
+        elif python_script_file.get() == 'orl_faces':
+            VAEsMissingValuesInTensorFlow.orl_faces.orl_faces(*arguments)
+        elif python_script_file.get() == 'yale_faces':
+            VAEsMissingValuesInTensorFlow.yale_faces.yale_faces(*arguments)
 
 
 def get_algorithm_name(algorithm):
@@ -131,9 +253,9 @@ def check_algorithm_and_show_vae_frame():
             and 'movielens' not in selectedDataset.lower():
         variables.extend([missing_values_var])
     if python_script_file.get() == 'mnist':
-        variables.extend([digitsOrFashionMNIST_var])
+        variables.extend([digits_or_fashion_mnist_var])
     elif python_script_file.get() == 'cifar10':
-        variables.extend([RGBOrGrayscaleCIFAR_var])
+        variables.extend([rgb_or_grayscale_cifar_var])
     elif python_script_file.get() == 'omniglot':
         variables.extend([omniglotLanguage_var])
 
@@ -174,9 +296,9 @@ def check_algorithm_and_show_knn_frame():
             and 'movielens' not in selectedDataset.lower():
         variables.extend([missing_values_var])
     if python_script_file.get() == 'mnist':
-        variables.extend([digitsOrFashionMNIST_var])
+        variables.extend([digits_or_fashion_mnist_var])
     elif python_script_file.get() == 'cifar10':
-        variables.extend([RGBOrGrayscaleCIFAR_var])
+        variables.extend([rgb_or_grayscale_cifar_var])
     elif python_script_file.get() == 'omniglot':
         variables.extend([omniglotLanguage_var])
 
@@ -211,9 +333,9 @@ def check_dataset():
                 and 'movielens' not in selectedDataset.lower():
             variables.extend([missing_values_var])
         if python_script_file.get() == 'mnist':
-            variables.extend([digitsOrFashionMNIST_var])
+            variables.extend([digits_or_fashion_mnist_var])
         elif python_script_file.get() == 'cifar10':
-            variables.extend([RGBOrGrayscaleCIFAR_var])
+            variables.extend([rgb_or_grayscale_cifar_var])
         elif python_script_file.get() == 'omniglot':
             variables.extend([omniglotLanguage_var])
     else:
@@ -222,9 +344,9 @@ def check_dataset():
                 and 'movielens' not in selectedDataset.lower():
             variables.extend([missing_values_var])
         if python_script_file.get() == 'mnist':
-            variables.extend([digitsOrFashionMNIST_var])
+            variables.extend([digits_or_fashion_mnist_var])
         elif python_script_file.get() == 'cifar10':
-            variables.extend([RGBOrGrayscaleCIFAR_var])
+            variables.extend([rgb_or_grayscale_cifar_var])
         elif python_script_file.get() == 'omniglot':
             variables.extend([omniglotLanguage_var])
 
@@ -265,7 +387,7 @@ def about_window():
     date = tk.Label(window, text='Date: April 2018')
     date.pack()
 
-    version_label = tk.Label(window, text='Version: ' + str(version))
+    version_label = tk.Label(window, text='Version: ' + version)
     version_label.pack()
 
     # change icon
@@ -442,259 +564,255 @@ def download_all_datasets_command(event):
     webbrowser.open_new(r"https://www.dropbox.com/sh/ucvad0dkcbxuyho/AAAjjrRPYiGLLPc_VKru4-Uva?dl=0")
 
 
-#####
-
-
-# Frames #
-welcomeFrame = tk.Frame(root)
-vaeFrame = tk.Frame(root)
-kNNFrame = tk.Frame(root)
-
-mnistDatasetFrame = tk.Frame(root)
-cifarDatasetFrame = tk.Frame(root)
-omniglotDatasetFrame = tk.Frame(root)
-missingValuesFrame = tk.Frame(root)
-
-runFrame = tk.Frame(root)
-
-# Widgets #
-
-# 1. welcomeFrame Widgets #
-empty_line_label = tk.Label(welcomeFrame, text='\n')
-empty_line_label.pack()
-
-aueb_logo = tk.PhotoImage(file=icons_path + 'aueb_logo.png')
-image_label = tk.Label(welcomeFrame, image=aueb_logo, anchor=tk.CENTER)
-image_label.pack()
-
-welcome_label = tk.Label(welcomeFrame, text='Welcome to the Variational autoencoders graphical user interface.')
-welcome_label.pack()
-instructions_label = tk.Label(
-    welcomeFrame,
-    text='Please select an algorithm and a dataset from the dropdown menus at the top.'
-)
-instructions_label.pack()
-
-# show welcomeFrame
-welcomeFrame.pack()
-
-# 2. vaeFrame Widgets #
-# Tkinter variables
-latent_dim_var = tk.StringVar(root, '64')
-epochs_var = tk.StringVar(root, '100')
-learning_rate_var = tk.StringVar(root, '0.01')
-batch_size_var = tk.StringVar(root, '250')
-K_var = tk.StringVar(root, '10')
-
-digitsOrFashionMNIST_var = tk.StringVar(root, 'digits')
-RGBOrGrayscaleCIFAR_var = tk.StringVar(root, 'grayscale')
-omniglotLanguage_var = tk.StringVar(root, 'english')
-missing_values_var = tk.StringVar(root, 'structured')
-
-latent_dim_label = tk.Label(vaeFrame, text='latent dimension:')
-latent_dim_label.pack()
-for i in [32, 64, 128]:
-    tk.Radiobutton(
-        vaeFrame,
-        text=i,
-        padx=2,
-        variable=latent_dim_var,
-        value=i
-    ).pack(anchor=tk.CENTER)
-latent_dim_text = tk.Entry(vaeFrame, textvariable=latent_dim_var)
-latent_dim_text.pack()
-
-vae_empty_line_label = tk.Label(vaeFrame, text='\r')
-vae_empty_line_label.pack()
-
-epochs_label = tk.Label(vaeFrame, text='epochs:')
-epochs_label.pack()
-for i in [20, 50, 100, 200]:
-    tk.Radiobutton(
-        vaeFrame,
-        text=i,
-        padx=2,
-        variable=epochs_var,
-        value=i
-    ).pack(anchor=tk.CENTER)
-epochs_text = tk.Entry(vaeFrame, textvariable=epochs_var)
-epochs_text.pack()
-
-vae_empty_line_label = tk.Label(vaeFrame, text='\r')
-vae_empty_line_label.pack()
-
-batch_size_label = tk.Label(vaeFrame, text='batch size:')
-batch_size_label.pack()
-for value in [250, 500, 'N']:
-    tk.Radiobutton(
-        vaeFrame,
-        text=value,
-        padx=2,
-        variable=batch_size_var,
-        value=value
-    ).pack(anchor=tk.CENTER)
-batch_size_text = tk.Entry(vaeFrame, textvariable=batch_size_var)
-batch_size_text.pack()
-
-vae_empty_line_label = tk.Label(vaeFrame, text='\r')
-vae_empty_line_label.pack()
-
-learning_rate_label = tk.Label(vaeFrame, text='learning rate:')
-learning_rate_label.pack()
-learning_rate_frame = tk.Frame(vaeFrame)
-learning_rate_frame.pack()
-for value in [0.1, 0.01, 0.001]:
-    tk.Radiobutton(
-        learning_rate_frame,
-        text=value,
-        padx=2,
-        variable=learning_rate_var,
-        value=value
-    ).pack(anchor=tk.CENTER)
-learning_rate_text = tk.Entry(vaeFrame, textvariable=learning_rate_var)
-learning_rate_text.pack()
-
-# 3. kNNFrame Widgets #
-k_label = tk.Label(kNNFrame, text='K:')
-k_label.pack()
-for value in [1, 3, 10, 100]:
-    tk.Radiobutton(
-        kNNFrame,
-        text=value,
-        padx=2,
-        variable=K_var,
-        value=value
-    ).pack(anchor=tk.CENTER)
-k_text = tk.Entry(kNNFrame, textvariable=K_var)
-k_text.pack()
-
-vae_empty_line_label = tk.Label(vaeFrame, text='\r')
-vae_empty_line_label.pack()
-
-knn_empty_line_label = tk.Label(kNNFrame, text='\r')
-knn_empty_line_label.pack()
-
-# 4. mnistDatasetFrame Widgets #
-mnist_label = tk.Label(mnistDatasetFrame, text='Digits or Fashion:')
-mnist_label.pack()
-for value in ['digits', 'fashion']:
-    tk.Radiobutton(
-        mnistDatasetFrame,
-        text=value,
-        padx=2,
-        variable=digitsOrFashionMNIST_var,
-        value=value.lower()
-    ).pack(anchor=tk.CENTER)
-
-# 5. cifarDatasetFrame Widgets #
-cifar_label = tk.Label(cifarDatasetFrame, text='Grayscale or RGB:')
-cifar_label.pack()
-for value in ['grayscale', 'RGB']:
-    tk.Radiobutton(
-        cifarDatasetFrame,
-        text=value,
-        padx=2,
-        variable=RGBOrGrayscaleCIFAR_var,
-        value=value.lower()
-    ).pack(anchor=tk.CENTER)
-
-# 6. omniglotDatasetFrame Widgets #
-omniglot_label = tk.Label(omniglotDatasetFrame, text='Language:')
-omniglot_label.pack()
-for value in ['English', 'Greek']:
-    tk.Radiobutton(
-        omniglotDatasetFrame,
-        text=value,
-        padx=2,
-        variable=omniglotLanguage_var,
-        value=value.lower()
-    ).pack(anchor=tk.CENTER)
-
-# 7. missing values Widgets #
-missing_values_label = tk.Label(missingValuesFrame, text='missing values construction:')
-missing_values_label.pack()
-for value in ['structured', 'random']:
-    tk.Radiobutton(
-        missingValuesFrame,
-        text=value,
-        padx=2,
-        variable=missing_values_var,
-        value=value.lower()
-    ).pack(anchor=tk.CENTER)
-empty_line_label = tk.Label(missingValuesFrame, text='\r')
-empty_line_label.pack()
-
-# Status Bar #
-
-status = tk.Label(runFrame, bd=1, relief=tk.SUNKEN, anchor=tk.S)
-status.pack(side=tk.BOTTOM, fill=tk.X)
-
-# Menus #
-
-menu = tk.Menu(root)
-root.config(menu=menu)
-
-algorithmsMenu = tk.Menu(menu, tearoff=False)
-menu.add_cascade(label='Algorithms', menu=algorithmsMenu)  # adds drop-down menu
-for name in algorithms:
-    description = algorithms[name]
-    if name == 'VAEsMissingValuesInTensorFlow':
-        algorithmsMenu.add_separator()
-    if 'knn' in name.lower():
-        algorithmsMenu.add_radiobutton(
-            label=description,
-            variable=python_script_folder,
-            value=name,
-            command=check_algorithm_and_show_knn_frame
-        )
-    else:
-        algorithmsMenu.add_radiobutton(
-            label=description,
-            variable=python_script_folder,
-            value=name,
-            command=check_algorithm_and_show_vae_frame
-        )
-
-datasetsMenu = tk.Menu(menu, tearoff=False)
-menu.add_cascade(label='Datasets', menu=datasetsMenu)  # adds drop-down menu
-for name in datasets:
-    description = datasets[name]
-    if name != 'movielens':
-        datasetsMenu.add_radiobutton(
-            label=description,
-            variable=python_script_file,
-            value=name,
-            command=check_dataset
-        )
-    else:
-        # Leave 'MovieLens' dataset disabled initially.
-        datasetsMenu.add_radiobutton(
-            label=description,
-            variable=python_script_file,
-            value=name,
-            command=check_dataset,
-            state='disabled'
-        )
-
-aboutMenu = tk.Menu(menu, tearoff=False)
-menu.add_cascade(label='About', menu=aboutMenu)  # adds drop-down menu
-aboutMenu.add_command(label='About', command=about_window)
-aboutMenu.add_command(label='Datasets Details', command=datasets_details_window)
-aboutMenu.add_command(label="Exit", command=root.quit)
-
-runButton = tk.Button(
-    runFrame,
-    text='Run',
-    fg='#340DFD',
-    bg='#5BFFAC',
-    height=2,
-    width=6,
-    command=lambda: run(variables)
-)
-runButton.pack(side=tk.BOTTOM)
-
-#####
-
 if __name__ == '__main__':
+
+    # Frames #
+    welcomeFrame = tk.Frame(root)
+    vaeFrame = tk.Frame(root)
+    kNNFrame = tk.Frame(root)
+
+    mnistDatasetFrame = tk.Frame(root)
+    cifarDatasetFrame = tk.Frame(root)
+    omniglotDatasetFrame = tk.Frame(root)
+    missingValuesFrame = tk.Frame(root)
+
+    runFrame = tk.Frame(root)
+
+    # Widgets #
+
+    # 1. welcomeFrame Widgets #
+    empty_line_label = tk.Label(welcomeFrame, text='\n')
+    empty_line_label.pack()
+
+    aueb_logo = tk.PhotoImage(file=icons_path + 'aueb_logo.png')
+    image_label = tk.Label(welcomeFrame, image=aueb_logo, anchor=tk.CENTER)
+    image_label.pack()
+
+    welcome_label = tk.Label(welcomeFrame, text='Welcome to the Variational autoencoders graphical user interface.')
+    welcome_label.pack()
+    instructions_label = tk.Label(
+        welcomeFrame,
+        text='Please select an algorithm and a dataset from the dropdown menus at the top.'
+    )
+    instructions_label.pack()
+
+    # show welcomeFrame
+    welcomeFrame.pack()
+
+    # 2. vaeFrame Widgets #
+    # Tkinter variables
+    latent_dim_var = tk.StringVar(root, '64')
+    epochs_var = tk.StringVar(root, '100')
+    learning_rate_var = tk.StringVar(root, '0.01')
+    batch_size_var = tk.StringVar(root, '250')
+    K_var = tk.StringVar(root, '10')
+
+    digits_or_fashion_mnist_var = tk.StringVar(root, 'digits')
+    rgb_or_grayscale_cifar_var = tk.StringVar(root, 'grayscale')
+    omniglotLanguage_var = tk.StringVar(root, 'english')
+    missing_values_var = tk.StringVar(root, 'structured')
+
+    latent_dim_label = tk.Label(vaeFrame, text='latent dimension:')
+    latent_dim_label.pack()
+    for i in [32, 64, 128]:
+        tk.Radiobutton(
+            vaeFrame,
+            text=i,
+            padx=2,
+            variable=latent_dim_var,
+            value=i
+        ).pack(anchor=tk.CENTER)
+    latent_dim_text = tk.Entry(vaeFrame, textvariable=latent_dim_var)
+    latent_dim_text.pack()
+
+    vae_empty_line_label = tk.Label(vaeFrame, text='\r')
+    vae_empty_line_label.pack()
+
+    epochs_label = tk.Label(vaeFrame, text='epochs:')
+    epochs_label.pack()
+    for i in [20, 50, 100, 200]:
+        tk.Radiobutton(
+            vaeFrame,
+            text=i,
+            padx=2,
+            variable=epochs_var,
+            value=i
+        ).pack(anchor=tk.CENTER)
+    epochs_text = tk.Entry(vaeFrame, textvariable=epochs_var)
+    epochs_text.pack()
+
+    vae_empty_line_label = tk.Label(vaeFrame, text='\r')
+    vae_empty_line_label.pack()
+
+    batch_size_label = tk.Label(vaeFrame, text='batch size:')
+    batch_size_label.pack()
+    for value in [250, 500, 'N']:
+        tk.Radiobutton(
+            vaeFrame,
+            text=value,
+            padx=2,
+            variable=batch_size_var,
+            value=value
+        ).pack(anchor=tk.CENTER)
+    batch_size_text = tk.Entry(vaeFrame, textvariable=batch_size_var)
+    batch_size_text.pack()
+
+    vae_empty_line_label = tk.Label(vaeFrame, text='\r')
+    vae_empty_line_label.pack()
+
+    learning_rate_label = tk.Label(vaeFrame, text='learning rate:')
+    learning_rate_label.pack()
+    learning_rate_frame = tk.Frame(vaeFrame)
+    learning_rate_frame.pack()
+    for value in [0.1, 0.01, 0.001]:
+        tk.Radiobutton(
+            learning_rate_frame,
+            text=value,
+            padx=2,
+            variable=learning_rate_var,
+            value=value
+        ).pack(anchor=tk.CENTER)
+    learning_rate_text = tk.Entry(vaeFrame, textvariable=learning_rate_var)
+    learning_rate_text.pack()
+
+    # 3. kNNFrame Widgets #
+    k_label = tk.Label(kNNFrame, text='K:')
+    k_label.pack()
+    for value in [1, 3, 10, 100]:
+        tk.Radiobutton(
+            kNNFrame,
+            text=value,
+            padx=2,
+            variable=K_var,
+            value=value
+        ).pack(anchor=tk.CENTER)
+    k_text = tk.Entry(kNNFrame, textvariable=K_var)
+    k_text.pack()
+
+    vae_empty_line_label = tk.Label(vaeFrame, text='\r')
+    vae_empty_line_label.pack()
+
+    knn_empty_line_label = tk.Label(kNNFrame, text='\r')
+    knn_empty_line_label.pack()
+
+    # 4. mnistDatasetFrame Widgets #
+    mnist_label = tk.Label(mnistDatasetFrame, text='Digits or Fashion:')
+    mnist_label.pack()
+    for value in ['digits', 'fashion']:
+        tk.Radiobutton(
+            mnistDatasetFrame,
+            text=value,
+            padx=2,
+            variable=digits_or_fashion_mnist_var,
+            value=value.lower()
+        ).pack(anchor=tk.CENTER)
+
+    # 5. cifarDatasetFrame Widgets #
+    cifar_label = tk.Label(cifarDatasetFrame, text='Grayscale or RGB:')
+    cifar_label.pack()
+    for value in ['grayscale', 'RGB']:
+        tk.Radiobutton(
+            cifarDatasetFrame,
+            text=value,
+            padx=2,
+            variable=rgb_or_grayscale_cifar_var,
+            value=value.lower()
+        ).pack(anchor=tk.CENTER)
+
+    # 6. omniglotDatasetFrame Widgets #
+    omniglot_label = tk.Label(omniglotDatasetFrame, text='Language:')
+    omniglot_label.pack()
+    for value in ['English', 'Greek']:
+        tk.Radiobutton(
+            omniglotDatasetFrame,
+            text=value,
+            padx=2,
+            variable=omniglotLanguage_var,
+            value=value.lower()
+        ).pack(anchor=tk.CENTER)
+
+    # 7. missing values Widgets #
+    missing_values_label = tk.Label(missingValuesFrame, text='missing values construction:')
+    missing_values_label.pack()
+    for value in ['structured', 'random']:
+        tk.Radiobutton(
+            missingValuesFrame,
+            text=value,
+            padx=2,
+            variable=missing_values_var,
+            value=value.lower()
+        ).pack(anchor=tk.CENTER)
+    empty_line_label = tk.Label(missingValuesFrame, text='\r')
+    empty_line_label.pack()
+
+    # Status Bar #
+
+    status = tk.Label(runFrame, bd=1, relief=tk.SUNKEN, anchor=tk.S)
+    status.pack(side=tk.BOTTOM, fill=tk.X)
+
+    # Menus #
+
+    menu = tk.Menu(root)
+    root.config(menu=menu)
+
+    algorithmsMenu = tk.Menu(menu, tearoff=False)
+    menu.add_cascade(label='Algorithms', menu=algorithmsMenu)  # adds drop-down menu
+    for name in algorithms:
+        description = algorithms[name]
+        if name == 'VAEsMissingValuesInTensorFlow':
+            algorithmsMenu.add_separator()
+        if 'knn' in name.lower():
+            algorithmsMenu.add_radiobutton(
+                label=description,
+                variable=python_script_folder,
+                value=name,
+                command=check_algorithm_and_show_knn_frame
+            )
+        else:
+            algorithmsMenu.add_radiobutton(
+                label=description,
+                variable=python_script_folder,
+                value=name,
+                command=check_algorithm_and_show_vae_frame
+            )
+
+    datasetsMenu = tk.Menu(menu, tearoff=False)
+    menu.add_cascade(label='Datasets', menu=datasetsMenu)  # adds drop-down menu
+    for name in datasets:
+        description = datasets[name]
+        if name != 'movielens':
+            datasetsMenu.add_radiobutton(
+                label=description,
+                variable=python_script_file,
+                value=name,
+                command=check_dataset
+            )
+        else:
+            # Leave 'MovieLens' dataset disabled initially.
+            datasetsMenu.add_radiobutton(
+                label=description,
+                variable=python_script_file,
+                value=name,
+                command=check_dataset,
+                state='disabled'
+            )
+
+    aboutMenu = tk.Menu(menu, tearoff=False)
+    menu.add_cascade(label='About', menu=aboutMenu)  # adds drop-down menu
+    aboutMenu.add_command(label='About', command=about_window)
+    aboutMenu.add_command(label='Datasets Details', command=datasets_details_window)
+    aboutMenu.add_command(label='Exit', command=root.quit)
+
+    runButton = tk.Button(
+        runFrame,
+        text='Run',
+        fg='#340DFD',
+        bg='#5BFFAC',
+        height=2,
+        width=6,
+        command=lambda: run(variables)
+    )
+    runButton.pack(side=tk.BOTTOM)
+
     center(root)
     root.mainloop()

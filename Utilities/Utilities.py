@@ -9,7 +9,8 @@ def reduce_data(X, num_examples, reduced_num_examples, y=None, t=None):
     starting_index = int(num_examples / num_classes)
     offset = int(reduced_num_examples / num_classes)
 
-    X = np.concatenate((X[:offset, :], X[starting_index: starting_index + offset, :],
+    X = np.concatenate((X[:offset, :],
+                        X[starting_index: starting_index + offset, :],
                         X[starting_index * 2: starting_index * 2 + offset, :],
                         X[starting_index * 3: starting_index * 3 + offset, :],
                         X[starting_index * 4: starting_index * 4 + offset, :],
@@ -20,7 +21,8 @@ def reduce_data(X, num_examples, reduced_num_examples, y=None, t=None):
                         X[starting_index * 9: starting_index * 9 + offset, :]))
 
     if y is not None:
-        y = np.concatenate((y[:offset], y[starting_index: starting_index + offset],
+        y = np.concatenate((y[:offset],
+                            y[starting_index: starting_index + offset],
                             y[starting_index * 2: starting_index * 2 + offset],
                             y[starting_index * 3: starting_index * 3 + offset],
                             y[starting_index * 4: starting_index * 4 + offset],
@@ -31,7 +33,8 @@ def reduce_data(X, num_examples, reduced_num_examples, y=None, t=None):
                             y[starting_index * 9: starting_index * 9 + offset]))
 
     if t is not None:
-        t = np.concatenate((t[:offset, :], t[starting_index: starting_index + offset, :],
+        t = np.concatenate((t[:offset, :],
+                            t[starting_index: starting_index + offset, :],
                             t[starting_index * 2: starting_index * 2 + offset, :],
                             t[starting_index * 3: starting_index * 3 + offset, :],
                             t[starting_index * 4: starting_index * 4 + offset, :],
@@ -206,11 +209,11 @@ def construct_missing_data(X, y=None, missing_value=0.5, structured_or_random='s
     return X_missing, X, y
 
 
-def non_missing_percentage(X, missing_value=0.5):
+def get_non_missing_percentage(X, missing_value=0.5):
     return np.where(X != missing_value)[0].size / np.size(X) * 100
 
 
-def non_zero_percentage(X):
+def get_non_zero_percentage(X):
     return np.count_nonzero(X) / np.size(X) * 100
 
 

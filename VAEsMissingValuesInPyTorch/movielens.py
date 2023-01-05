@@ -1,27 +1,21 @@
-import inspect
 import os
-import sys
 import time
 
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-parent_dir = os.path.dirname(current_dir)
-sys.path.append(parent_dir)
-from __init__ import *
-
+from Utilities.Utilities import get_non_zero_percentage, rmse, mae
+from Utilities.get_movielens_dataset import get_movielens_dataset
+from Utilities.initialize_weights_in_pytorch import initialize_weights
+from Utilities.plot_dataset_samples import plot_movielens_data
+from Utilities.vae_in_pytorch import train
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # hide tensorflow warnings
 
-missing_value = 0
 
-#####
-
-# MAIN #
-
-if __name__ == '__main__':
+def movielens(latent_dim=64, epochs=100, batch_size=250, learning_rate=0.01):
+    missing_value = 0
 
     movielens_dataset_dir = '../MovieLens_dataset/ml-100k'
     output_data_dir = './movielens_output_data/VAEsMissingValuesInPyTorch/'
@@ -29,7 +23,7 @@ if __name__ == '__main__':
     if not os.path.exists(output_data_dir):
         os.mkdir(output_data_dir)
 
-    _, _, X_merged = get_movielens_dataset.get_movielens_data(movielens_dataset_dir)
+    _, _, X_merged = get_movielens_dataset(movielens_dataset_dir)
 
     no_users = X_merged.shape[0]
     no_movies = X_merged.shape[1]
@@ -39,8 +33,12 @@ if __name__ == '__main__':
 
     X_df = pd.DataFrame(X_merged)
     X_df = X_df.replace(to_replace=0.0, value='---')
-    X_df.to_csv(path_or_buf=output_data_dir + '/users_movies_ratings_missing_values.csv',
-                sep='\t', index=None, header=None)
+    X_df.to_csv(
+        path_or_buf=output_data_dir + '/users_movies_ratings_missing_values.csv',
+        sep='\t',
+        index=False,
+        header=False
+    )
 
     print('')
 
@@ -52,23 +50,23 @@ if __name__ == '__main__':
     # M2: number of neurons in the decoder
     hidden_encoder_dim = 400  # M1
     hidden_decoder_dim = hidden_encoder_dim  # M2
-    latent_dim = int(sys.argv[1])  # Z_dim
-    epochs = int(sys.argv[2])
-    batch_size = sys.argv[3]
+    # latent_dim = Z_dim
     if batch_size == 'N':
         batch_size = N
     else:
         batch_size = int(batch_size)
-    learning_rate = float(sys.argv[4])
 
     #####
 
-    params, solver = initialize_weights_in_pytorch.initialize_weights(input_dim, hidden_encoder_dim,
-                                                                      hidden_decoder_dim, latent_dim, lr=learning_rate)
+    params, solver = initialize_weights(
+        input_dim,
+        hidden_encoder_dim,
+        hidden_decoder_dim,
+        latent_dim,
+        lr=learning_rate
+    )
 
-    cur_samples = None
     cur_elbo = None
-    masked_batch_data = None
 
     # X_train_masked: array with 0s where the pixels are missing
     # and 1s where the pixels are not missing
@@ -76,7 +74,7 @@ if __name__ == '__main__':
     X_merged_masked[np.where(X_merged_masked != missing_value)] = 1
     X_merged_masked[np.where(X_merged_masked == missing_value)] = 0
 
-    non_zero_percentage = Utilities.non_zero_percentage(X_merged_masked)
+    non_zero_percentage = get_non_zero_percentage(X_merged_masked)
     print('non missing values percentage: ' + str(non_zero_percentage) + ' %')
 
     X_filled = np.array(X_merged)
@@ -92,7 +90,7 @@ if __name__ == '__main__':
 
             batch_data = X_filled[start_index:end_index, :]
 
-            cur_samples, cur_elbo = vae_in_pytorch.train(batch_data, batch_size, latent_dim, params, solver)
+            cur_samples, cur_elbo = train(batch_data, batch_size, latent_dim, params, solver)
 
             masked_batch_data = X_merged_masked[start_index:end_index, :]
             cur_samples = np.multiply(masked_batch_data, batch_data) + np.multiply(1 - masked_batch_data, cur_samples)
@@ -106,18 +104,22 @@ if __name__ == '__main__':
 
     X_filled[np.where(X_filled == missing_value)] = 1
 
-    error1 = Utilities.rmse(X_merged, X_filled)
+    error1 = rmse(X_merged, X_filled)
     print('root mean squared error: ' + str(error1))
 
-    error2 = Utilities.mae(X_merged, X_filled)
+    error2 = mae(X_merged, X_filled)
     print('mean absolute error: ' + str(error2))
 
     X_filled_df = pd.DataFrame(X_filled)
     X_filled_df = X_filled_df.round(1)
     # X_filled_df = X_filled_df.replace(to_replace=0.0, value='---')
-    X_filled_df.to_csv(path_or_buf=output_data_dir + '/users_movies_ratings_predicted_values.csv',
-                       sep='\t', index=None, header=None)
+    X_filled_df.to_csv(
+        path_or_buf=output_data_dir + '/users_movies_ratings_predicted_values.csv',
+        sep='\t',
+        index=False,
+        header=False
+    )
 
-    fig = plot_dataset_samples.plot_movielens_data(X_filled)
+    fig = plot_movielens_data(X_filled)
     fig.savefig(output_data_dir + '/average_movies_ratings.png', bbox_inches='tight')
     plt.close()

@@ -1,6 +1,4 @@
-import inspect
 import os
-import sys
 import time
 
 import matplotlib.pyplot as plt
@@ -8,27 +6,24 @@ import numpy as np
 import tensorflow as tf
 from keras.datasets.mnist import load_data
 
-current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-parent_dir = os.path.dirname(current_dir)
-sys.path.append(parent_dir)
-from __init__ import *
-
+from Utilities.Utilities import reduce_data, construct_missing_data, get_non_zero_percentage, rmse, mae
+from Utilities.plot_dataset_samples import plot_mnist_or_omniglot_data
+from Utilities.vae_in_tensorflow import vae
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # hide tensorflow warnings
 
-missing_value = 0.5
 
-#####
+def mnist(
+        latent_dim=64,
+        epochs=100,
+        batch_size=250,
+        learning_rate=0.01,
+        structured_or_random='structured',
+        digits_or_fashion='digits'
+):
+    missing_value = 0.5
 
-# MAIN #
-
-if __name__ == '__main__':
-
-    digitsOrFashion = sys.argv[6]
-    # digitsOrFashion = 'digits'
-    # digitsOrFashion = 'fashion'
-
-    if digitsOrFashion == 'digits':
+    if digits_or_fashion == 'digits':
         output_images_dir = './output_images/VAEsMissingValuesInTensorFlow/mnist'
         log_dir = './tensorflow_logs/mnist_vae_missing_values'
         save_dir = './save/mnist_vae_missing_values'
@@ -40,10 +35,10 @@ if __name__ == '__main__':
         mnist_dataset_dir = '../FASHION_MNIST_dataset'
 
     if not os.path.exists(output_images_dir):
-            os.makedirs(output_images_dir)
+        os.makedirs(output_images_dir)
 
     if not os.path.exists(save_dir):
-            os.makedirs(save_dir)
+        os.makedirs(save_dir)
 
     mnist = load_data(mnist_dataset_dir)
 
@@ -54,14 +49,11 @@ if __name__ == '__main__':
     #####
 
     # Reduce data to avoid memory error.
-    X_train, y_train, _ = Utilities.reduce_data(X_train, X_train.shape[0], 30000, y=y_train)
+    X_train, y_train, _ = reduce_data(X_train, X_train.shape[0], 30000, y=y_train)
 
     # construct data with missing values
-    X_train_missing, X_train, y_train = Utilities.construct_missing_data(
-        X_train,
-        y_train,
-        structured_or_random=sys.argv[5]
-    )
+    X_train_missing, X_train, y_train = construct_missing_data(X_train, y_train,
+                                                               structured_or_random=structured_or_random)
 
     print('')
 
@@ -73,18 +65,15 @@ if __name__ == '__main__':
     # M2: number of neurons in the decoder
     hidden_encoder_dim = 400  # M1
     hidden_decoder_dim = hidden_encoder_dim  # M2
-    latent_dim = int(sys.argv[1])  # Z_dim
-    epochs = int(sys.argv[2])
-    batch_size = sys.argv[3]
+    # latent_dim = Z_dim
     if batch_size == 'N':
         batch_size = N
     else:
         batch_size = int(batch_size)
-    learning_rate = float(sys.argv[4])
 
     #####
 
-    x, loss_summ, apply_updates, summary_op, saver, elbo, x_recon_samples = vae_in_tensorflow.vae(
+    x, loss_summ, apply_updates, summary_op, saver, elbo, x_recon_samples = vae(
         batch_size,
         input_dim,
         hidden_encoder_dim,
@@ -106,7 +95,7 @@ if __name__ == '__main__':
     X_train_masked[np.where(X_train_masked != missing_value)] = 1
     X_train_masked[np.where(X_train_masked == missing_value)] = 0
 
-    non_zero_percentage = Utilities.non_zero_percentage(X_train_masked)
+    non_zero_percentage = get_non_zero_percentage(X_train_masked)
     print('non missing values percentage: ' + str(non_zero_percentage) + ' %')
 
     X_filled = np.array(X_train_missing)
@@ -134,10 +123,13 @@ if __name__ == '__main__':
 
                 feed_dict = {x: batch_data}
                 loss_str, _, summary_str, cur_elbo, cur_samples = sess.run(
-                    [loss_summ, apply_updates, summary_op, elbo, x_recon_samples], feed_dict=feed_dict)
+                    [loss_summ, apply_updates, summary_op, elbo, x_recon_samples],
+                    feed_dict=feed_dict
+                )
 
                 masked_batch_data = X_train_masked[start_index:end_index, :]
-                cur_samples = np.multiply(masked_batch_data, batch_data) + np.multiply(1 - masked_batch_data, cur_samples)
+                cur_samples = np.multiply(masked_batch_data, batch_data) + \
+                              np.multiply(1 - masked_batch_data, cur_samples)
                 X_filled[start_index:end_index, :] = cur_samples
 
                 summary_writer.add_summary(loss_str, epoch)
@@ -146,38 +138,51 @@ if __name__ == '__main__':
             print('Epoch {0} | Loss (ELBO): {1}'.format(epoch, cur_elbo))
 
             if epoch == 1:
-
-                fig = plot_dataset_samples.plot_mnist_or_omniglot_data(X_train[start_index:end_index, :], batch_labels, title='Original Data')
+                fig = plot_mnist_or_omniglot_data(
+                    X_train[start_index:end_index, :],
+                    batch_labels,
+                    title='Original Data'
+                )
                 fig.savefig(output_images_dir + '/original_data.png', bbox_inches='tight')
                 plt.close()
 
-                fig = plot_dataset_samples.plot_mnist_or_omniglot_data(X_train_missing[start_index:end_index, :], batch_labels, title='Original Data')
+                fig = plot_mnist_or_omniglot_data(
+                    X_train_missing[start_index:end_index, :],
+                    batch_labels,
+                    title='Original Data'
+                )
                 fig.savefig(output_images_dir + '/missing_data.png', bbox_inches='tight')
                 plt.close()
 
-                fig = plot_dataset_samples.plot_mnist_or_omniglot_data(masked_batch_data, batch_labels, title='Masked Data')
+                fig = plot_mnist_or_omniglot_data(
+                    masked_batch_data,
+                    batch_labels,
+                    title='Masked Data'
+                )
                 fig.savefig(output_images_dir + '/masked_data.png', bbox_inches='tight')
                 plt.close()
 
             if epoch % 10 == 0 or epoch == 1:
-
-                fig = plot_dataset_samples.plot_mnist_or_omniglot_data(cur_samples, batch_labels, title='Epoch {}'.format(str(epoch).zfill(3)))
+                fig = plot_mnist_or_omniglot_data(
+                    cur_samples,
+                    batch_labels,
+                    title='Epoch {}'.format(str(epoch).zfill(3))
+                )
                 fig.savefig(output_images_dir + '/epoch_{}.png'.format(str(epoch).zfill(3)), bbox_inches='tight')
                 plt.close()
 
             if epoch == int(epochs / 2):
-                save_path = saver.save(sess, save_dir + '/model.ckpt')
+                saver.save(sess, save_dir + '/model.ckpt')
     elapsed_time = time.time() - start_time
 
     print('training time: ' + str(elapsed_time))
     print('')
 
-    error1 = Utilities.rmse(X_train, X_filled)
+    error1 = rmse(X_train, X_filled)
     print('root mean squared error: ' + str(error1))
 
-    error2 = Utilities.mae(X_train, X_filled)
+    error2 = mae(X_train, X_filled)
     print('mean absolute error: ' + str(error2))
-
 
     # TENSORBOARD
     # Open a console and run 'tensorboard --logdir=./tensorflow_logs/mnist_vae_missing_values'.

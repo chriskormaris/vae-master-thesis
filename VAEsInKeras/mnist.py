@@ -1,6 +1,4 @@
-import inspect
 import os
-import sys
 import time
 
 import matplotlib.pyplot as plt
@@ -8,31 +6,23 @@ import numpy as np
 from keras.callbacks import TensorBoard
 from keras.datasets.mnist import load_data
 
-current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-parent_dir = os.path.dirname(current_dir)
-sys.path.append(parent_dir)
-from __init__ import *
+from Utilities.Utilities import rmse, mae
+from Utilities.vae_in_keras import vae
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # hide tensorflow warnings
 
-input_dim = 784
-latent_dim = int(sys.argv[1])
 
-digitsOrFashion = sys.argv[4]
-# digitsOrFashion = 'digits'
-# digitsOrFashion = 'fashion'
+def mnist(latent_dim=64, epochs=100, batch_size=250, digits_or_fashion='digits'):
+    input_dim = 784
 
-if digitsOrFashion == 'digits':
-    mnist_dataset_dir = '../MNIST_dataset'
-    log_dir = './keras_logs/mnist'
-else:
-    mnist_dataset_dir = '../FASHION_MNIST_dataset'
-    log_dir = './keras_logs/fashion_mnist'
+    if digits_or_fashion == 'digits':
+        mnist_dataset_dir = '../MNIST_dataset'
+        log_dir = './keras_logs/mnist'
+    else:
+        mnist_dataset_dir = '../FASHION_MNIST_dataset'
+        log_dir = './keras_logs/fashion_mnist'
 
-
-if __name__ == '__main__':
-
-    encoder, decoder, autoencoder = vae_in_keras.vae(input_dim, latent_dim)
+    encoder, decoder, autoencoder = vae(input_dim, latent_dim)
 
     # Let's prepare our input data.
     # We're using MNIST images, and we're discarding the labels
@@ -41,6 +31,7 @@ if __name__ == '__main__':
     mnist = load_data(mnist_dataset_dir)
 
     X_train = mnist[0][0]
+    y_train = mnist[0][1]
     X_test = mnist[1][0]
 
     # We will normalize all values between 0 and 1
@@ -53,8 +44,6 @@ if __name__ == '__main__':
     X_test = X_test.reshape((len(X_test), np.prod(X_test.shape[1:])))
 
     # Now let's train our autoencoder for a given number of epochs. #
-    epochs = int(sys.argv[2])
-    batch_size = sys.argv[3]
     if batch_size == 'N':
         batch_size = X_train.shape[0]
     else:
@@ -63,7 +52,7 @@ if __name__ == '__main__':
     start_time = time.time()
     autoencoder.fit(
         X_train,
-        X_train,
+        y_train,
         epochs=epochs,
         batch_size=batch_size,
         shuffle=True,
@@ -105,10 +94,10 @@ if __name__ == '__main__':
 
     print('')
 
-    error1 = Utilities.rmse(X_test, decoded_imgs)
+    error1 = rmse(X_test, decoded_imgs)
     print('root mean squared error: ' + str(error1))
 
-    error2 = Utilities.mae(X_test, decoded_imgs)
+    error2 = mae(X_test, decoded_imgs)
     print('mean absolute error: ' + str(error2))
 
     # TENSORBOARD

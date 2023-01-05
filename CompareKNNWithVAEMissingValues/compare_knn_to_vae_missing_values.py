@@ -1,7 +1,7 @@
-from Utilities import *
-import pandas as pd
 import numpy as np
+import pandas as pd
 
+from Utilities import *
 
 missing_value = 0
 
@@ -26,13 +26,17 @@ no_movies = knn_predicted_values.shape[1]
 print('number of users: ' + str(no_users))
 print('number of movies: ' + str(no_movies))
 
-knn_predicted_values_df.index = range(1, no_users+1)
-knn_predicted_values_df.columns = range(1, no_movies+1)
+knn_predicted_values_df.index = range(1, no_users + 1)
+knn_predicted_values_df.columns = range(1, no_movies + 1)
 # print(knn_predicted_values_df.head(2))
 
 # print('')
 
-vae_pytorch_predicted_values_df = pd.read_csv('users_movies_ratings_vae_pytorch_predicted_values.csv', sep='\t', header=None)
+vae_pytorch_predicted_values_df = pd.read_csv(
+    'users_movies_ratings_vae_pytorch_predicted_values.csv',
+    sep='\t',
+    header=None
+)
 vae_pytorch_predicted_values_df = vae_pytorch_predicted_values_df.replace(to_replace='---', value=1.0)
 vae_pytorch_predicted_values_df = vae_pytorch_predicted_values_df.astype(float)
 # round dataframe
@@ -100,8 +104,7 @@ print('vae in pytorch mean rating: ' + str(vae_pytorch_predicted_values[indices]
 indices = np.where(vae_tensorflow_predicted_values != missing_value)
 print('vae in tensorflow mean rating: ' + str(vae_tensorflow_predicted_values[indices].mean()))
 
-print('')
-print('')
+print('\n')
 
 print('Comparison between K-NN and VAE in TensorFlow Missing Values algorithm')
 

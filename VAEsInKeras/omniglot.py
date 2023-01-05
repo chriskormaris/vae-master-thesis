@@ -1,65 +1,67 @@
-import inspect
 import os
-import sys
 import time
 
 import matplotlib.pyplot as plt
 import numpy as np
 from keras.callbacks import TensorBoard
 
-current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-parent_dir = os.path.dirname(current_dir)
-sys.path.append(parent_dir)
-from __init__ import *
+from Utilities.Utilities import rmse, mae
+from Utilities.get_omniglot_dataset import get_omniglot_dataset
+from Utilities.vae_in_keras import vae
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # hide tensorflow warnings
 
-input_dim = 784
-latent_dim = int(sys.argv[1])
-omniglot_dataset_dir = '../OMNIGLOT_dataset'
 
-language = sys.argv[4]
+def omniglot(latent_dim=64, epochs=100, batch_size=250, language='English'):
+    input_dim = 784
+    omniglot_dataset_dir = '../OMNIGLOT_dataset'
 
-if language.lower() == 'greek':
-    log_dir = './keras_logs/omniglot_greek'
-    alphabet = 20
-else:
-    log_dir = './keras_logs/omniglot_english'
-    alphabet = 31
+    if language.lower() == 'greek':
+        log_dir = './keras_logs/omniglot_greek'
+        alphabet = 20
+    else:
+        log_dir = './keras_logs/omniglot_english'
+        alphabet = 31
 
-
-if __name__ == '__main__':
-
-    encoder, decoder, autoencoder = vae_in_keras.vae(input_dim, latent_dim)
+    encoder, decoder, autoencoder = vae(input_dim, latent_dim)
 
     # Let's prepare our input data.
     # We're using OMNIGLOT images, and we're discarding the labels
     # (since we're only interested in encoding/decoding the input images).
 
     # LOAD OMNIGLOT DATASET #
-    X_train, _ = get_omniglot_dataset.get_omniglot_dataset(omniglot_dataset_dir + '/chardata.mat',
-                                                           TrainOrTest='train', alphabet=alphabet, binarize=True)
-    X_test, _ = get_omniglot_dataset.get_omniglot_dataset(omniglot_dataset_dir + '/chardata.mat',
-                                                          TrainOrTest='test', alphabet=alphabet, binarize=True)
+    X_train, y_train = get_omniglot_dataset(
+        omniglot_dataset_dir + '/chardata.mat',
+        train_or_test='train',
+        alphabet=alphabet,
+        binarize=True
+    )
+    X_test, y_test = get_omniglot_dataset(
+        omniglot_dataset_dir + '/chardata.mat',
+        train_or_test='test',
+        alphabet=alphabet,
+        binarize=True
+    )
 
     X_merged = np.concatenate((X_train, X_test), axis=0)
+    y_merged = np.concatenate((y_train, y_test), axis=0)
 
     # Now let's train our autoencoder for a given number of epochs. #
-    epochs = int(sys.argv[2])
-    batch_size = sys.argv[3]
     if batch_size == 'N':
         batch_size = X_merged.shape[0]
     else:
         batch_size = int(batch_size)
-    print(batch_size)
 
     start_time = time.time()
-    autoencoder.fit(X_merged, X_merged,
-                    epochs=epochs,
-                    batch_size=batch_size,
-                    shuffle=True,
-                    validation_data=(X_test, X_test),
-                    callbacks=[TensorBoard(log_dir=log_dir, histogram_freq=0, write_graph=False)])
+    autoencoder.fit(
+        X_merged,
+        y_merged,
+        epochs=epochs,
+        batch_size=batch_size,
+        shuffle=True,
+        validation_data=(X_test, X_test),
+        callbacks=[TensorBoard(log_dir=log_dir, histogram_freq=0, write_graph=False)]
+    )
     elapsed_time = time.time() - start_time
 
     print('training time: ' + str(elapsed_time))
@@ -93,13 +95,12 @@ if __name__ == '__main__':
         ax.get_yaxis().set_visible(False)
     plt.show()
 
-
     print('')
 
-    error1 = Utilities.rmse(X_test, decoded_imgs)
+    error1 = rmse(X_test, decoded_imgs)
     print('root mean squared error: ' + str(error1))
 
-    error2 = Utilities.mae(X_test, decoded_imgs)
+    error2 = mae(X_test, decoded_imgs)
     print('mean absolute error: ' + str(error2))
 
     # TENSORBOARD

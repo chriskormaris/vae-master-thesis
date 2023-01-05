@@ -1,41 +1,33 @@
-import inspect
 import os
-import sys
 import time
 
 import matplotlib.pyplot as plt
 import numpy as np
 
-current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-parent_dir = os.path.dirname(current_dir)
-sys.path.append(parent_dir)
-from __init__ import *
-
+from Utilities.Utilities import construct_missing_data, get_non_zero_percentage, rmse, mae
+from Utilities.get_binarized_mnist_dataset import get_binarized_mnist_dataset, get_binarized_mnist_labels, obtain
+from Utilities.initialize_weights_in_pytorch import initialize_weights
+from Utilities.plot_dataset_samples import plot_mnist_or_omniglot_data
+from Utilities.vae_in_pytorch import train
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # hide tensorflow warnings
 
-missing_value = 0.5
 
-#####
-
-# MAIN #
-
-if __name__ == '__main__':
+def binarized_mnist(latent_dim=64, epochs=100, batch_size=250, learning_rate=0.01):
+    missing_value = 0.5
 
     output_images_dir = './output_images/VAEsMissingValuesInPyTorch/binarized_mnist'
     binarized_mnist_dataset_dir = '../Binarized_MNIST_dataset'
 
     if not os.path.exists(output_images_dir):
-            os.makedirs(output_images_dir)
+        os.makedirs(output_images_dir)
 
     if not os.path.exists(binarized_mnist_dataset_dir):
         os.makedirs(binarized_mnist_dataset_dir)
-        get_binarized_mnist_dataset.obtain(binarized_mnist_dataset_dir)
+        obtain(binarized_mnist_dataset_dir)
 
-    X_test = get_binarized_mnist_dataset.get_binarized_mnist_dataset(binarized_mnist_dataset_dir
-                                                                     + '/binarized_mnist_test.amat', 'TEST')
-    y_test = get_binarized_mnist_dataset.get_binarized_mnist_labels(binarized_mnist_dataset_dir
-                                                                    + '/binarized_mnist_test_labels.txt', 'TEST')
+    X_test = get_binarized_mnist_dataset(binarized_mnist_dataset_dir + '/binarized_mnist_test.amat', 'TEST')
+    y_test = get_binarized_mnist_labels(binarized_mnist_dataset_dir + '/binarized_mnist_test_labels.txt', 'TEST')
 
     # random shuffle the data
     np.random.seed(0)
@@ -46,7 +38,7 @@ if __name__ == '__main__':
     #####
 
     # construct data with missing values
-    X_test_missing, X_test, _ = Utilities.construct_missing_data(X_test)
+    X_test_missing, X_test, _ = construct_missing_data(X_test)
 
     #####
 
@@ -56,26 +48,27 @@ if __name__ == '__main__':
     # M2: number of neurons in the decoder
     hidden_encoder_dim = 400  # M1
     hidden_decoder_dim = hidden_encoder_dim  # M2
-    latent_dim = 64  # Z_dim
-    epochs = 100
-    batch_size = 250
-    learning_rate = 0.01
+    # latent_dim = Z_dim
+    if batch_size == 'N':
+        batch_size = N
+    else:
+        batch_size = int(batch_size)
 
     #####
 
     # plot X_test
-    fig = plot_dataset_samples.plot_mnist_or_omniglot_data(X_test, y_test, title='Original Data')
+    fig = plot_mnist_or_omniglot_data(X_test, y_test, title='Original Data')
     fig.savefig(output_images_dir + '/original_data.png', bbox_inches='tight')
     plt.close()
 
     # plot X_test_missing
-    fig = plot_dataset_samples.plot_mnist_or_omniglot_data(X_test_missing, y_test, title='Missing Data')
+    fig = plot_mnist_or_omniglot_data(X_test_missing, y_test, title='Missing Data')
     fig.savefig(output_images_dir + '/missing_data.png', bbox_inches='tight')
     plt.close()
 
     #####
 
-    params, solver = vae_in_pytorch.initialize_weights(input_dim, hidden_encoder_dim, hidden_decoder_dim, latent_dim, lr=learning_rate)
+    params, solver = initialize_weights(input_dim, hidden_encoder_dim, hidden_decoder_dim, latent_dim, lr=learning_rate)
 
     cur_samples = None
     batch_labels = None
@@ -88,7 +81,7 @@ if __name__ == '__main__':
     X_test_masked[np.where(X_test_masked != missing_value)] = 1
     X_test_masked[np.where(X_test_masked == missing_value)] = 0
 
-    non_zero_percentage = Utilities.non_zero_percentage(X_test_masked)
+    non_zero_percentage = get_non_zero_percentage(X_test_masked)
     print('non missing values percentage: ' + str(non_zero_percentage) + ' %')
 
     X_filled = np.array(X_test_missing)
@@ -114,14 +107,12 @@ if __name__ == '__main__':
         print('Epoch {0} | Loss (ELBO): {1}'.format(epoch, cur_elbo))
 
         if epoch == 1:
-
-            fig = plot_dataset_samples.plot_mnist_or_omniglot_data(masked_batch_data, batch_labels, title='Masked Data')
+            fig = plot_mnist_or_omniglot_data(masked_batch_data, batch_labels, title='Masked Data')
             fig.savefig(output_images_dir + '/masked_data.png', bbox_inches='tight')
             plt.close()
 
         if epoch % 10 == 0 or epoch == 1:
-
-            fig = plot_dataset_samples.plot_mnist_or_omniglot_data(cur_samples, batch_labels, title='Epoch {}'.format(str(epoch).zfill(3)))
+            fig = plot_mnist_or_omniglot_data(cur_samples, batch_labels, title='Epoch {}'.format(str(epoch).zfill(3)))
             fig.savefig(output_images_dir + '/epoch_{}.png'.format(str(epoch).zfill(3)), bbox_inches='tight')
             plt.close()
 
@@ -131,8 +122,8 @@ if __name__ == '__main__':
     print('training time: ' + str(elapsed_time))
     print('')
 
-    error1 = Utilities.rmse(X_test, X_filled)
+    error1 = rmse(X_test, X_filled)
     print('root mean squared error: ' + str(error1))
 
-    error2 = Utilities.mae(X_test, X_filled)
+    error2 = mae(X_test, X_filled)
     print('mean absolute error: ' + str(error2))

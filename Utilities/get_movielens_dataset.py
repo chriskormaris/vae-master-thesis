@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 
 
-def get_movielens_data(movielens_dataset_dir):
+def get_movielens_dataset(movielens_dataset_dir):
     # TRAIN data
     dataframe = pd.read_csv(movielens_dataset_dir + '/ua.base',
                             sep='\t', header=None, names=['userID', 'movieId', 'rating', 'col3'])
@@ -18,7 +18,7 @@ def get_movielens_data(movielens_dataset_dir):
 
     # TEST data
     dataframe_test = pd.read_csv(movielens_dataset_dir + '/ua.test',
-                            sep='\t', header=None, names=['userID', 'movieId', 'rating', 'col3'])
+                                 sep='\t', header=None, names=['userID', 'movieId', 'rating', 'col3'])
     dataframe_test['userID'] = dataframe_test['userID'] - 1
     dataframe_test['movieId'] = dataframe_test['movieId'] - 1
     del dataframe_test['col3']
@@ -38,4 +38,3 @@ def get_movielens_data(movielens_dataset_dir):
     X_all[dataframe_merged['userID'], dataframe_merged['movieId']] = dataframe_merged['rating'].apply(pd.to_numeric)
 
     return X_train, X_test, X_all
-

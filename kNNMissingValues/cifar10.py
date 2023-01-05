@@ -1,32 +1,21 @@
-import inspect
 import os
-import sys
 import time
 
 import matplotlib.pyplot as plt
 import numpy as np
 
-current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-parent_dir = os.path.dirname(current_dir)
-sys.path.append(parent_dir)
-from __init__ import *
+from Utilities.Utilities import reduce_data, construct_missing_data, get_non_zero_percentage, rmse, mae
+from Utilities.get_cifar10_dataset import get_cifar10_dataset
+from Utilities.kNN_matrix_completion import kNNMatrixCompletion
+from Utilities.plot_dataset_samples import plot_cifar10_data
 
 
-missing_value = 0.5
-K = int(sys.argv[1])
-
-
-###############
-
-# MAIN #
-
-if __name__ == '__main__':
+def cifar10(K=10, structured_or_random='structured', rgb_or_grayscale='grayscale'):
+    missing_value = 0.5
 
     cifar_dataset_dir = '../CIFAR_dataset/CIFAR-10'
 
-    RGBOrGrayscale = sys.argv[3]
-
-    if RGBOrGrayscale.lower() == 'grayscale':
+    if rgb_or_grayscale.lower() == 'grayscale':
         output_images_dir = './output_images/kNNMissingValues/cifar10_grayscale_cats_and_dogs'
     else:
         output_images_dir = './output_images/kNNMissingValues/cifar10_rgb_cats_and_dogs'
@@ -35,9 +24,9 @@ if __name__ == '__main__':
         os.makedirs(output_images_dir)
 
     # LOAD CIFAR-10 DATASET #
-    (X_train, y_train), (X_test, y_test) = get_cifar10_dataset.get_cifar10_dataset(cifar_dataset_dir, structured_or_random=sys.argv[2])
+    (X_train, y_train), (X_test, y_test) = get_cifar10_dataset(cifar_dataset_dir)
 
-    if RGBOrGrayscale.lower() == 'grayscale':
+    if rgb_or_grayscale.lower() == 'grayscale':
         # convert colored images from 3072 dimensions to 1024 grayscale images
         X_train = np.dot(X_train[:, :, :, :3], [0.299, 0.587, 0.114])
         X_train = np.reshape(X_train, newshape=(-1, 1024))  # X_train: N x 1024
@@ -77,37 +66,42 @@ if __name__ == '__main__':
     y_train = np.concatenate((y_train, y_test), axis=0)
 
     # reduce the number of test examples to 100
-    X_test, y_test, _ = Utilities.reduce_data(X_test, X_test.shape[0], 100, y=y_test)
+    X_test, y_test, _ = reduce_data(X_test, X_test.shape[0], 100, y=y_test)
 
     # construct data with missing values
-    X_train_missing, X_train, y_train = Utilities.construct_missing_data(X_train, y_train)
-    X_test_missing, X_test, y_test = Utilities.construct_missing_data(X_test, y_test)
+    X_train_missing, X_train, y_train = construct_missing_data(
+        X_train,
+        y_train,
+        structured_or_random=structured_or_random
+    )
+    X_test_missing, X_test, y_test = construct_missing_data(X_test, y_test, structured_or_random=structured_or_random)
 
     # plot train data
-    if RGBOrGrayscale.lower() == 'grayscale':
-        fig = plot_dataset_samples.plot_cifar10_data(X_train, y_train, categories=categories, n=50, grayscale=True)
+    if rgb_or_grayscale.lower() == 'grayscale':
+        fig = plot_cifar10_data(X_train, y_train, categories=categories, n=50, grayscale=True)
     else:
-        fig = plot_dataset_samples.plot_cifar10_data(X_train, y_train, categories=categories, n=50)
+        fig = plot_cifar10_data(X_train, y_train, categories=categories, n=50)
     fig.savefig(output_images_dir + '/Train Data.png', bbox_inches='tight')
     plt.close()
 
     # plot original data with missing values
-    if RGBOrGrayscale.lower() == 'grayscale':
-        fig = plot_dataset_samples.plot_cifar10_data(X_test_missing, y_test, categories=categories, n=50, grayscale=True)
+    if rgb_or_grayscale.lower() == 'grayscale':
+        fig = plot_cifar10_data(X_test_missing, y_test, categories=categories, n=50, grayscale=True)
     else:
-        fig = plot_dataset_samples.plot_cifar10_data(X_test_missing, y_test, categories=categories, n=50)
+        fig = plot_cifar10_data(X_test_missing, y_test, categories=categories, n=50)
     fig.savefig(output_images_dir + '/Test Data with Mixed Missing Values K=' + str(K), bbox_inches='tight')
     plt.close()
 
-    # Compute how sparse is the matrix X_train. Print the percentage of non-missing entries compared to the total entries of the matrix.
+    # Compute how sparse is the matrix X_train.
+    # Print the percentage of non-missing entries compared to the total entries of the matrix.
 
-    percentage = Utilities.non_missing_percentage(X_train_missing)
+    percentage = get_non_zero_percentage(X_train_missing)
     print('non missing values percentage in the TRAIN data: ' + str(percentage) + ' %')
-    percentage = Utilities.non_missing_percentage(X_test_missing)
+    percentage = get_non_zero_percentage(X_test_missing)
     print('non missing values percentage in the TEST data: ' + str(percentage) + ' %')
 
     # convert variables to numpy matrices
-    X_train = np.matrix(X_train)
+    # X_train = np.matrix(X_train)
     X_test_missing = np.matrix(X_test_missing)
     y_test = np.matrix(y_test).T
 
@@ -118,23 +112,29 @@ if __name__ == '__main__':
     print('')
 
     start_time = time.time()
-    #X_test_predicted = kNN.kNNMatrixCompletion(X_train_missing, X_test_missing, K, missing_value, use_softmax_weights=False)
-    X_test_predicted = kNN.kNNMatrixCompletion(X_train_missing, X_test_missing, K, missing_value)
+    # X_test_predicted = kNNMatrixCompletion(
+    #     X_train_missing,
+    #     X_test_missing,
+    #     K,
+    #     missing_value,
+    #     use_softmax_weights=False
+    # )
+    X_test_predicted = kNNMatrixCompletion(X_train_missing, X_test_missing, K, missing_value)
     elapsed_time = time.time() - start_time
 
     print('k-nn predictions calculations time: ' + str(elapsed_time))
     print('')
 
     # plot predicted test data
-    if RGBOrGrayscale.lower() == 'grayscale':
-        fig = plot_dataset_samples.plot_cifar10_data(X_test_predicted, y_test, categories=categories, n=50, grayscale=True)
+    if rgb_or_grayscale.lower() == 'grayscale':
+        fig = plot_cifar10_data(X_test_predicted, y_test, categories=categories, n=50, grayscale=True)
     else:
-        fig = plot_dataset_samples.plot_cifar10_data(X_test_predicted, y_test, categories=categories, n=50)
+        fig = plot_cifar10_data(X_test_predicted, y_test, categories=categories, n=50)
     fig.savefig(output_images_dir + '/Predicted Test Data K=' + str(K), bbox_inches='tight')
     plt.close()
 
-    error1 = Utilities.rmse(X_test, X_test_predicted)
+    error1 = rmse(X_test, X_test_predicted)
     print('root mean squared error: ' + str(error1))
 
-    error2 = Utilities.mae(X_test, X_test_predicted)
+    error2 = mae(X_test, X_test_predicted)
     print('mean absolute error: ' + str(error2))

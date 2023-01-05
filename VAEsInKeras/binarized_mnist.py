@@ -1,43 +1,36 @@
-import inspect
 import os
-import sys
 import time
 
 import matplotlib.pyplot as plt
 import numpy as np
 from keras.callbacks import TensorBoard
 
-current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-parent_dir = os.path.dirname(current_dir)
-sys.path.append(parent_dir)
-from __init__ import *
-
+from Utilities.Utilities import rmse, mae
+from Utilities.get_binarized_mnist_dataset import get_binarized_mnist_dataset, get_binarized_mnist_labels, obtain
+from Utilities.vae_in_keras import vae
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # hide tensorflow warnings
 
-input_dim = 784
-latent_dim = int(sys.argv[1])
 
-binarized_mnistset_dataset_dir = '../Binarized_MNIST_dataset'
-log_dir = './keras_logs/binarized_mnist'
+def binarized_mnist(latent_dim=64, epochs=100, batch_size=250):
+    input_dim = 784
 
+    binarized_mnist_dataset_dir = '../Binarized_MNIST_dataset'
+    log_dir = './keras_logs/binarized_mnist'
 
-if __name__ == '__main__':
-
-    encoder, decoder, autoencoder = vae_in_keras.vae(input_dim, latent_dim)
+    encoder, decoder, autoencoder = vae(input_dim, latent_dim)
 
     # Let's prepare our input data.
     # We're using MNIST digits, and we're discarding the labels
     # (since we're only interested in encoding/decoding the input images).
 
-    if not os.path.exists(binarized_mnistset_dataset_dir):
-        os.makedirs(binarized_mnistset_dataset_dir)
-        get_binarized_mnist_dataset.obtain(binarized_mnistset_dataset_dir)
+    if not os.path.exists(binarized_mnist_dataset_dir):
+        os.makedirs(binarized_mnist_dataset_dir)
+        obtain(binarized_mnist_dataset_dir)
 
-    X_train = get_binarized_mnist_dataset.get_binarized_mnist_dataset(binarized_mnistset_dataset_dir
-                                                                      + '/binarized_mnist_train.amat', 'TRAIN')
-    X_test = get_binarized_mnist_dataset.get_binarized_mnist_dataset(binarized_mnistset_dataset_dir
-                                                                     + '/binarized_mnist_test.amat', 'TEST')
+    X_train = get_binarized_mnist_dataset(binarized_mnist_dataset_dir + '/binarized_mnist_train.amat', 'TRAIN')
+    y_train = get_binarized_mnist_labels(binarized_mnist_dataset_dir + '/binarized_mnist_train_labels.txt', 'TEST')
+    X_test = get_binarized_mnist_dataset(binarized_mnist_dataset_dir + '/binarized_mnist_test.amat', 'TEST')
 
     # randomize data
     s = np.random.permutation(X_train.shape[0])
@@ -46,20 +39,21 @@ if __name__ == '__main__':
     X_test = X_test[s, :]
 
     # Now let's train our autoencoder for a given number of epochs. #
-    epochs = int(sys.argv[2])
-    batch_size = sys.argv[3]
     if batch_size == 'N':
         batch_size = X_train.shape[0]
     else:
         batch_size = int(batch_size)
 
     start_time = time.time()
-    autoencoder.fit(X_train, X_train,
-                    epochs=epochs,
-                    batch_size=batch_size,
-                    shuffle=True,
-                    validation_data=(X_test, X_test),
-                    callbacks=[TensorBoard(log_dir=log_dir, histogram_freq=0, write_graph=False)])
+    autoencoder.fit(
+        X_train,
+        y_train,
+        epochs=epochs,
+        batch_size=batch_size,
+        shuffle=True,
+        validation_data=(X_test, X_test),
+        callbacks=[TensorBoard(log_dir=log_dir, histogram_freq=0, write_graph=False)]
+    )
     elapsed_time = time.time() - start_time
 
     print('training time: ' + str(elapsed_time))
@@ -95,10 +89,10 @@ if __name__ == '__main__':
 
     print('')
 
-    error1 = Utilities.rmse(X_test, decoded_imgs)
+    error1 = rmse(X_test, decoded_imgs)
     print('root mean squared error: ' + str(error1))
 
-    error2 = Utilities.mae(X_test, decoded_imgs)
+    error2 = mae(X_test, decoded_imgs)
     print('mean absolute error: ' + str(error2))
 
     # TENSORBOARD
