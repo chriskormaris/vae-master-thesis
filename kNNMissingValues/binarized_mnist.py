@@ -4,10 +4,10 @@ import time
 import matplotlib.pyplot as plt
 import numpy as np
 
-from Utilities.Utilities import reduce_data, construct_missing_data, get_non_zero_percentage, rmse, mae
 from Utilities.get_binarized_mnist_dataset import get_binarized_mnist_dataset, get_binarized_mnist_labels, obtain
 from Utilities.kNN_matrix_completion import kNNMatrixCompletion
 from Utilities.plot_dataset_samples import plot_mnist_or_omniglot_data
+from Utilities.utils import reduce_data, construct_missing_data, get_non_zero_percentage, rmse, mae
 
 
 def binarized_mnist(K=10, structured_or_random='structured'):

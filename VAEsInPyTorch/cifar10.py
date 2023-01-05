@@ -6,11 +6,10 @@ import time
 import matplotlib.pyplot as plt
 import numpy as np
 
-from Utilities.Utilities import rmse, mae
 from Utilities.get_cifar10_dataset import get_cifar10_dataset
-from Utilities.initialize_weights_in_pytorch import initialize_weights
 from Utilities.plot_dataset_samples import plot_cifar10_data
-from Utilities.vae_in_pytorch import train
+from Utilities.utils import rmse, mae
+from Utilities.vae_in_pytorch import initialize_weights, train
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # hide tensorflow warnings
 
@@ -31,10 +30,10 @@ def cifar10(latent_dim=64, epochs=100, batch_size=250, learning_rate=0.01, rgb_o
 
     N = X_train.shape[0]
 
-    # We will normalize all values between 0 and 1
+    # We will normalize all values between 0 and 1,
     # and we will flatten the 32x32 images into vectors of size 3072.
 
-    # reduce train and test data to only two categories, the class 3 ('cat') and the class 5 ('dog')
+    # Reduce train and test data to only two categories, the class 3 ('cat') and the class 5 ('dog').
     categories = [3, 5]
 
     category = 3
@@ -54,7 +53,7 @@ def cifar10(latent_dim=64, epochs=100, batch_size=250, learning_rate=0.01, rgb_o
     X_test = np.concatenate((X_test_cats, X_test_dogs), axis=0)
     y_test = np.concatenate((y_test_cats, y_test_dogs), axis=0)
 
-    # merge train and test data together to increase the train dataset size
+    # Merge train and test data together to increase the train dataset size.
     X_train = np.concatenate((X_train, X_test), axis=0)  # X_train: N x 3072
     y_train = np.concatenate((y_train, y_test), axis=0)
 
@@ -64,11 +63,11 @@ def cifar10(latent_dim=64, epochs=100, batch_size=250, learning_rate=0.01, rgb_o
     y_train = y_train[s]
 
     if rgb_or_grayscale.lower() == 'grayscale':
-        # convert colored images from 3072 dimensions to 1024 grayscale images
+        # Convert colored images from 3072 dimensions to 1024 grayscale images.
         X_train = np.dot(X_train[:, :, :, :3], [0.299, 0.587, 0.114])
         X_train = np.reshape(X_train, newshape=(-1, 1024))  # X_train: N x 1024
     else:
-        # We will normalize all values between 0 and 1
+        # We will normalize all values between 0 and 1,
         # and we will flatten the 32x32 images into vectors of size 3072.
         X_train = X_train.reshape((len(X_train), 3072))
 

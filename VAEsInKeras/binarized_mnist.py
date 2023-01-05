@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 from keras.callbacks import TensorBoard
 
-from Utilities.Utilities import rmse, mae
 from Utilities.get_binarized_mnist_dataset import get_binarized_mnist_dataset, get_binarized_mnist_labels, obtain
+from Utilities.utils import rmse, mae
 from Utilities.vae_in_keras import vae
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # hide tensorflow warnings

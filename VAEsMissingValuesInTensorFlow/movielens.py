@@ -6,9 +6,9 @@ import numpy as np
 import pandas as pd
 import tensorflow as tf
 
-from Utilities.Utilities import get_non_zero_percentage, rmse, mae
 from Utilities.get_movielens_dataset import get_movielens_dataset
 from Utilities.plot_dataset_samples import plot_movielens_data
+from Utilities.utils import get_non_zero_percentage, rmse, mae
 from Utilities.vae_in_tensorflow import vae
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # hide tensorflow warnings

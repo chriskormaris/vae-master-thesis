@@ -4,11 +4,10 @@ import time
 import matplotlib.pyplot as plt
 import numpy as np
 
-from Utilities.Utilities import construct_missing_data, get_non_zero_percentage, rmse, mae
 from Utilities.get_binarized_mnist_dataset import get_binarized_mnist_dataset, get_binarized_mnist_labels, obtain
-from Utilities.initialize_weights_in_pytorch import initialize_weights
 from Utilities.plot_dataset_samples import plot_mnist_or_omniglot_data
-from Utilities.vae_in_pytorch import train
+from Utilities.utils import construct_missing_data, get_non_zero_percentage, rmse, mae
+from Utilities.vae_in_pytorch import initialize_weights, train
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # hide tensorflow warnings
 

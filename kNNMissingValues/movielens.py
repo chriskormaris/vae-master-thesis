@@ -5,10 +5,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-from Utilities.Utilities import get_non_zero_percentage, rmse, mae
 from Utilities.get_movielens_dataset import get_movielens_dataset
 from Utilities.kNN_matrix_completion import kNNMatrixCompletion
 from Utilities.plot_dataset_samples import plot_movielens_data
+from Utilities.utils import get_non_zero_percentage, rmse, mae
 
 
 def movielens(K=10):

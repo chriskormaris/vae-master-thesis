@@ -5,10 +5,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 from keras.datasets.mnist import load_data
 
-from Utilities.Utilities import reduce_data, construct_missing_data, get_non_zero_percentage, rmse, mae
-from Utilities.initialize_weights_in_pytorch import initialize_weights
 from Utilities.plot_dataset_samples import plot_mnist_or_omniglot_data
-from Utilities.vae_in_pytorch import train
+from Utilities.utils import reduce_data, construct_missing_data, get_non_zero_percentage, rmse, mae
+from Utilities.vae_in_pytorch import initialize_weights, train
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # hide tensorflow warnings
 

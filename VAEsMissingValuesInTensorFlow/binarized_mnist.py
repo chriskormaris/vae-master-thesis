@@ -5,9 +5,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
 
-from Utilities.Utilities import construct_missing_data, get_non_zero_percentage, rmse, mae
 from Utilities.get_binarized_mnist_dataset import get_binarized_mnist_dataset, get_binarized_mnist_labels, obtain
 from Utilities.plot_dataset_samples import plot_mnist_or_omniglot_data
+from Utilities.utils import construct_missing_data, get_non_zero_percentage, rmse, mae
 from Utilities.vae_in_tensorflow import vae
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # hide tensorflow warnings

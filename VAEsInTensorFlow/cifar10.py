@@ -7,9 +7,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
 
-from Utilities.Utilities import mae, rmse
 from Utilities.get_cifar10_dataset import get_cifar10_dataset
 from Utilities.plot_dataset_samples import plot_cifar10_data
+from Utilities.utils import mae, rmse
 from Utilities.vae_in_tensorflow import vae
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # hide tensorflow warnings

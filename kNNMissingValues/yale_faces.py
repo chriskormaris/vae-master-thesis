@@ -4,10 +4,10 @@ import time
 import matplotlib.pyplot as plt
 import numpy as np
 
-from Utilities.Utilities import construct_missing_data, get_non_zero_percentage, rmse, mae
 from Utilities.get_yale_faces_dataset import get_yale_faces_dataset
 from Utilities.kNN_matrix_completion import kNNMatrixCompletion
 from Utilities.plot_dataset_samples import plot_yale_faces
+from Utilities.utils import construct_missing_data, get_non_zero_percentage, rmse, mae
 
 
 def yale_faces(K=10, structured_or_random='structured'):

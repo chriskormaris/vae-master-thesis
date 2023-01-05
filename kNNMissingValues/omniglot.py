@@ -4,10 +4,10 @@ import time
 import matplotlib.pyplot as plt
 import numpy as np
 
-from Utilities.Utilities import construct_missing_data, get_non_zero_percentage, rmse, mae
 from Utilities.get_omniglot_dataset import get_omniglot_dataset
 from Utilities.kNN_matrix_completion import kNNMatrixCompletion
 from Utilities.plot_dataset_samples import plot_mnist_or_omniglot_data
+from Utilities.utils import construct_missing_data, get_non_zero_percentage, rmse, mae
 
 
 def omniglot(K=10, structured_or_random='structured', language='English'):

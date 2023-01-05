@@ -8,9 +8,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
 
-from Utilities.Utilities import reduce_data, construct_missing_data, get_non_zero_percentage, rmse, mae
 from Utilities.get_yale_faces_dataset import get_yale_faces_dataset
 from Utilities.plot_dataset_samples import plot_yale_faces
+from Utilities.utils import reduce_data, construct_missing_data, get_non_zero_percentage, rmse, mae
 from Utilities.vae_in_tensorflow import vae
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # hide tensorflow warnings

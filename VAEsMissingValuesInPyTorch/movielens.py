@@ -5,11 +5,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-from Utilities.Utilities import get_non_zero_percentage, rmse, mae
 from Utilities.get_movielens_dataset import get_movielens_dataset
-from Utilities.initialize_weights_in_pytorch import initialize_weights
 from Utilities.plot_dataset_samples import plot_movielens_data
-from Utilities.vae_in_pytorch import train
+from Utilities.utils import get_non_zero_percentage, rmse, mae
+from Utilities.vae_in_pytorch import initialize_weights, train
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # hide tensorflow warnings
 

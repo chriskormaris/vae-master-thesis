@@ -6,8 +6,8 @@ import numpy as np
 import tensorflow as tf
 from keras.datasets.mnist import load_data
 
-from Utilities.Utilities import reduce_data, construct_missing_data, get_non_zero_percentage, rmse, mae
 from Utilities.plot_dataset_samples import plot_mnist_or_omniglot_data
+from Utilities.utils import reduce_data, construct_missing_data, get_non_zero_percentage, rmse, mae
 from Utilities.vae_in_tensorflow import vae
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # hide tensorflow warnings

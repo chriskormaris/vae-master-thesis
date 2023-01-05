@@ -5,9 +5,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 from keras.datasets.mnist import load_data
 
-from Utilities.Utilities import reduce_data, construct_missing_data, get_non_zero_percentage, rmse, mae
 from Utilities.kNN_matrix_completion import kNNMatrixCompletion
 from Utilities.plot_dataset_samples import plot_mnist_or_omniglot_data
+from Utilities.utils import reduce_data, construct_missing_data, get_non_zero_percentage, rmse, mae
 
 
 def mnist(K=10, structured_or_random='structured', digits_or_fashion='digits'):
