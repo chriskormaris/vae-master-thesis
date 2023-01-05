@@ -1,7 +1,8 @@
+import os
+import sys
+
 import numpy as np
 import pandas as pd
-import sys
-import os
 
 if sys.version_info[0] == 2:
     from urllib import urlretrieve

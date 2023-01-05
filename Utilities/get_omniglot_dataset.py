@@ -1,5 +1,5 @@
-import scipy.io as sio
 import numpy as np
+import scipy.io as sio
 
 
 # The dataset contains 50 alphabets. Each alphabet has 60 characters.

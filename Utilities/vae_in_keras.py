@@ -1,6 +1,7 @@
+import os
+
 from keras.layers import Input, Dense
 from keras.models import Model
-import os
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # hide tensorflow warnings
 

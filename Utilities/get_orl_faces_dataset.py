@@ -1,6 +1,7 @@
-from PIL import Image
-import numpy as np
 import os
+
+import numpy as np
+from PIL import Image
 
 D = 10304  # 92 x 112
 K = 40  # number of classes
