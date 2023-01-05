@@ -10,6 +10,11 @@ Supervisor Professor: Michalis Titsias
 
 This repository was created for the purposes of my Master Thesis for the MSc in Computer Science at Athens University of Economics & Business (AUEB).
 
+## ResearchGate links ##
+You can find the `.pdf` files of my master thesis on the site of ResearchGate in two languages, English & Greek:
+- English translation: https://www.researchgate.net/publication/337000568
+- Greek translation: https://www.researchgate.net/publication/349465619
+
 
 ## Description ##
 
