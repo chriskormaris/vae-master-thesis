@@ -26,7 +26,7 @@ You can download all the datasets here:
 
 A graphical user interface (GUI) has been implemented for the project of this thesis, using Python 3 and the Tkinter library.
 
-First install all requirements:
+First, install all requirements:
 ```shell
 pip install -r requirements.txt
 ```
