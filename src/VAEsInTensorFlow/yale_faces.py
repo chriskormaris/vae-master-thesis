@@ -14,7 +14,7 @@ from src.Utilities.vae_in_tensorflow import vae
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # hide tensorflow warnings
 
 
-def yale_faces(latent_dim=64, epochs=100, batch_size=250, learning_rate=0.01):
+def yale_faces(latent_dim=64, epochs=100, batch_size='N', learning_rate=0.01):
     output_images_path = output_img_base_path + 'VAEsInTensorFlow/yale_faces'
     logdir = tensorflow_logs_path + 'yale_faces_vae'
     save_path = save_base_path + 'yale_faces_vae'
@@ -132,10 +132,10 @@ def yale_faces(latent_dim=64, epochs=100, batch_size=250, learning_rate=0.01):
     print('')
 
     error1 = rmse(X, X_recon)
-    print('root mean squared error: ' + str(error1))
+    print(f'root mean squared error: {error1}')
 
     error2 = mae(X, X_recon)
-    print('mean absolute error: ' + str(error2))
+    print(f'mean absolute error: {error2}')
 
     # TENSORBOARD
     # Open a console and run 'tensorboard --logdir=../tensorflow_logs/yale_faces_vae'.

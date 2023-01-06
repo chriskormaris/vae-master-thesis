@@ -75,10 +75,10 @@ def yale_faces(K=10, structured_or_random='structured'):
     plt.close()
 
     error1 = rmse(X, X_predicted)
-    print('root mean squared error: ' + str(error1))
+    print(f'root mean squared error: {error1}')
 
     error2 = mae(X, X_predicted)
-    print('mean absolute error: ' + str(error2))
+    print(f'mean absolute error: {error2}')
 
 
 if __name__ == '__main__':

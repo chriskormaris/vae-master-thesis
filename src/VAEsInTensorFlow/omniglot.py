@@ -16,7 +16,7 @@ from src.Utilities.vae_in_tensorflow import vae
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # hide tensorflow warnings
 
 
-def omniglot(latent_dim=64, epochs=100, batch_size=250, learning_rate=0.01, language='English'):
+def omniglot(latent_dim=64, epochs=100, batch_size='N', learning_rate=0.01, language='English'):
     if language.lower() == 'greek':
         output_images_path = output_img_base_path + 'VAEsInTensorFlow/omniglot_greek'
         logdir = 'tensorflow_logs/omniglot_greek_vae'
@@ -189,10 +189,10 @@ def omniglot(latent_dim=64, epochs=100, batch_size=250, learning_rate=0.01, lang
     print('')
 
     error1 = rmse(X_merged, X_recon)
-    print('root mean squared error: ' + str(error1))
+    print(f'root mean squared error: {error1}')
 
     error2 = mae(X_merged, X_recon)
-    print('mean absolute error: ' + str(error2))
+    print(f'mean absolute error: {error2}')
 
     # TENSORBOARD
     # Open a console and run 'tensorboard --logdir=../tensorflow_logs/omniglot_greek_vae' OR

@@ -12,7 +12,7 @@ from src.Utilities.vae_in_keras import vae
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # hide tensorflow warnings
 
 
-def yale_faces(latent_dim=64, epochs=100, batch_size=250):
+def yale_faces(latent_dim=64, epochs=100, batch_size='N'):
     input_dim = 32256
 
     encoder, decoder, autoencoder = vae(input_dim, latent_dim)
@@ -54,7 +54,7 @@ def yale_faces(latent_dim=64, epochs=100, batch_size=250):
     encoded_imgs = encoder.predict(X)
     decoded_imgs = decoder.predict(encoded_imgs)
 
-    print('encoded_imgs mean: ' + str(encoded_imgs.mean()))
+    print(f'encoded_imgs mean: {encoded_imgs.mean()}')
 
     n = 10  # how many digits we will display
     plt.figure(figsize=(20, 4))
@@ -77,10 +77,10 @@ def yale_faces(latent_dim=64, epochs=100, batch_size=250):
     print('')
 
     error1 = rmse(X, decoded_imgs)
-    print('root mean squared error: ' + str(error1))
+    print(f'root mean squared error: {error1}')
 
     error2 = mae(X, decoded_imgs)
-    print('mean absolute error: ' + str(error2))
+    print(f'mean absolute error: {error2}')
 
     # TENSORBOARD
     # Open a console and run 'tensorboard --logdir=../keras_logs/omniglot_english'.

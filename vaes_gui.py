@@ -87,7 +87,8 @@ def run(
             arguments.extend([omniglot_language_var])
 
     print('********************')
-    print('arguments: ' + str(arguments))
+    print(f'Running {algorithm}.{dataset}...')
+    print(f'arguments: {arguments}')
 
     if algorithm == 'kNNMissingValues':
         if dataset == 'binarized_mnist':
@@ -552,7 +553,7 @@ if __name__ == '__main__':
     latent_dim_var = tk.IntVar(root, 64)
     epochs_var = tk.IntVar(root, 100)
     learning_rate_var = tk.DoubleVar(root, 0.01)
-    batch_size_var = tk.IntVar(root, 250)
+    batch_size_var = tk.StringVar(root, 'N')
     K_var = tk.IntVar(root, 10)
 
     digits_or_fashion_mnist_var = tk.StringVar(root, 'digits')

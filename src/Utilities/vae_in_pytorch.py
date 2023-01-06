@@ -18,43 +18,40 @@ def xavier_init(size):
 
 
 def initialize_weights(X_dim, hidden_encoder_dim, hidden_decoder_dim, Z_dim, lr=0.01):
-    # ============================== Encoder Parameters: Thetas ============================== #
+    # ============================== Encoder Parameters: Phis ============================== #
 
     # M1 x D
-    theta1 = xavier_init(size=[hidden_encoder_dim, X_dim])
+    phi1 = xavier_init(size=[hidden_encoder_dim, X_dim])
     # 1 x M1
-    bias_theta1 = Variable(torch.zeros(hidden_encoder_dim), requires_grad=True)
+    bias_phi1 = Variable(torch.zeros(hidden_encoder_dim), requires_grad=True)
 
     # Z_dim x M1
-    theta_mu = xavier_init(size=[Z_dim, hidden_encoder_dim])
+    phi_mu = xavier_init(size=[Z_dim, hidden_encoder_dim])
     # 1 x Z_dim
-    bias_theta_mu = Variable(torch.zeros(Z_dim), requires_grad=True)
+    bias_phi_mu = Variable(torch.zeros(Z_dim), requires_grad=True)
 
     # Z_dim x M1
-    theta_logvar = xavier_init(size=[Z_dim, hidden_encoder_dim])
+    phi_logvar = xavier_init(size=[Z_dim, hidden_encoder_dim])
     # 1 x Z_dim
-    bias_theta_logvar = Variable(torch.zeros(Z_dim), requires_grad=True)
+    bias_phi_logvar = Variable(torch.zeros(Z_dim), requires_grad=True)
 
-    # ============================== Decoder Parameters: Phis ============================== #
+    # ============================== Decoder Parameters: Thetas ============================== #
 
     # M2 x Z_dim
-    phi1 = xavier_init(size=[hidden_decoder_dim, Z_dim])
+    theta1 = xavier_init(size=[hidden_decoder_dim, Z_dim])
     # 1 x M2
-    bias_phi1 = Variable(torch.zeros(hidden_decoder_dim), requires_grad=True)
+    bias_theta1 = Variable(torch.zeros(hidden_decoder_dim), requires_grad=True)
 
     # D x M2
-    phi2 = xavier_init(size=[X_dim, hidden_decoder_dim])
+    theta2 = xavier_init(size=[X_dim, hidden_decoder_dim])
     # 1 x D
-    bias_phi2 = Variable(torch.zeros(X_dim), requires_grad=True)
+    bias_theta2 = Variable(torch.zeros(X_dim), requires_grad=True)
 
     # ============================== TRAINING ==============================
 
-    thetas = [theta1, bias_theta1,
-              theta_mu, bias_theta_mu,
-              theta_logvar, bias_theta_logvar]
-    phis = [phi1, bias_phi1,
-            phi2, bias_phi2]
-    params = thetas + phis
+    phis = [phi1, bias_phi1, phi_mu, bias_phi_mu, phi_logvar, bias_phi_logvar]
+    thetas = [theta1, bias_theta1, theta2, bias_theta2]
+    params = phis + thetas
 
     solver = optim.Adam(params, lr=lr)
 
@@ -65,30 +62,30 @@ def initialize_weights(X_dim, hidden_encoder_dim, hidden_decoder_dim, Z_dim, lr=
 def train(x, mb_size, Z_dim, params, solver):
     x = Variable(torch.from_numpy(x).float())
 
-    theta1 = params[0]  # M1 x D
-    bias_theta1 = params[1]  # 1 x M1
-    theta_mu = params[2]  # Z_dim x M1
-    bias_theta_mu = params[3]  # 1 x Z_dim
-    theta_logvar = params[4]  # Z_dim x M1
-    bias_theta_logvar = params[5]  # 1 x Z_dim
-    phi1 = params[6]  # M2 x Z_dim
-    bias_phi1 = params[7]  # 1 x M2
-    phi2 = params[8]  # D x M2
-    bias_phi2 = params[9]  # 1 x D
+    phi1 = params[0]  # M1 x D
+    bias_phi1 = params[1]  # 1 x M1
+    phi_mu = params[2]  # Z_dim x M1
+    bias_phi_mu = params[3]  # 1 x Z_dim
+    phi_logvar = params[4]  # Z_dim x M1
+    bias_phi_logvar = params[5]  # 1 x Z_dim
+    theta1 = params[6]  # M2 x Z_dim
+    bias_theta1 = params[7]  # 1 x M2
+    theta2 = params[8]  # D x M2
+    bias_theta2 = params[9]  # 1 x D
 
     # ============================== Q(Z|X) = Q(Z) - Encoder NN ============================== #
 
-    # hidden_layer_encoder = nn.relu(x @ torch.transpose(theta1, 0, 1) + bias_theta1.repeat(mb_size, 1))
-    hidden_layer_encoder = nn.relu(torch.mm(x, torch.transpose(theta1, 0, 1)) +
-                                   bias_theta1.repeat(mb_size, 1))
-    # mu_encoder = hidden_layer_encoder @ torch.transpose(theta_mu, 0, 1) + \
-    #              bias_theta_mu.repeat(hidden_layer_encoder.size(0), 1)
-    mu_encoder = torch.mm(hidden_layer_encoder, torch.transpose(theta_mu, 0, 1)) + \
-                 bias_theta_mu.repeat(hidden_layer_encoder.size(0), 1)
-    # logvar_encoder = hidden_layer_encoder @ torch.transpose(theta_logvar, 0, 1) + \
-    #                  bias_theta_logvar.repeat(hidden_layer_encoder.size(0), 1)
-    logvar_encoder = torch.mm(hidden_layer_encoder, torch.transpose(theta_logvar, 0, 1)) + \
-                     bias_theta_logvar.repeat(hidden_layer_encoder.size(0), 1)
+    # hidden_layer_encoder = nn.relu(x @ torch.transpose(phi1, 0, 1) + bias_phi1.repeat(mb_size, 1))
+    hidden_layer_encoder = nn.relu(torch.mm(x, torch.transpose(phi1, 0, 1)) +
+                                   bias_phi1.repeat(mb_size, 1))
+    # mu_encoder = hidden_layer_encoder @ torch.transpose(phi_mu, 0, 1) + \
+    #              bias_phi_mu.repeat(hidden_layer_encoder.size(0), 1)
+    mu_encoder = torch.mm(hidden_layer_encoder, torch.transpose(phi_mu, 0, 1)) + \
+                 bias_phi_mu.repeat(hidden_layer_encoder.size(0), 1)
+    # logvar_encoder = hidden_layer_encoder @ torch.transpose(phi_logvar, 0, 1) + \
+    #                  bias_phi_logvar.repeat(hidden_layer_encoder.size(0), 1)
+    logvar_encoder = torch.mm(hidden_layer_encoder, torch.transpose(phi_logvar, 0, 1)) + \
+                     bias_phi_logvar.repeat(hidden_layer_encoder.size(0), 1)
 
     # Sample epsilon from the Gaussian distribution. #
     epsilon = Variable(torch.randn(mb_size, Z_dim))
@@ -99,11 +96,11 @@ def train(x, mb_size, Z_dim, params, solver):
 
     # ============================== P(X|Z) - Decoder NN ============================== #
 
-    # hidden_layer_decoder = nn.relu(z @ torch.transpose(phi1, 0, 1) + bias_phi1.repeat(z.size(0), 1))
-    hidden_layer_decoder = nn.relu(torch.mm(z, torch.transpose(phi1, 0, 1)) + bias_phi1.repeat(z.size(0), 1))
-    # x_hat = hidden_layer_decoder @ torch.transpose(phi2, 0, 1) + bias_phi2.repeat(hidden_layer_decoder.size(0), 1)
-    x_hat = torch.mm(hidden_layer_decoder, torch.transpose(phi2, 0, 1)) + \
-            bias_phi2.repeat(hidden_layer_decoder.size(0), 1)
+    # hidden_layer_decoder = nn.relu(z @ torch.transpose(theta1, 0, 1) + bias_theta1.repeat(z.size(0), 1))
+    hidden_layer_decoder = nn.relu(torch.mm(z, torch.transpose(theta1, 0, 1)) + bias_theta1.repeat(z.size(0), 1))
+    # x_hat = hidden_layer_decoder @ torch.transpose(theta2, 0, 1) + bias_theta2.repeat(hidden_layer_decoder.size(0), 1)
+    x_hat = torch.mm(hidden_layer_decoder, torch.transpose(theta2, 0, 1)) + \
+            bias_theta2.repeat(hidden_layer_decoder.size(0), 1)
     x_recon_samples = torch.sigmoid(x_hat)
 
     # Loss #

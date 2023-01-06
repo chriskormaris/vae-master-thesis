@@ -59,10 +59,10 @@ def movielens(K=10):
     X_merged_predicted[np.where(X_merged_predicted == missing_value)] = 1
 
     error1 = rmse(X_merged, X_merged_predicted)
-    print('root mean squared error: ' + str(error1))
+    print(f'root mean squared error: {error1}')
 
     error2 = mae(X_merged, X_merged_predicted)
-    print('mean absolute error: ' + str(error2))
+    print(f'mean absolute error: {error2}')
 
     X_merged_predicted_df = pd.DataFrame(X_merged_predicted)
     # X_merged_predicted_df = X_merged_predicted_df.replace(to_replace=0.0, value='---')

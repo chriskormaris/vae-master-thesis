@@ -13,7 +13,7 @@ from src.Utilities.vae_in_pytorch import initialize_weights, train
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # hide tensorflow warnings
 
 
-def binarized_mnist(latent_dim=64, epochs=100, batch_size=250, learning_rate=0.01):
+def binarized_mnist(latent_dim=64, epochs=100, batch_size='N', learning_rate=0.01):
     missing_value = 0.5
 
     output_images_path = output_img_base_path + 'VAEsMissingValuesInPyTorch/binarized_mnist'
@@ -122,10 +122,10 @@ def binarized_mnist(latent_dim=64, epochs=100, batch_size=250, learning_rate=0.0
     print('')
 
     error1 = rmse(X_test, X_filled)
-    print('root mean squared error: ' + str(error1))
+    print(f'root mean squared error: {error1}')
 
     error2 = mae(X_test, X_filled)
-    print('mean absolute error: ' + str(error2))
+    print(f'mean absolute error: {error2}')
 
 
 if __name__ == '__main__':

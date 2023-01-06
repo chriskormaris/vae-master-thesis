@@ -13,7 +13,7 @@ from src.Utilities.constants import *
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # hide tensorflow warnings
 
 
-def cifar10(latent_dim=64, epochs=100, batch_size=250, rgb_or_grayscale='rgb'):
+def cifar10(latent_dim=64, epochs=100, batch_size='N', rgb_or_grayscale='rgb'):
     if rgb_or_grayscale.lower() == 'rgb':
         input_dim = 3072
     else:
@@ -85,7 +85,7 @@ def cifar10(latent_dim=64, epochs=100, batch_size=250, rgb_or_grayscale='rgb'):
     encoded_imgs = encoder.predict(X_test)
     decoded_imgs = decoder.predict(encoded_imgs)
 
-    print('encoded_imgs mean: ' + str(encoded_imgs.mean()))
+    print(f'encoded_imgs mean: {encoded_imgs.mean()}')
 
     n = 10  # how many digits we will display
     plt.figure(figsize=(20, 4))
@@ -114,10 +114,10 @@ def cifar10(latent_dim=64, epochs=100, batch_size=250, rgb_or_grayscale='rgb'):
     print('')
 
     error1 = rmse(X_test, decoded_imgs)
-    print('root mean squared error: ' + str(error1))
+    print(f'root mean squared error: {error1}')
 
     error2 = mae(X_test, decoded_imgs)
-    print('mean absolute error: ' + str(error2))
+    print(f'mean absolute error: {error2}')
 
     # TENSORBOARD
     # Open a console and run 'tensorboard --logdir=../keras_logs/cifar10_rgb' OR

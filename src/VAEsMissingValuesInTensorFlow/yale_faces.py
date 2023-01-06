@@ -17,7 +17,7 @@ from src.Utilities.vae_in_tensorflow import vae
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # hide tensorflow warnings
 
 
-def yale_faces(latent_dim=64, epochs=100, batch_size=250, learning_rate=0.01, structured_or_random='structured'):
+def yale_faces(latent_dim=64, epochs=100, batch_size='N', learning_rate=0.01, structured_or_random='structured'):
     missing_value = 0.5
 
     output_images_path = output_img_base_path + 'VAEsMissingValuesInTensorFlow/yale_faces'
@@ -170,10 +170,10 @@ def yale_faces(latent_dim=64, epochs=100, batch_size=250, learning_rate=0.01, st
     print('')
 
     error1 = rmse(X, X_filled)
-    print('root mean squared error: ' + str(error1))
+    print(f'root mean squared error: {error1}')
 
     error2 = mae(X, X_filled)
-    print('mean absolute error: ' + str(error2))
+    print(f'mean absolute error: {error2}')
 
     # TENSORBOARD
     # Open a console and run 'tensorboard --logdir=./tensorflow_logs/faces_vae_missing_values'

@@ -55,43 +55,43 @@ def vae(batch_size, input_dim, hidden_encoder_dim, hidden_decoder_dim, latent_di
 
     # The encoder is a neural network with 2 hidden layers.
     with tf.name_scope('encoder'):
-        with tf.name_scope('Thetas'):
-            # theta1: M1 x D
-            theta1 = initialize_weight_variable([hidden_encoder_dim, input_dim], name='theta1')
+        with tf.name_scope('Phis'):
+            # phi1: M1 x D
+            phi1 = initialize_weight_variable([hidden_encoder_dim, input_dim], name='phi1')
 
-            # bias_theta1: 1 x M1
-            bias_theta1 = initialize_bias_variable([hidden_encoder_dim], name='bias_theta1')
+            # bias_phi1: 1 x M1
+            bias_phi1 = initialize_bias_variable([hidden_encoder_dim], name='bias_phi1')
 
-            # theta_mu: Z_dim x M1
-            theta_mu = initialize_weight_variable([latent_dim, hidden_encoder_dim], name='theta_mu')
+            # phi_mu: Z_dim x M1
+            phi_mu = initialize_weight_variable([latent_dim, hidden_encoder_dim], name='phi_mu')
 
-            # bias_theta_mu: 1 x Z_dim
-            bias_theta_mu = initialize_bias_variable([latent_dim], name='bias_theta_mu')
+            # bias_phi_mu: 1 x Z_dim
+            bias_phi_mu = initialize_bias_variable([latent_dim], name='bias_phi_mu')
 
-            # theta_logvar: Z_dim x M1
-            theta_logvar = initialize_weight_variable([latent_dim, hidden_encoder_dim], name='theta_logvar')
+            # phi_logvar: Z_dim x M1
+            phi_logvar = initialize_weight_variable([latent_dim, hidden_encoder_dim], name='phi_logvar')
 
-            # bias_theta_logvar: 1 X Z_dim
-            bias_theta_logvar = initialize_bias_variable([latent_dim], name='bias_theta_logvar')
+            # bias_phi_logvar: 1 X Z_dim
+            bias_phi_logvar = initialize_bias_variable([latent_dim], name='bias_phi_logvar')
 
         with tf.name_scope('hidden_layer1'):
             # Hidden layer 1 activation function of the encoder
             # hidden_layer_encoder: N x M1
             # RELU
-            hidden_layer_encoder = tf.nn.relu(tf.nn.bias_add(tf.matmul(x, tf.transpose(theta1)), bias_theta1))
+            hidden_layer_encoder = tf.nn.relu(tf.nn.bias_add(tf.matmul(x, tf.transpose(phi1)), bias_phi1))
             # SIGMOID
-            # hidden_layer_encoder = tf.nn.sigmoid(tf.nn.bias_add(tf.matmul(x, tf.transpose(theta1)), bias_theta1))
+            # hidden_layer_encoder = tf.nn.sigmoid(tf.nn.bias_add(tf.matmul(x, tf.transpose(phi1)), bias_phi1))
 
         with tf.name_scope('hidden_layer2_mu'):
             # mu_encoder: N x Z_dim
-            mu_encoder = tf.nn.bias_add(tf.matmul(hidden_layer_encoder, tf.transpose(theta_mu)), bias_theta_mu)
+            mu_encoder = tf.nn.bias_add(tf.matmul(hidden_layer_encoder, tf.transpose(phi_mu)), bias_phi_mu)
 
         with tf.name_scope('hidden_layer2_logvar'):
             # the log sigma^2 of the encoder
             # logvar_encoder: N x Z_dim
             logvar_encoder = tf.nn.bias_add(
-                tf.matmul(hidden_layer_encoder, tf.transpose(theta_logvar)),
-                bias_theta_logvar
+                tf.matmul(hidden_layer_encoder, tf.transpose(phi_logvar)),
+                bias_phi_logvar
             )
 
         with tf.name_scope('sample_E'):
@@ -110,29 +110,28 @@ def vae(batch_size, input_dim, hidden_encoder_dim, hidden_decoder_dim, latent_di
 
     # The encoder is a neural network with 2 hidden layers.
     with tf.name_scope('decoder'):
-        with tf.name_scope('Phis'):
+        with tf.name_scope('Thetas'):
             # ph1: M2 x Z_dim
             ph1 = initialize_weight_variable([hidden_decoder_dim, latent_dim], name='ph1')
-            # bias_phi1: 1 x M2
-            bias_phi1 = initialize_bias_variable([hidden_decoder_dim], name='bias_phi1')
+            # bias_theta1: 1 x M2
+            bias_theta1 = initialize_bias_variable([hidden_decoder_dim], name='bias_theta1')
 
-            # phi2: D x M2
-            phi2 = initialize_weight_variable([input_dim, hidden_decoder_dim],
-                                                                           name='phi2')
-            # bias_phi2: 1 x D
-            bias_phi2 = initialize_bias_variable([input_dim], name='bias_phi2')
+            # theta2: D x M2
+            theta2 = initialize_weight_variable([input_dim, hidden_decoder_dim], name='theta2')
+            # bias_theta2: 1 x D
+            bias_theta2 = initialize_bias_variable([input_dim], name='bias_theta2')
 
         with tf.name_scope('hidden_layer1'):
             # Hidden layer 1 activation function of the decoder
             # hidden_layer_decoder: N x M2
             # RELU
-            hidden_layer_decoder = tf.nn.relu(tf.nn.bias_add(tf.matmul(z, tf.transpose(ph1)), bias_phi1))
+            hidden_layer_decoder = tf.nn.relu(tf.nn.bias_add(tf.matmul(z, tf.transpose(ph1)), bias_theta1))
             # SIGMOID
-            #hidden_layer_decoder = tf.nn.sigmoid(tf.nn.bias_add(tf.matmul(z, tf.transpose(ph1)), bias_phi1))
+            # hidden_layer_decoder = tf.nn.sigmoid(tf.nn.bias_add(tf.matmul(z, tf.transpose(ph1)), bias_theta1))
 
         with tf.name_scope('hidden_layer2'):
             # x_hat: N x D
-            x_hat = tf.nn.bias_add(tf.matmul(hidden_layer_decoder, tf.transpose(phi2)), bias_phi2)
+            x_hat = tf.nn.bias_add(tf.matmul(hidden_layer_decoder, tf.transpose(theta2)), bias_theta2)
 
     with tf.name_scope('reconstructed_data'):
         # X_recon_samples: N x D, reconstructed data
@@ -173,9 +172,9 @@ def vae(batch_size, input_dim, hidden_encoder_dim, hidden_decoder_dim, latent_di
 
         loss_summ = tf.compat.v1.summary.scalar('ELBO', elbo)
 
-        thetas = [theta1, bias_theta1, theta_mu, bias_theta_mu, theta_logvar, bias_theta_logvar]
-        phis = [ph1, bias_phi1, phi2, bias_phi2]
-        var_list = thetas + phis
+        phis = [phi1, bias_phi1, phi_mu, bias_phi_mu, phi_logvar, bias_phi_logvar]
+        thetas = [ph1, bias_theta1, theta2, bias_theta2]
+        var_list = phis + thetas
 
         # Adam Optimizer (WORKS BEST!) #
         grads_and_vars = tf.compat.v1.train.AdamOptimizer(learning_rate=lr).compute_gradients(
@@ -188,7 +187,7 @@ def vae(batch_size, input_dim, hidden_encoder_dim, hidden_decoder_dim, latent_di
         # Gradient Descent Optimizer #
         '''
         grads_and_vars = tf.train.GradientDescentOptimizer(learning_rate=lr). \
-                         compute_gradients(loss=elbo, var_list=thetas.extend(phis))
+                         compute_gradients(loss=elbo, var_list=phis.extend(thetas))
         apply_updates = tf.train.GradientDescentOptimizer(learning_rate=lr). \
                         apply_gradients(grads_and_vars=grads_and_vars)
         '''

@@ -13,7 +13,7 @@ from src.Utilities.vae_in_keras import vae
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # hide tensorflow warnings
 
 
-def mnist(latent_dim=64, epochs=100, batch_size=250, digits_or_fashion='digits'):
+def mnist(latent_dim=64, epochs=100, batch_size='N', digits_or_fashion='digits'):
     input_dim = 784
 
     if digits_or_fashion == 'digits':
@@ -70,7 +70,7 @@ def mnist(latent_dim=64, epochs=100, batch_size=250, digits_or_fashion='digits')
     encoded_imgs = encoder.predict(X_test)
     decoded_imgs = decoder.predict(encoded_imgs)
 
-    print('encoded_imgs mean: ' + str(encoded_imgs.mean()))
+    print(f'encoded_imgs mean: {encoded_imgs.mean()}')
 
     n = 10  # how many digits we will display
     plt.figure(figsize=(20, 4))
@@ -93,10 +93,10 @@ def mnist(latent_dim=64, epochs=100, batch_size=250, digits_or_fashion='digits')
     print('')
 
     error1 = rmse(X_test, decoded_imgs)
-    print('root mean squared error: ' + str(error1))
+    print(f'root mean squared error: {error1}')
 
     error2 = mae(X_test, decoded_imgs)
-    print('mean absolute error: ' + str(error2))
+    print(f'mean absolute error: {error2}')
 
     # TENSORBOARD
     # Open a console and run 'tensorboard --logdir=../keras_logs/mnist'.

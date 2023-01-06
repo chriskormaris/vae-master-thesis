@@ -18,7 +18,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # hide tensorflow warnings
 def cifar10(
         latent_dim=64,
         epochs=100,
-        batch_size=250,
+        batch_size='N',
         learning_rate=0.01,
         structured_or_random='structured',
         rgb_or_grayscale='grayscale'
@@ -238,10 +238,10 @@ def cifar10(
     print('')
 
     error1 = rmse(X_train, X_filled)
-    print('root mean squared error: ' + str(error1))
+    print(f'root mean squared error: {error1}')
 
     error2 = mae(X_train, X_filled)
-    print('mean absolute error: ' + str(error2))
+    print(f'mean absolute error: {error2}')
 
     # TENSORBOARD
     # Open a console and run 'tensorboard --logdir=./tensorflow_logs/cifar10_rgb_vae_missing_values' OR

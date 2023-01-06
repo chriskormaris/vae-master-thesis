@@ -52,10 +52,10 @@ print('')
 print('Comparison between K-NN and VAE in PyTorch Missing Values algorithm')
 
 error1 = rmse(knn_predicted_values, vae_pytorch_predicted_values)
-print('root mean squared error: ' + str(error1))
+print(f'root mean squared error: {error1}')
 
 error2 = mae(knn_predicted_values, vae_pytorch_predicted_values)
-print('mean absolute error: ' + str(error2))
+print(f'mean absolute error: {error2}')
 
 match = np.sum(np.equal(vae_pytorch_predicted_values, knn_predicted_values)) / \
         np.size(vae_pytorch_predicted_values) * 100
@@ -89,10 +89,10 @@ print('')
 print('Comparison between VAE in PyTorch and VAE in TensorFlow Missing Values algorithm')
 
 error1 = rmse(vae_pytorch_predicted_values, vae_tensorflow_predicted_values)
-print('root mean squared error: ' + str(error1))
+print(f'root mean squared error: {error1}')
 
 error2 = mae(vae_pytorch_predicted_values, vae_tensorflow_predicted_values)
-print('mean absolute error: ' + str(error2))
+print(f'mean absolute error: {error2}')
 
 match = np.sum(np.equal(vae_pytorch_predicted_values, vae_tensorflow_predicted_values)) / \
         np.size(vae_pytorch_predicted_values) * 100
@@ -108,10 +108,10 @@ print('\n')
 print('Comparison between K-NN and VAE in TensorFlow Missing Values algorithm')
 
 error1 = rmse(knn_predicted_values, vae_tensorflow_predicted_values)
-print('root mean squared error: ' + str(error1))
+print(f'root mean squared error: {error1}')
 
 error2 = mae(knn_predicted_values, vae_tensorflow_predicted_values)
-print('mean absolute error: ' + str(error2))
+print(f'mean absolute error: {error2}')
 
 match = np.sum(np.equal(knn_predicted_values, vae_tensorflow_predicted_values)) / \
         np.size(vae_pytorch_predicted_values) * 100
