@@ -20,6 +20,8 @@ def get_cifar10_dataset(cifar_path):
         fpath = os.path.join(uncompressed_file_path, 'data_batch_' + str(i))
         if not os.path.exists(fpath):
             uncompressed = False
+        if os.path.join(uncompressed_file_path, 'test_batch'):
+            uncompressed = False
     if not uncompressed:
         if not os.path.exists(compressed_file_path):
             if not os.path.exists(cifar_path):

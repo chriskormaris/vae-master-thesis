@@ -56,7 +56,7 @@ def plot_cifar10_data(X, y, categories=list(range(10)), n=10, title='', grayscal
         if int(n * c + 1) < int(n * len(categories)):
             i = 0
             # plot the first n data of each category
-            for col in range(len(categories)):
+            for col in range(5):
                 while y[i] != category:
                     i = i + 1
                 ax = plt.subplot(10, 10, col + c * n + 1)
@@ -122,7 +122,7 @@ def plot_yale_faces(X, y, categories=list(range(1, 11)), n=10, title='', graysca
         if int(n * c + 1) < int(n * len(categories)):
             i = 0
             # plot the first n data of each category
-            for col in range(5):
+            for col in range(2):
                 while y[i] != category:
                     i = i + 1
                 ax = plt.subplot(10, 10, col + c * 10 + 1)

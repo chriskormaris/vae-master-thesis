@@ -24,6 +24,10 @@ def initialize_bias_variable(shape, name=''):
 # VARIATIONAL AUTOENCODER IMPLEMENTATION IN TENSORFLOW #
 
 def vae(batch_size, input_dim, hidden_encoder_dim, hidden_decoder_dim, latent_dim, lr=0.01):
+    # Reset the default graph
+    # IMPORTANT: WE NEED THIS to rerun the TensorFlow operation
+    tf.compat.v1.reset_default_graph()
+
     tf.compat.v1.disable_eager_execution()
     # Input placeholder
     with tf.name_scope('input_data'):
@@ -36,15 +40,15 @@ def vae(batch_size, input_dim, hidden_encoder_dim, hidden_decoder_dim, latent_di
             tf.compat.v1.summary.image('image_data', tf.reshape(x, shape=[-1, 32, 32, 1]))
         elif input_dim == 3072:  # for CIFAR-10 RGB dataset
             tf.compat.v1.summary.image('image_data', tf.reshape(x, shape=[-1, 32, 32, 3]))
-        elif input_dim == 32256:  # for 'Yale Faces' dataset
-            tf.compat.v1.summary.image(
-                'image_data',
-                tf.transpose(tf.reshape(x, shape=[-1, 192, 168, 1]), perm=[0, 2, 1, 3])
-            )
-        elif input_dim == 10304:  # for 'ORL Faces' dataset
+        elif input_dim == 10304:  # for ORL Faces dataset
             tf.compat.v1.summary.image(
                 'image_data',
                 tf.transpose(tf.reshape(x, shape=[-1, 92, 112, 1]), perm=[0, 2, 1, 3])
+            )
+        elif input_dim == 32256:  # for Yale Faces dataset
+            tf.compat.v1.summary.image(
+                'image_data',
+                tf.transpose(tf.reshape(x, shape=[-1, 192, 168, 1]), perm=[0, 2, 1, 3])
             )
 
     # ============================== Q(Z|X) = Q(Z) - Encoder NN ============================== #

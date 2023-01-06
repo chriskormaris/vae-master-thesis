@@ -85,8 +85,11 @@ def cifar10(
     #####
 
     # construct data with missing values
-    X_train_missing, X_train, y_train = construct_missing_data(X_train, y_train,
-                                                               structured_or_random=structured_or_random)
+    X_train_missing, X_train, y_train = construct_missing_data(
+        X_train,
+        y_train,
+        structured_or_random=structured_or_random
+    )
 
     print('')
 

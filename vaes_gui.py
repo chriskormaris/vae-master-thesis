@@ -1,5 +1,6 @@
 import tkinter as tk
 import webbrowser
+from tkinter import ttk
 
 import src.VAEsInKeras.binarized_mnist
 import src.VAEsInKeras.cifar10
@@ -97,9 +98,9 @@ def run(
     missing_values
 ):
     if 'knn' not in algorithm.lower():
-        arguments = [int(latent_dim), int(epochs), int(batch_size)]
+        arguments = [latent_dim, epochs, batch_size]
         if 'keras' not in algorithm.lower():
-            arguments.extend([float(learning_rate)])
+            arguments.extend([learning_rate])
         if 'missing' in algorithm.lower() and dataset is not None and 'movielens' not in dataset.lower():
             arguments.extend([missing_values])
         if dataset_var.get() == 'mnist':
@@ -109,7 +110,7 @@ def run(
         elif dataset_var.get() == 'omniglot':
             arguments.extend([omniglot_language])
     else:
-        arguments = [int(K)]
+        arguments = [K]
         if 'missing' in algorithm.lower() and dataset is not None and 'movielens' not in dataset.lower():
             arguments.extend([missing_values_var])
         if dataset_var.get() == 'mnist':
@@ -119,6 +120,7 @@ def run(
         elif dataset_var.get() == 'omniglot':
             arguments.extend([omniglot_language_var])
 
+    print('********************')
     print('arguments: ' + str(arguments))
 
     if algorithm == 'kNNMissingValues':
@@ -384,102 +386,119 @@ def datasets_details_window():
 
     mnist_ds_label = tk.Label(
         window,
-        text='MNIST dataset\n# TRAIN data: 55000, # TEST data: 10000, # VALIDATION '
-             'data: 5000 \n# Classes: 10\nDimension: 28x28 pixels'
+        text='MNIST dataset\n'
+             '# TRAIN data: 55000, # TEST data: 10000\n'
+             '# VALIDATION data: 5000 # Classes: 10\n'
+             'Dimensions: 28x28 pixels'
     )
     mnist_ds_label.pack()
-    mnist_ds_link = tk.Label(window, text="MNIST dataset link", fg="blue", cursor="hand2")
+    mnist_ds_link = tk.Label(window, text='MNIST dataset link', fg='blue', cursor='hand2')
     mnist_ds_link.pack()
-    mnist_ds_link.bind("<Button-1>", mnist_link_command)
-    empty_line_label = tk.Label(window, text='\r')
-    empty_line_label.pack()
+    mnist_ds_link.bind('<Button-1>', mnist_link_command)
+    sep = ttk.Separator(window, orient='horizontal')
+    sep.pack(fill='x')
 
     fashion_mnist_ds_label = tk.Label(
         window,
-        text='Fashion MNIST dataset\n# TRAIN data: 60000, # TEST data: 10000\n# Classes: 10\nDimension: 28x28 pixels'
+        text='Fashion MNIST dataset\n'
+             '# TRAIN data: 60000, # TEST data: 10000\n'
+             '# Classes: 10, Dimensions: 28x28 pixels'
     )
     fashion_mnist_ds_label.pack()
-    fashion_mnist_ds_link = tk.Label(window, text="Fashion MNIST dataset link", fg="blue", cursor="hand2")
+    fashion_mnist_ds_link = tk.Label(window, text='Fashion MNIST dataset link', fg='blue', cursor='hand2')
     fashion_mnist_ds_link.pack()
-    fashion_mnist_ds_link.bind("<Button-1>", fashion_mnist_link_command)
-    empty_line_label = tk.Label(window, text='\r')
-    empty_line_label.pack()
+    fashion_mnist_ds_link.bind('<Button-1>', fashion_mnist_link_command)
+    sep = ttk.Separator(window, orient='horizontal')
+    sep.pack(fill='x')
 
     binarized_mnist_ds_label = tk.Label(
         window,
-        text='Binarized MNIST dataset\n# TRAIN data: 50000, # TEST data: '
-             '10000, # VALIDATION data: 10000 \n# Classes: 10\nDimension: 28x28 pixels'
+        text='Binarized MNIST dataset\n'
+             '# TRAIN data: 50000, # TEST data: 10000\n'
+             '# VALIDATION data: 10000, # Classes: 10\n'
+             'Dimensions: 28x28 pixels'
     )
     binarized_mnist_ds_label.pack()
-    binarized_mnist_ds_link = tk.Label(window, text="Binarized MNIST dataset link", fg="blue", cursor="hand2")
+    binarized_mnist_ds_link = tk.Label(window, text='Binarized MNIST dataset link', fg='blue', cursor='hand2')
     binarized_mnist_ds_link.pack()
-    binarized_mnist_ds_link.bind("<Button-1>", binarized_mnist_link_command)
-    empty_line_label = tk.Label(window, text='\r')
-    empty_line_label.pack()
+    binarized_mnist_ds_link.bind('<Button-1>', binarized_mnist_link_command)
+    sep = ttk.Separator(window, orient='horizontal')
+    sep.pack(fill='x')
 
     cifar_10_ds_label = tk.Label(
         window,
-        text='CIFAR-10 dataset\n# TRAIN data: 50000, # TEST data: 10000 \n# Classes: '
-             '10\nRGB Dimension: 32x32x3 pixels, \nGrayscale Dimension: 32x32x1 pixels'
+        text='CIFAR-10 dataset\n'
+             '# TRAIN data: 50000, # TEST data: 10000\n'
+             '# Classes: 10\n'
+             'RGB Dimensions: 32x32x3 pixels\n'
+             'Grayscale Dimensions: 32x32x1 pixels'
     )
     cifar_10_ds_label.pack()
-    cifar_10_link = tk.Label(window, text="CIFAR-10 dataset link", fg="blue", cursor="hand2")
+    cifar_10_link = tk.Label(window, text='CIFAR-10 dataset link', fg='blue', cursor='hand2')
     cifar_10_link.pack()
-    cifar_10_link.bind("<Button-1>", cifar_link_command)
-    empty_line_label = tk.Label(window, text='\r')
-    empty_line_label.pack()
+    cifar_10_link.bind('<Button-1>', cifar_link_command)
+    sep = ttk.Separator(window, orient='horizontal')
+    sep.pack(fill='x')
 
     omniglot_ds_label = tk.Label(
         window,
-        text='OMNIGLOT dataset\nEnglish Alphabet \t # TRAIN data: 390, # TEST data: '
-             '130, # Classes: 26\nGreek Alphabet \t # TRAIN data: 360, # TEST data: '
-             '120, # Classes: 24\nDimension: 28x28 pixels'
+        text='OMNIGLOT dataset\n'
+             'English Alphabet\n'
+             '# TRAIN data: 390, # TEST data: 130, # Classes: 26\n'
+             'Greek Alphabet\n'
+             '# TRAIN data: 360, # TEST data: 120, # Classes: 24\n'
+             'Dimensions: 28x28 pixels'
     )
     omniglot_ds_label.pack()
-    omniglot_ds_link = tk.Label(window, text="OMNIGLOT dataset link", fg="blue", cursor="hand2")
+    omniglot_ds_link = tk.Label(window, text='OMNIGLOT dataset link', fg='blue', cursor='hand2')
     omniglot_ds_link.pack()
-    omniglot_ds_link.bind("<Button-1>", omniglot_link_command)
-    empty_line_label = tk.Label(window, text='\r')
-    empty_line_label.pack()
+    omniglot_ds_link.bind('<Button-1>', omniglot_link_command)
+    sep = ttk.Separator(window, orient='horizontal')
+    sep.pack(fill='x')
 
     yale_ds_label = tk.Label(
         window,
-        text='YALE Faces dataset\n# of data: 2442\n # Classes: 38\nDimension: 168x192 pixels'
+        text='YALE Faces dataset\n'
+             '# of data: 2442, # Classes: 38\n'
+             'Dimensions: 168x192 pixels'
     )
     yale_ds_label.pack()
-    yale_ds_link = tk.Label(window, text="YALE Faces dataset link", fg="blue", cursor="hand2")
+    yale_ds_link = tk.Label(window, text='YALE Faces dataset link', fg='blue', cursor='hand2')
     yale_ds_link.pack()
-    yale_ds_link.bind("<Button-1>", yale_link_command)
-    empty_line_label = tk.Label(window, text='\r')
-    empty_line_label.pack()
+    yale_ds_link.bind('<Button-1>', yale_link_command)
+    sep = ttk.Separator(window, orient='horizontal')
+    sep.pack(fill='x')
 
     the_db_of_faces_ds_label = tk.Label(
         window,
-        text='ORL Face Database\n# of data: 400\n # Classes: 40\nDimension: 92x112 pixels'
+        text='ORL Face Database\n'
+             '# of data: 400, # Classes: 40\n'
+             'Dimensions: 92x112 pixels'
     )
     the_db_of_faces_ds_label.pack()
-    the_db_of_faces_ds_link = tk.Label(window, text="ORL Face Database link", fg="blue", cursor="hand2")
+    the_db_of_faces_ds_link = tk.Label(window, text='ORL Face Database link', fg='blue', cursor='hand2')
     the_db_of_faces_ds_link.pack()
-    the_db_of_faces_ds_link.bind("<Button-1>", the_db_of_faces_link_command)
-    empty_line_label = tk.Label(window, text='\r')
-    empty_line_label.pack()
+    the_db_of_faces_ds_link.bind('<Button-1>', the_db_of_faces_link_command)
+    sep = ttk.Separator(window, orient='horizontal')
+    sep.pack(fill='x')
 
     movielens_ds_label = tk.Label(
         window,
-        text='MovieLens 100k dataset\n# TRAIN ratings: 90570 \t # TEST ratings: '
-             '9430\n# of users: 943 \t # of movies: 1682\n# of total ratings: '
-             '1586126 \t non-missing percentage: 5.7 %'
+        text='MovieLens 100k dataset\n'
+             '# TRAIN ratings: 90570, # TEST ratings: 9430\n'
+             '# of users: 943, # of movies: 1682\n'
+             '# of total ratings: 1586126, non-missing percentage: 5.7 %'
     )
     movielens_ds_label.pack()
-    movielens_ds_link = tk.Label(window, text="MovieLens dataset link", fg="blue", cursor="hand2")
+    movielens_ds_link = tk.Label(window, text='MovieLens dataset link', fg='blue', cursor='hand2')
     movielens_ds_link.pack()
-    movielens_ds_link.bind("<Button-1>", movielens_link_command)
-    empty_line_label = tk.Label(window, text='\r')
-    empty_line_label.pack()
+    movielens_ds_link.bind('<Button-1>', movielens_link_command)
+    sep = ttk.Separator(window, orient='horizontal')
+    sep.pack(fill='x')
 
-    download_all_datasets_link = tk.Label(window, text="Download all datasets here", fg="blue", cursor="hand2")
+    download_all_datasets_link = tk.Label(window, text='Download all datasets here', fg='blue', cursor='hand2')
     download_all_datasets_link.pack()
-    download_all_datasets_link.bind("<Button-1>", download_all_datasets_command)
+    download_all_datasets_link.bind('<Button-1>', download_all_datasets_command)
 
     # change icon
     window.iconbitmap(icons_path + 'help.ico')
@@ -492,39 +511,39 @@ def datasets_details_window():
 
 
 def mnist_link_command(event):
-    webbrowser.open_new(r"http://yann.lecun.com/exdb/mnist")
+    webbrowser.open_new(r'http://yann.lecun.com/exdb/mnist')
 
 
 def fashion_mnist_link_command(event):
-    webbrowser.open_new(r"https://github.com/zalandoresearch/fashion-mnist/tree/master/data/fashion")
+    webbrowser.open_new(r'https://github.com/zalandoresearch/fashion-mnist/tree/master/data/fashion')
 
 
 def binarized_mnist_link_command(event):
-    webbrowser.open_new(r"https://github.com/yburda/iwae/tree/master/datasets/BinaryMNIST")
+    webbrowser.open_new(r'https://github.com/yburda/iwae/tree/master/datasets/BinaryMNIST')
 
 
 def cifar_link_command(event):
-    webbrowser.open_new(r"https://www.cs.toronto.edu/~kriz/cifar.html")
+    webbrowser.open_new(r'https://www.cs.toronto.edu/~kriz/cifar.html')
 
 
 def omniglot_link_command(event):
-    webbrowser.open_new(r"https://github.com/yburda/iwae/tree/master/datasets/OMNIGLOT")
+    webbrowser.open_new(r'https://github.com/yburda/iwae/tree/master/datasets/OMNIGLOT')
 
 
 def yale_link_command(event):
-    webbrowser.open_new(r"https://vision.ucsd.edu/content/extended-yale-face-database-b-b")
+    webbrowser.open_new(r'https://vision.ucsd.edu/content/extended-yale-face-database-b-b')
 
 
 def the_db_of_faces_link_command(event):
-    webbrowser.open_new(r"http://cam-orl.co.uk/facedatabase.html")
+    webbrowser.open_new(r'http://cam-orl.co.uk/facedatabase.html')
 
 
 def movielens_link_command(event):
-    webbrowser.open_new(r"https://grouplens.org/datasets/movielens")
+    webbrowser.open_new(r'https://grouplens.org/datasets/movielens')
 
 
 def download_all_datasets_command(event):
-    webbrowser.open_new(r"https://www.dropbox.com/sh/ucvad0dkcbxuyho/AAAjjrRPYiGLLPc_VKru4-Uva?dl=0")
+    webbrowser.open_new(r'https://www.dropbox.com/sh/ucvad0dkcbxuyho/AAAjjrRPYiGLLPc_VKru4-Uva?dl=0')
 
 
 if __name__ == '__main__':
@@ -564,11 +583,11 @@ if __name__ == '__main__':
 
     # 2. vaeFrame Widgets #
     # Tkinter variables
-    latent_dim_var = tk.StringVar(root, '64')
-    epochs_var = tk.StringVar(root, '100')
-    learning_rate_var = tk.StringVar(root, '0.01')
-    batch_size_var = tk.StringVar(root, '250')
-    K_var = tk.StringVar(root, '10')
+    latent_dim_var = tk.IntVar(root, 64)
+    epochs_var = tk.IntVar(root, 100)
+    learning_rate_var = tk.DoubleVar(root, 0.01)
+    batch_size_var = tk.IntVar(root, 250)
+    K_var = tk.IntVar(root, 10)
 
     digits_or_fashion_mnist_var = tk.StringVar(root, 'digits')
     rgb_or_grayscale_cifar_var = tk.StringVar(root, 'grayscale')
