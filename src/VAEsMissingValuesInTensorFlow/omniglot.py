@@ -309,7 +309,7 @@ def omniglot(
                     )
                 plt.close()
 
-            if epoch == int(epochs / 2):
+            if epoch % 2 == 0:
                 saver.save(sess, save_path + '/model.ckpt')
     elapsed_time = time.time() - start_time
 

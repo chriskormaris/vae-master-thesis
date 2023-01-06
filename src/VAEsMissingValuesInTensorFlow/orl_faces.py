@@ -166,7 +166,7 @@ def orl_faces(latent_dim=64, epochs=100, batch_size=250, learning_rate=0.01, str
                                 .format(str(epoch).zfill(3)) + '_faces_' + str(i + 1) + '-' + str(i + 10) + '.png')
                     plt.close()
 
-            if epoch == int(epochs / 2):
+            if epoch % 2 == 0:
                 saver.save(sess, save_path + '/model.ckpt')
     elapsed_time = time.time() - start_time
 
