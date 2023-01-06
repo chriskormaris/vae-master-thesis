@@ -36,7 +36,7 @@ Then, download all the datasets from the URL in the file `datasets_urls.md`, ext
 
 ## How to run the VAEs GUI
 
-A graphical user interface (GUI) has been implemented for the project of this thesis, using Python 3 and the Tkinter library.
+A graphical user interface (GUI) has been implemented for the project of this thesis, using Python 3 and the tkinter library.
 
 Go to the project directory.
 

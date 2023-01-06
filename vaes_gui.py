@@ -43,40 +43,6 @@ import src.kNNMissingValues.orl_faces
 import src.kNNMissingValues.yale_faces
 from src.Utilities.constants import *
 
-# create window and set title
-root = tk.Tk()
-root.title('vaes')
-
-# change window size
-root.geometry('800x810')
-
-# change icon
-root.iconbitmap(icons_path + 'vaes.ico')
-
-algorithm_var = tk.StringVar(root, '')
-dataset_var = tk.StringVar(root, '')
-
-algorithms = {
-    'VAEsInTensorFlow': 'VAE in TensorFlow',
-    'VAEsInPyTorch': 'VAE in PyTorch',
-    'VAEsInKeras': 'VAE in Keras',
-    'VAEsMissingValuesInTensorFlow': 'VAE Missing Values completion algorithm in TensorFlow',
-    'VAEsMissingValuesInPyTorch': 'VAE Missing Values completion algorithm in PyTorch',
-    'kNNMissingValues': 'K-NN Missing Values completion algorithm'
-}
-
-datasets = {
-    'mnist': 'MNIST',
-    'binarized_mnist': 'Binarized MNIST',
-    'cifar10': 'CIFAR-10',
-    'omniglot': 'OMNIGLOT',
-    'yale_faces': 'YALE Faces',
-    'orl_faces': 'ORL Face Database',
-    'movielens': 'MovieLens'
-}
-
-variables = []
-
 isAlgorithmSelected = False
 isDatasetSelected = False
 
@@ -207,18 +173,6 @@ def run(
             src.VAEsMissingValuesInTensorFlow.orl_faces.orl_faces(*arguments)
         elif dataset == 'yale_faces':
             src.VAEsMissingValuesInTensorFlow.yale_faces.yale_faces(*arguments)
-
-
-def get_algorithm_name(algorithm):
-    for name in algorithms:
-        if algorithm == name:
-            return name
-
-
-def get_dataset_name(dataset):
-    for name in datasets:
-        if dataset == name:
-            return name
 
 
 def hide_extra_options():
@@ -547,6 +501,15 @@ def download_all_datasets_command(event):
 
 
 if __name__ == '__main__':
+    # create window and set title
+    root = tk.Tk()
+    root.title('vaes')
+
+    # change window size
+    root.geometry('800x810')
+
+    # change icon
+    root.iconbitmap(icons_path + 'vaes.ico')
 
     # Frames #
     welcomeFrame = tk.Frame(root)
@@ -582,7 +545,10 @@ if __name__ == '__main__':
     welcomeFrame.pack()
 
     # 2. vaeFrame Widgets #
-    # Tkinter variables
+    # tkinter variables
+    algorithm_var = tk.StringVar(root)
+    dataset_var = tk.StringVar(root)
+
     latent_dim_var = tk.IntVar(root, 64)
     epochs_var = tk.IntVar(root, 100)
     learning_rate_var = tk.DoubleVar(root, 0.01)
@@ -737,6 +703,15 @@ if __name__ == '__main__':
     menu = tk.Menu(root)
     root.config(menu=menu)
 
+    algorithms = {
+        'VAEsInTensorFlow': 'VAE in TensorFlow',
+        'VAEsInPyTorch': 'VAE in PyTorch',
+        'VAEsInKeras': 'VAE in Keras',
+        'VAEsMissingValuesInTensorFlow': 'VAE Missing Values completion algorithm in TensorFlow',
+        'VAEsMissingValuesInPyTorch': 'VAE Missing Values completion algorithm in PyTorch',
+        'kNNMissingValues': 'K-NN Missing Values completion algorithm'
+    }
+
     algorithmsMenu = tk.Menu(menu, tearoff=False)
     menu.add_cascade(label='Algorithms', menu=algorithmsMenu)  # adds drop-down menu
     for name in algorithms:
@@ -757,6 +732,16 @@ if __name__ == '__main__':
                 value=name,
                 command=check_algorithm_and_show_vae_frame
             )
+
+    datasets = {
+        'mnist': 'MNIST',
+        'binarized_mnist': 'Binarized MNIST',
+        'cifar10': 'CIFAR-10',
+        'omniglot': 'OMNIGLOT',
+        'yale_faces': 'YALE Faces',
+        'orl_faces': 'ORL Face Database',
+        'movielens': 'MovieLens'
+    }
 
     datasetsMenu = tk.Menu(menu, tearoff=False)
     menu.add_cascade(label='Datasets', menu=datasetsMenu)  # adds drop-down menu
