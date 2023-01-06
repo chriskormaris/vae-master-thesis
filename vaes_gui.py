@@ -280,7 +280,7 @@ def check_algorithm_and_show_knn_frame():
     else:
         datasetsMenu.entryconfig(6, state='disabled')  # disable 'MovieLens' dataset
     if 'missing' in algorithm_var.get().lower() and \
-            (not dataset_var.get() == 'movielens' and not dataset_var.get() == ''):
+            not dataset_var.get() == 'movielens' and not dataset_var.get() == '':
         missingValuesFrame.pack()
     if dataset_var.get() == 'mnist':
         mnistDatasetFrame.pack()
@@ -301,7 +301,7 @@ def check_dataset():
     isDatasetSelected = True
 
     if 'missing' in algorithm_var.get().lower() and \
-            (not dataset_var.get() == 'movielens' and not dataset_var.get() == ''):
+            not dataset_var.get() == 'movielens' and not dataset_var.get() == '':
         missingValuesFrame.pack()
     if dataset_var.get() == 'mnist' and not welcomeFrame.winfo_ismapped():
         mnistDatasetFrame.pack()

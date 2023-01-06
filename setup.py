@@ -21,6 +21,6 @@ cx_Freeze.setup(
     name='vaes',
     options={'build_exe': build_exe_options},
     version='1.0.0',
-    description='Variational Autoencoders & Missing Values Completion Algorithm',
+    description='Variational Autoencoders & Missing Values Completion Algorithms',
     executables=executables
 )
