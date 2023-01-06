@@ -3,11 +3,11 @@ import numpy as np
 #####
 
 
-def non_missing_percentage(X, missing_value=0.5):
+def get_non_missing_percentage(X, missing_value=0.5):
     return np.where(X != missing_value)[0].size / np.size(X) * 100
 
 
-def non_zero_percentage(X):
+def get_non_zero_percentage(X):
     return np.count_nonzero(X) / np.size(X) * 100
 
 

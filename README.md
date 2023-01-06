@@ -52,7 +52,8 @@ python vaes_gui.py
    pyinstaller vaes_gui.spec
    ```
 
-Then, download all the datasets from the URL in the file `datasets_urls.md`, extract them and move them to the `dist` folder.
+Go to the `dist` folder and create the directory `DATASETS`.
+Then, download all the datasets from the URL in the file `datasets_urls.md`, extract them and move them to the `dist/DATASETS` folder.
 Now, browse to the directory `dist/vaes_gui`. Find the file `vaes_gui.exe` and run it.
 The GUI will make it all easier for you!
 

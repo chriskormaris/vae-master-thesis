@@ -3,6 +3,7 @@ matplotlib
 tensorflow
 keras
 torchvision
+mlxtend
 scipy
 tk
 pyinstaller

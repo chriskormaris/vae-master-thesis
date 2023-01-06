@@ -1,46 +1,46 @@
 import tkinter as tk
 import webbrowser
 
-import VAEsInKeras.binarized_mnist
-import VAEsInKeras.cifar10
-import VAEsInKeras.mnist
-import VAEsInKeras.omniglot
-import VAEsInKeras.orl_faces
-import VAEsInKeras.yale_faces
-import VAEsInPyTorch.binarized_mnist
-import VAEsInPyTorch.cifar10
-import VAEsInPyTorch.mnist
-import VAEsInPyTorch.omniglot
-import VAEsInPyTorch.orl_faces
-import VAEsInPyTorch.yale_faces
-import VAEsInTensorFlow.binarized_mnist
-import VAEsInTensorFlow.cifar10
-import VAEsInTensorFlow.mnist
-import VAEsInTensorFlow.omniglot
-import VAEsInTensorFlow.orl_faces
-import VAEsInTensorFlow.yale_faces
-import VAEsMissingValuesInPyTorch.binarized_mnist
-import VAEsMissingValuesInPyTorch.cifar10
-import VAEsMissingValuesInPyTorch.mnist
-import VAEsMissingValuesInPyTorch.movielens
-import VAEsMissingValuesInPyTorch.omniglot
-import VAEsMissingValuesInPyTorch.orl_faces
-import VAEsMissingValuesInPyTorch.yale_faces
-import VAEsMissingValuesInTensorFlow.binarized_mnist
-import VAEsMissingValuesInTensorFlow.cifar10
-import VAEsMissingValuesInTensorFlow.mnist
-import VAEsMissingValuesInTensorFlow.movielens
-import VAEsMissingValuesInTensorFlow.omniglot
-import VAEsMissingValuesInTensorFlow.orl_faces
-import VAEsMissingValuesInTensorFlow.yale_faces
-import kNNMissingValues.binarized_mnist
-import kNNMissingValues.cifar10
-import kNNMissingValues.mnist
-import kNNMissingValues.movielens
-import kNNMissingValues.omniglot
-import kNNMissingValues.orl_faces
-import kNNMissingValues.yale_faces
-from Utilities.constants import *
+import src.VAEsInKeras.binarized_mnist
+import src.VAEsInKeras.cifar10
+import src.VAEsInKeras.mnist
+import src.VAEsInKeras.omniglot
+import src.VAEsInKeras.orl_faces
+import src.VAEsInKeras.yale_faces
+import src.VAEsInPyTorch.binarized_mnist
+import src.VAEsInPyTorch.cifar10
+import src.VAEsInPyTorch.mnist
+import src.VAEsInPyTorch.omniglot
+import src.VAEsInPyTorch.orl_faces
+import src.VAEsInPyTorch.yale_faces
+import src.VAEsInTensorFlow.binarized_mnist
+import src.VAEsInTensorFlow.cifar10
+import src.VAEsInTensorFlow.mnist
+import src.VAEsInTensorFlow.omniglot
+import src.VAEsInTensorFlow.orl_faces
+import src.VAEsInTensorFlow.yale_faces
+import src.VAEsMissingValuesInPyTorch.binarized_mnist
+import src.VAEsMissingValuesInPyTorch.cifar10
+import src.VAEsMissingValuesInPyTorch.mnist
+import src.VAEsMissingValuesInPyTorch.movielens
+import src.VAEsMissingValuesInPyTorch.omniglot
+import src.VAEsMissingValuesInPyTorch.orl_faces
+import src.VAEsMissingValuesInPyTorch.yale_faces
+import src.VAEsMissingValuesInTensorFlow.binarized_mnist
+import src.VAEsMissingValuesInTensorFlow.cifar10
+import src.VAEsMissingValuesInTensorFlow.mnist
+import src.VAEsMissingValuesInTensorFlow.movielens
+import src.VAEsMissingValuesInTensorFlow.omniglot
+import src.VAEsMissingValuesInTensorFlow.orl_faces
+import src.VAEsMissingValuesInTensorFlow.yale_faces
+import src.kNNMissingValues.binarized_mnist
+import src.kNNMissingValues.cifar10
+import src.kNNMissingValues.mnist
+import src.kNNMissingValues.movielens
+import src.kNNMissingValues.omniglot
+import src.kNNMissingValues.orl_faces
+import src.kNNMissingValues.yale_faces
+from src.Utilities.constants import *
 
 # create window and set title
 root = tk.Tk()
@@ -52,11 +52,8 @@ root.geometry('800x810')
 # change icon
 root.iconbitmap(icons_path + 'vaes.ico')
 
-python_script_folder = tk.StringVar(root, '')
-python_script_file = tk.StringVar(root, '')
-
-selectedAlgorithm = ''
-selectedDataset = ''
+algorithm_var = tk.StringVar(root, '')
+dataset_var = tk.StringVar(root, '')
 
 algorithms = {
     'VAEsInTensorFlow': 'VAE in TensorFlow',
@@ -86,103 +83,128 @@ isDatasetSelected = False
 #####
 
 
-def run(variables):
-    arguments = []
-    for variable in variables:
-        argument = variable.get()
-        if argument.isdigit():
-            argument = int(argument)
-        else:
-            try:
-                argument = float(argument)
-            except:
-                pass
-        arguments.append(argument)
+def run(
+    algorithm,
+    dataset,
+    latent_dim,
+    epochs,
+    learning_rate,
+    batch_size,
+    K,
+    digits_or_fashion_mnist,
+    rgb_or_grayscale_cifar,
+    omniglot_language,
+    missing_values
+):
+    if 'knn' not in algorithm.lower():
+        arguments = [int(latent_dim), int(epochs), int(batch_size)]
+        if 'keras' not in algorithm.lower():
+            arguments.extend([float(learning_rate)])
+        if 'missing' in algorithm.lower() and dataset is not None and 'movielens' not in dataset.lower():
+            arguments.extend([missing_values])
+        if dataset_var.get() == 'mnist':
+            arguments.extend([digits_or_fashion_mnist])
+        elif dataset_var.get() == 'cifar10':
+            arguments.extend([rgb_or_grayscale_cifar])
+        elif dataset_var.get() == 'omniglot':
+            arguments.extend([omniglot_language])
+    else:
+        arguments = [int(K)]
+        if 'missing' in algorithm.lower() and dataset is not None and 'movielens' not in dataset.lower():
+            arguments.extend([missing_values_var])
+        if dataset_var.get() == 'mnist':
+            arguments.extend([digits_or_fashion_mnist_var])
+        elif dataset_var.get() == 'cifar10':
+            arguments.extend([rgb_or_grayscale_cifar_var])
+        elif dataset_var.get() == 'omniglot':
+            arguments.extend([omniglot_language_var])
+
     print('arguments: ' + str(arguments))
-    if python_script_folder.get() == 'kNNMissingValues':
-        if python_script_file.get() == 'binarized_mnist':
-            kNNMissingValues.binarized_mnist.binarized_mnist(*arguments)
-        elif python_script_file.get() == 'cifar10':
-            kNNMissingValues.cifar10.cifar10(*arguments)
-        elif python_script_file.get() == 'mnist':
-            kNNMissingValues.mnist.mnist(*arguments)
-        elif python_script_file.get() == 'movielens':
-            kNNMissingValues.movielens.movielens(*arguments)
-        elif python_script_file.get() == 'omniglot':
-            kNNMissingValues.omniglot.omniglot(*arguments)
-        elif python_script_file.get() == 'orl_faces':
-            kNNMissingValues.orl_faces.orl_faces(*arguments)
-        elif python_script_file.get() == 'yale_faces':
-            kNNMissingValues.yale_faces.yale_faces(*arguments)
-    elif python_script_folder.get() == 'VAEsInKeras':
-        if python_script_file.get() == 'binarized_mnist':
-            VAEsInKeras.binarized_mnist.binarized_mnist(*arguments)
-        elif python_script_file.get() == 'cifar10':
-            VAEsInKeras.cifar10.cifar10(*arguments)
-        elif python_script_file.get() == 'mnist':
-            VAEsInKeras.mnist.mnist(*arguments)
-        elif python_script_file.get() == 'omniglot':
-            VAEsInKeras.omniglot.omniglot(*arguments)
-        elif python_script_file.get() == 'orl_faces':
-            VAEsInKeras.orl_faces.orl_faces(*arguments)
-        elif python_script_file.get() == 'yale_faces':
-            VAEsInKeras.yale_faces.yale_faces(*arguments)
-    elif python_script_folder.get() == 'VAEsInPyTorch':
-        if python_script_file.get() == 'binarized_mnist':
-            VAEsInPyTorch.binarized_mnist.binarized_mnist(*arguments)
-        elif python_script_file.get() == 'cifar10':
-            VAEsInPyTorch.cifar10.cifar10(*arguments)
-        elif python_script_file.get() == 'mnist':
-            VAEsInPyTorch.mnist.mnist(*arguments)
-        elif python_script_file.get() == 'omniglot':
-            VAEsInPyTorch.omniglot.omniglot(*arguments)
-        elif python_script_file.get() == 'orl_faces':
-            VAEsInPyTorch.orl_faces.orl_faces(*arguments)
-        elif python_script_file.get() == 'yale_faces':
-            VAEsInPyTorch.yale_faces.yale_faces(*arguments)
-    elif python_script_folder.get() == 'VAEsInTensorFlow':
-        if python_script_file.get() == 'binarized_mnist':
-            VAEsInTensorFlow.binarized_mnist.binarized_mnist(*arguments)
-        elif python_script_file.get() == 'cifar10':
-            VAEsInTensorFlow.cifar10.cifar10(*arguments)
-        elif python_script_file.get() == 'mnist':
-            VAEsInTensorFlow.mnist.mnist(*arguments)
-        elif python_script_file.get() == 'omniglot':
-            VAEsInTensorFlow.omniglot.omniglot(*arguments)
-        elif python_script_file.get() == 'orl_faces':
-            VAEsInTensorFlow.orl_faces.orl_faces(*arguments)
-        elif python_script_file.get() == 'yale_faces':
-            VAEsInTensorFlow.yale_faces.yale_faces(*arguments)
-    elif python_script_folder.get() == 'VAEsMissingValuesInPyTorch':
-        if python_script_file.get() == 'binarized_mnist':
-            VAEsMissingValuesInPyTorch.binarized_mnist.binarized_mnist(*arguments)
-        elif python_script_file.get() == 'cifar10':
-            VAEsMissingValuesInPyTorch.cifar10.cifar10(*arguments)
-        elif python_script_file.get() == 'mnist':
-            VAEsMissingValuesInPyTorch.mnist.mnist(*arguments)
-        elif python_script_file.get() == 'movielens':
-            VAEsMissingValuesInPyTorch.movielens.movielens(*arguments)
-        elif python_script_file.get() == 'omniglot':
-            VAEsMissingValuesInPyTorch.omniglot.omniglot(*arguments)
-        elif python_script_file.get() == 'orl_faces':
-            VAEsMissingValuesInPyTorch.orl_faces.orl_faces(*arguments)
-        elif python_script_file.get() == 'yale_faces':
-            VAEsMissingValuesInPyTorch.yale_faces.yale_faces(*arguments)
-    elif python_script_folder.get() == 'VAEsMissingValuesInTensorFlow':
-        if python_script_file.get() == 'binarized_mnist':
-            VAEsMissingValuesInTensorFlow.binarized_mnist.binarized_mnist(*arguments)
-        elif python_script_file.get() == 'cifar10':
-            VAEsMissingValuesInTensorFlow.cifar10.cifar10(*arguments)
-        elif python_script_file.get() == 'mnist':
-            VAEsMissingValuesInTensorFlow.mnist.mnist(*arguments)
-        elif python_script_file.get() == 'movielens':
-            VAEsMissingValuesInTensorFlow.movielens.movielens(*arguments)
-        elif python_script_file.get() == 'omniglot':
-            VAEsMissingValuesInTensorFlow.omniglot.omniglot(*arguments)
-        elif python_script_file.get() == 'orl_faces':
-            VAEsMissingValuesInTensorFlow.orl_faces.orl_faces(*arguments)
-        elif python_script_file.get() == 'yale_faces':
-            VAEsMissingValuesInTensorFlow.yale_faces.yale_faces(*arguments)
+
+    if algorithm == 'kNNMissingValues':
+        if dataset == 'binarized_mnist':
+            src.kNNMissingValues.binarized_mnist.binarized_mnist(*arguments)
+        elif dataset == 'cifar10':
+            src.kNNMissingValues.cifar10.cifar10(*arguments)
+        elif dataset == 'mnist':
+            src.kNNMissingValues.mnist.mnist(*arguments)
+        elif dataset == 'movielens':
+            src.kNNMissingValues.movielens.movielens(*arguments)
+        elif dataset == 'omniglot':
+            src.kNNMissingValues.omniglot.omniglot(*arguments)
+        elif dataset == 'orl_faces':
+            src.kNNMissingValues.orl_faces.orl_faces(*arguments)
+        elif dataset == 'yale_faces':
+            src.kNNMissingValues.yale_faces.yale_faces(*arguments)
+    elif algorithm == 'VAEsInKeras':
+        if dataset == 'binarized_mnist':
+            src.VAEsInKeras.binarized_mnist.binarized_mnist(*arguments)
+        elif dataset == 'cifar10':
+            src.VAEsInKeras.cifar10.cifar10(*arguments)
+        elif dataset == 'mnist':
+            src.VAEsInKeras.mnist.mnist(*arguments)
+        elif dataset == 'omniglot':
+            src.VAEsInKeras.omniglot.omniglot(*arguments)
+        elif dataset == 'orl_faces':
+            src.VAEsInKeras.orl_faces.orl_faces(*arguments)
+        elif dataset == 'yale_faces':
+            src.VAEsInKeras.yale_faces.yale_faces(*arguments)
+    elif algorithm == 'VAEsInPyTorch':
+        if dataset == 'binarized_mnist':
+            src.VAEsInPyTorch.binarized_mnist.binarized_mnist(*arguments)
+        elif dataset == 'cifar10':
+            src.VAEsInPyTorch.cifar10.cifar10(*arguments)
+        elif dataset == 'mnist':
+            src.VAEsInPyTorch.mnist.mnist(*arguments)
+        elif dataset == 'omniglot':
+            src.VAEsInPyTorch.omniglot.omniglot(*arguments)
+        elif dataset == 'orl_faces':
+            src.VAEsInPyTorch.orl_faces.orl_faces(*arguments)
+        elif dataset == 'yale_faces':
+            src.VAEsInPyTorch.yale_faces.yale_faces(*arguments)
+    elif algorithm == 'VAEsInTensorFlow':
+        if dataset == 'binarized_mnist':
+            src.VAEsInTensorFlow.binarized_mnist.binarized_mnist(*arguments)
+        elif dataset == 'cifar10':
+            src.VAEsInTensorFlow.cifar10.cifar10(*arguments)
+        elif dataset == 'mnist':
+            src.VAEsInTensorFlow.mnist.mnist(*arguments)
+        elif dataset == 'omniglot':
+            src.VAEsInTensorFlow.omniglot.omniglot(*arguments)
+        elif dataset == 'orl_faces':
+            src.VAEsInTensorFlow.orl_faces.orl_faces(*arguments)
+        elif dataset == 'yale_faces':
+            src.VAEsInTensorFlow.yale_faces.yale_faces(*arguments)
+    elif algorithm == 'VAEsMissingValuesInPyTorch':
+        if dataset == 'binarized_mnist':
+            src.VAEsMissingValuesInPyTorch.binarized_mnist.binarized_mnist(*arguments)
+        elif dataset == 'cifar10':
+            src.VAEsMissingValuesInPyTorch.cifar10.cifar10(*arguments)
+        elif dataset == 'mnist':
+            src.VAEsMissingValuesInPyTorch.mnist.mnist(*arguments)
+        elif dataset == 'movielens':
+            src.VAEsMissingValuesInPyTorch.movielens.movielens(*arguments)
+        elif dataset == 'omniglot':
+            src.VAEsMissingValuesInPyTorch.omniglot.omniglot(*arguments)
+        elif dataset == 'orl_faces':
+            src.VAEsMissingValuesInPyTorch.orl_faces.orl_faces(*arguments)
+        elif dataset == 'yale_faces':
+            src.VAEsMissingValuesInPyTorch.yale_faces.yale_faces(*arguments)
+    elif algorithm == 'VAEsMissingValuesInTensorFlow':
+        if dataset == 'binarized_mnist':
+            src.VAEsMissingValuesInTensorFlow.binarized_mnist.binarized_mnist(*arguments)
+        elif dataset == 'cifar10':
+            src.VAEsMissingValuesInTensorFlow.cifar10.cifar10(*arguments)
+        elif dataset == 'mnist':
+            src.VAEsMissingValuesInTensorFlow.mnist.mnist(*arguments)
+        elif dataset == 'movielens':
+            src.VAEsMissingValuesInTensorFlow.movielens.movielens(*arguments)
+        elif dataset == 'omniglot':
+            src.VAEsMissingValuesInTensorFlow.omniglot.omniglot(*arguments)
+        elif dataset == 'orl_faces':
+            src.VAEsMissingValuesInTensorFlow.orl_faces.orl_faces(*arguments)
+        elif dataset == 'yale_faces':
+            src.VAEsMissingValuesInTensorFlow.yale_faces.yale_faces(*arguments)
 
 
 def get_algorithm_name(algorithm):
@@ -214,11 +236,7 @@ def check_algorithm_and_show_vae_frame():
     vaeFrame.pack()
     global isAlgorithmSelected
     isAlgorithmSelected = True
-    global selectedAlgorithm
-    selectedAlgorithm = get_algorithm_name(python_script_folder.get())
-    global selectedDataset
-    selectedDataset = get_dataset_name(python_script_file.get())
-    if 'keras' in selectedAlgorithm.lower():
+    if 'keras' in algorithm_var.get().lower():
         vae_empty_line_label.pack_forget()
         learning_rate_label.pack_forget()
         learning_rate_frame.pack_forget()
@@ -229,35 +247,22 @@ def check_algorithm_and_show_vae_frame():
         learning_rate_frame.pack()
         learning_rate_text.pack()
         vae_empty_line_label.pack()
-    if 'missing' in selectedAlgorithm.lower():
+    if 'missing' in algorithm_var.get().lower():
         datasetsMenu.entryconfig(6, state='normal')  # enable 'MovieLens' dataset
     else:
         datasetsMenu.entryconfig(6, state='disabled')  # disable 'MovieLens' dataset
-    if 'missing' in selectedAlgorithm.lower() and \
-            (not python_script_file.get() == 'movielens' and not python_script_file.get() == ''):
+    if 'missing' in algorithm_var.get().lower() and \
+            not dataset_var.get() == 'movielens' and not dataset_var.get() == '':
         missingValuesFrame.pack()
-    if python_script_file.get() == 'mnist':
+    if dataset_var.get() == 'mnist':
         mnistDatasetFrame.pack()
-    if python_script_file.get() == 'cifar10':
+    if dataset_var.get() == 'cifar10':
         cifarDatasetFrame.pack()
-    elif python_script_file.get() == 'omniglot':
+    elif dataset_var.get() == 'omniglot':
         omniglotDatasetFrame.pack()
     if isAlgorithmSelected and isDatasetSelected:
         runFrame.pack(side='bottom')
-        status.config(text='Algorithm selected: ' + selectedAlgorithm + ', dataset selected: ' + selectedDataset)
-    global variables
-    variables = [latent_dim_var, epochs_var, batch_size_var]
-    if 'keras' not in selectedAlgorithm.lower():
-        variables.extend([learning_rate_var])
-    if 'missing' in selectedAlgorithm.lower() and selectedDataset is not None \
-            and 'movielens' not in selectedDataset.lower():
-        variables.extend([missing_values_var])
-    if python_script_file.get() == 'mnist':
-        variables.extend([digits_or_fashion_mnist_var])
-    elif python_script_file.get() == 'cifar10':
-        variables.extend([rgb_or_grayscale_cifar_var])
-    elif python_script_file.get() == 'omniglot':
-        variables.extend([omniglotLanguage_var])
+        status.config(text='Algorithm selected: ' + algorithm_var.get() + ', dataset selected: ' + dataset_var.get())
 
 
 def check_algorithm_and_show_knn_frame():
@@ -270,85 +275,43 @@ def check_algorithm_and_show_knn_frame():
     kNNFrame.pack()
     global isAlgorithmSelected
     isAlgorithmSelected = True
-    global selectedAlgorithm
-    selectedAlgorithm = get_algorithm_name(python_script_folder.get())
-    global selectedDataset
-    selectedDataset = get_dataset_name(python_script_file.get())
-    if 'missing' in selectedAlgorithm.lower():
+    if 'missing' in algorithm_var.get().lower():
         datasetsMenu.entryconfig(6, state='normal')  # enable 'MovieLens' dataset
     else:
         datasetsMenu.entryconfig(6, state='disabled')  # disable 'MovieLens' dataset
-    if 'missing' in selectedAlgorithm.lower() and \
-            (not python_script_file.get() == 'movielens' and not python_script_file.get() == ''):
+    if 'missing' in algorithm_var.get().lower() and \
+            (not dataset_var.get() == 'movielens' and not dataset_var.get() == ''):
         missingValuesFrame.pack()
-    if python_script_file.get() == 'mnist':
+    if dataset_var.get() == 'mnist':
         mnistDatasetFrame.pack()
-    if python_script_file.get() == 'cifar10':
+    if dataset_var.get() == 'cifar10':
         cifarDatasetFrame.pack()
-    elif python_script_file.get() == 'omniglot':
+    elif dataset_var.get() == 'omniglot':
         omniglotDatasetFrame.pack()
     if isAlgorithmSelected and isDatasetSelected:
         runFrame.pack(side='bottom')
-        status.config(text='Algorithm selected: ' + selectedAlgorithm + ', dataset selected: ' + selectedDataset)
-    global variables
-    variables = [K_var]
-    if 'missing' in selectedAlgorithm.lower() and selectedDataset is not None \
-            and 'movielens' not in selectedDataset.lower():
-        variables.extend([missing_values_var])
-    if python_script_file.get() == 'mnist':
-        variables.extend([digits_or_fashion_mnist_var])
-    elif python_script_file.get() == 'cifar10':
-        variables.extend([rgb_or_grayscale_cifar_var])
-    elif python_script_file.get() == 'omniglot':
-        variables.extend([omniglotLanguage_var])
+        status.config(text='Algorithm selected: ' + algorithm_var.get() + ', dataset selected: ' + dataset_var.get())
 
 
 def check_dataset():
     global isDatasetSelected
-    global selectedDataset
 
     hide_extra_options()
 
     isDatasetSelected = True
 
-    if 'missing' in selectedAlgorithm.lower() and \
-            (not python_script_file.get() == 'movielens' and not python_script_file.get() == ''):
+    if 'missing' in algorithm_var.get().lower() and \
+            (not dataset_var.get() == 'movielens' and not dataset_var.get() == ''):
         missingValuesFrame.pack()
-    selectedDataset = get_dataset_name(python_script_file.get())
-    if python_script_file.get() == 'mnist' and not welcomeFrame.winfo_ismapped():
+    if dataset_var.get() == 'mnist' and not welcomeFrame.winfo_ismapped():
         mnistDatasetFrame.pack()
-    elif python_script_file.get() == 'cifar10' and not welcomeFrame.winfo_ismapped():
+    elif dataset_var.get() == 'cifar10' and not welcomeFrame.winfo_ismapped():
         cifarDatasetFrame.pack()
-    elif python_script_file.get() == 'omniglot' and not welcomeFrame.winfo_ismapped():
+    elif dataset_var.get() == 'omniglot' and not welcomeFrame.winfo_ismapped():
         omniglotDatasetFrame.pack()
     if isAlgorithmSelected and isDatasetSelected:
         runFrame.pack(side='bottom')
-        status.config(text='Algorithm selected: ' + selectedAlgorithm + ', dataset selected: ' + selectedDataset)
-    global variables
-    if 'knn' not in python_script_folder.get().lower():
-        variables = [latent_dim_var, epochs_var, batch_size_var]
-        if 'keras' not in selectedAlgorithm.lower():
-            variables.extend([learning_rate_var])
-        if not selectedAlgorithm is None and 'missing' in selectedAlgorithm.lower() \
-                and 'movielens' not in selectedDataset.lower():
-            variables.extend([missing_values_var])
-        if python_script_file.get() == 'mnist':
-            variables.extend([digits_or_fashion_mnist_var])
-        elif python_script_file.get() == 'cifar10':
-            variables.extend([rgb_or_grayscale_cifar_var])
-        elif python_script_file.get() == 'omniglot':
-            variables.extend([omniglotLanguage_var])
-    else:
-        variables = [K_var]
-        if not selectedAlgorithm is None and 'missing' in selectedAlgorithm.lower() \
-                and 'movielens' not in selectedDataset.lower():
-            variables.extend([missing_values_var])
-        if python_script_file.get() == 'mnist':
-            variables.extend([digits_or_fashion_mnist_var])
-        elif python_script_file.get() == 'cifar10':
-            variables.extend([rgb_or_grayscale_cifar_var])
-        elif python_script_file.get() == 'omniglot':
-            variables.extend([omniglotLanguage_var])
+        status.config(text='Algorithm selected: ' + algorithm_var.get() + ', dataset selected: ' + dataset_var.get())
 
 
 # center the window on screen
@@ -609,7 +572,7 @@ if __name__ == '__main__':
 
     digits_or_fashion_mnist_var = tk.StringVar(root, 'digits')
     rgb_or_grayscale_cifar_var = tk.StringVar(root, 'grayscale')
-    omniglotLanguage_var = tk.StringVar(root, 'english')
+    omniglot_language_var = tk.StringVar(root, 'english')
     missing_values_var = tk.StringVar(root, 'structured')
 
     latent_dim_label = tk.Label(vaeFrame, text='latent dimension:')
@@ -727,7 +690,7 @@ if __name__ == '__main__':
             omniglotDatasetFrame,
             text=value,
             padx=2,
-            variable=omniglotLanguage_var,
+            variable=omniglot_language_var,
             value=value.lower()
         ).pack(anchor=tk.CENTER)
 
@@ -764,14 +727,14 @@ if __name__ == '__main__':
         if 'knn' in name.lower():
             algorithmsMenu.add_radiobutton(
                 label=description,
-                variable=python_script_folder,
+                variable=algorithm_var,
                 value=name,
                 command=check_algorithm_and_show_knn_frame
             )
         else:
             algorithmsMenu.add_radiobutton(
                 label=description,
-                variable=python_script_folder,
+                variable=algorithm_var,
                 value=name,
                 command=check_algorithm_and_show_vae_frame
             )
@@ -783,7 +746,7 @@ if __name__ == '__main__':
         if name != 'movielens':
             datasetsMenu.add_radiobutton(
                 label=description,
-                variable=python_script_file,
+                variable=dataset_var,
                 value=name,
                 command=check_dataset
             )
@@ -791,7 +754,7 @@ if __name__ == '__main__':
             # Leave 'MovieLens' dataset disabled initially.
             datasetsMenu.add_radiobutton(
                 label=description,
-                variable=python_script_file,
+                variable=dataset_var,
                 value=name,
                 command=check_dataset,
                 state='disabled'
@@ -810,7 +773,19 @@ if __name__ == '__main__':
         bg='#5BFFAC',
         height=2,
         width=6,
-        command=lambda: run(variables)
+        command=lambda: run(
+            algorithm_var.get(),
+            dataset_var.get(),
+            latent_dim_var.get(),
+            epochs_var.get(),
+            learning_rate_var.get(),
+            batch_size_var.get(),
+            K_var.get(),
+            digits_or_fashion_mnist_var.get(),
+            rgb_or_grayscale_cifar_var.get(),
+            omniglot_language_var.get(),
+            missing_values_var.get()
+        )
     )
     runButton.pack(side=tk.BOTTOM)
 
