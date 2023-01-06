@@ -87,7 +87,7 @@ def run(
             arguments.extend([omniglot_language_var])
 
     print('********************')
-    print(f'Running {algorithm}.{dataset}...')
+    print(f'Running {algorithm}.{dataset}')
     print(f'arguments: {arguments}')
 
     if algorithm == 'kNNMissingValues':
