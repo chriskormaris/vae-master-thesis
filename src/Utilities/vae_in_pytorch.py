@@ -104,10 +104,10 @@ def train(x, mb_size, Z_dim, params, solver):
     # x_hat = hidden_layer_decoder @ torch.transpose(phi2, 0, 1) + bias_phi2.repeat(hidden_layer_decoder.size(0), 1)
     x_hat = torch.mm(hidden_layer_decoder, torch.transpose(phi2, 0, 1)) + \
             bias_phi2.repeat(hidden_layer_decoder.size(0), 1)
-    x_recon_samples = nn.sigmoid(x_hat)
+    x_recon_samples = torch.sigmoid(x_hat)
 
     # Loss #
-    recon_loss = nn.binary_cross_entropy(x_recon_samples, x, size_average=False) / mb_size
+    recon_loss = nn.binary_cross_entropy_with_logits(x_recon_samples, x, reduction='sum') / mb_size
     kl_loss = torch.mean(0.5 * torch.sum(1 + logvar_encoder - mu_encoder ** 2 - torch.exp(logvar_encoder), 1))
     elbo_loss = recon_loss - kl_loss
 

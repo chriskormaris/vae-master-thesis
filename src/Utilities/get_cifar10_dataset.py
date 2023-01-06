@@ -16,15 +16,14 @@ def get_cifar10_dataset(cifar_path):
     uncompressed_file_path = os.path.join(cifar_path, 'cifar-10-batches-py')
 
     uncompressed = True
-    if not os.path.exists(uncompressed_file_path):
-        uncompressed = False
-    if uncompressed:
-        for i in range(1, 6):
-            fpath = os.path.join(uncompressed_file_path, 'data_batch_' + str(i))
-            if not os.path.exists(fpath):
-                uncompressed = False
+    for i in range(1, 6):
+        fpath = os.path.join(uncompressed_file_path, 'data_batch_' + str(i))
+        if not os.path.exists(fpath):
+            uncompressed = False
     if not uncompressed:
         if not os.path.exists(compressed_file_path):
+            if not os.path.exists(cifar_path):
+                os.mkdir(cifar_path)
             cifar10.get_file(fname=fname, origin=origin, cache_subdir=cifar_path, extract=True)
         # open file
         compressed_file = tarfile.open(compressed_file_path)
