@@ -289,7 +289,7 @@ def about_window():
 
     window.resizable(False, False)
 
-    creator = tk.Label(window, text='© Created by: Christos Kormaris')
+    creator = tk.Label(window, text=f'© Created by: {author}')
     creator.pack()
 
     professor = tk.Label(window, text='Supervisor Professor: Dr. Michalis Titsias')
@@ -307,7 +307,7 @@ def about_window():
     date = tk.Label(window, text='Date: April 2018')
     date.pack()
 
-    version_label = tk.Label(window, text='Version: ' + version)
+    version_label = tk.Label(window, text=f'Version: {version}')
     version_label.pack()
 
     # change icon

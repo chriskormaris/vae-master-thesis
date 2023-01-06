@@ -1,4 +1,5 @@
 version = '3.0.0'
+author = 'Christos Kormaris'
 
 icons_path = 'icons\\'
 output_img_base_path = 'output_images\\'
