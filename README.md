@@ -28,9 +28,17 @@ You can download all the datasets here:
 [https://www.dropbox.com/sh/ucvad0dkcbxuyho/AAAjjrRPYiGLLPc_VKru4-Uva?dl=0](https://www.dropbox.com/sh/ucvad0dkcbxuyho/AAAjjrRPYiGLLPc_VKru4-Uva?dl=0)
 
 
+## Extract datasets
+
+Go one level up from the project directory and create the directory `DATASETS`.
+Then, download all the datasets from the URL in the file `datasets_urls.md`, extract them and move them to the `DATASETS` folder.
+
+
 ## How to run the VAEs GUI
 
 A graphical user interface (GUI) has been implemented for the project of this thesis, using Python 3 and the Tkinter library.
+
+Go to the project directory.
 
 First, install all requirements:
 ```shell
@@ -41,21 +49,6 @@ Then, run:
 python vaes_gui.py
 ```
 
-## How to create an executable for the GUI
-
-1. First, install the `pyinstaller` dependency.
-   ```shell
-   pip install pyinstaller
-   ```
-2. Then, make an executable file using the settings from the file [vaes_gui.spec](vaes_gui.spec)
-   ```shell
-   pyinstaller vaes_gui.spec
-   ```
-
-Go to the `dist` folder and create the directory `DATASETS`.
-Then, download all the datasets from the URL in the file `datasets_urls.md`, extract them and move them to the `dist/DATASETS` folder.
-Now, browse to the directory `dist/vaes_gui`. Find the file `vaes_gui.exe` and run it.
-The GUI will make it all easier for you!
 
 ### Screenshot
 

@@ -6,5 +6,3 @@ torchvision
 mlxtend
 scipy
 tk
-pyinstaller
-cx_Freeze
