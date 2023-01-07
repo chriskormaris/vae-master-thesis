@@ -6,7 +6,7 @@ import numpy as np
 from keras.callbacks import TensorBoard
 
 from src.Utilities.constants import *
-from src.Utilities.get_binarized_mnist_dataset import get_binarized_mnist_dataset, get_binarized_mnist_labels, obtain
+from src.Utilities.get_binarized_mnist_dataset import get_binarized_mnist_dataset, obtain
 from src.Utilities.utils import rmse, mae
 from src.Utilities.vae_in_keras import vae
 

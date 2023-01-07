@@ -195,7 +195,8 @@ def omniglot(K=10, structured_or_random='structured', language='English'):
         show_plot=False,
         mnist_or_omniglot='omniglot'
     )
-    fig.savefig(output_images_path + '/Predicted Merged Data K=' + str(K) + ' Characters 11-20.png', bbox_inches='tight')
+    fig.savefig(output_images_path + '/Predicted Merged Data K=' + str(K) + ' Characters 11-20.png',
+                bbox_inches='tight')
     plt.close()
     if language.lower() == 'greek':
         fig = plot_mnist_or_omniglot_data(

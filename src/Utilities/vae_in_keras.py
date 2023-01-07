@@ -24,9 +24,9 @@ def vae(input_dim, latent_dim):
 
     # ALTERNATIVE
     # 'encoded' is the encoded representation of the input
-    #encoded = Dense(latent_dim, activation='sigmoid')(input_img)
+    # encoded = Dense(latent_dim, activation='sigmoid')(input_img)
     # 'decoded' is the lossy reconstruction of the input
-    #decoded = Dense(input_dim)(encoded)
+    # decoded = Dense(input_dim)(encoded)
 
     # this model maps an input to its reconstruction
     autoencoder = Model(input_img, decoded)
@@ -50,12 +50,12 @@ def vae(input_dim, latent_dim):
     # and the Adadelta optimizer.
 
     autoencoder.compile(optimizer='adadelta', loss='binary_crossentropy')  # Works best!
-    #autoencoder.compile(optimizer='adagrad', loss='binary_crossentropy')
-    #autoencoder.compile(optimizer='adam', loss='binary_crossentropy')
-    #autoencoder.compile(optimizer='adamax', loss='binary_crossentropy')
-    #autoencoder.compile(optimizer='nadam', loss='binary_crossentropy')
+    # autoencoder.compile(optimizer='adagrad', loss='binary_crossentropy')
+    # autoencoder.compile(optimizer='adam', loss='binary_crossentropy')
+    # autoencoder.compile(optimizer='adamax', loss='binary_crossentropy')
+    # autoencoder.compile(optimizer='nadam', loss='binary_crossentropy')
     # autoencoder.compile(optimizer='rmsprop', loss='binary_crossentropy')
-    #autoencoder.compile(optimizer='sgd', loss='binary_crossentropy')
-    #autoencoder.compile(optimizer='tfoptimizer', loss='binary_crossentropy')
+    # autoencoder.compile(optimizer='sgd', loss='binary_crossentropy')
+    # autoencoder.compile(optimizer='tfoptimizer', loss='binary_crossentropy')
 
     return encoder, decoder, autoencoder

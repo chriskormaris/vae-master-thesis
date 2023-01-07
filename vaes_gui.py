@@ -51,17 +51,17 @@ isDatasetSelected = False
 
 
 def run(
-    algorithm,
-    dataset,
-    latent_dim,
-    epochs,
-    learning_rate,
-    batch_size,
-    K,
-    digits_or_fashion_mnist,
-    rgb_or_grayscale_cifar,
-    omniglot_language,
-    missing_values
+        algorithm,
+        dataset,
+        latent_dim,
+        epochs,
+        learning_rate,
+        batch_size,
+        K,
+        digits_or_fashion_mnist,
+        rgb_or_grayscale_cifar,
+        omniglot_language,
+        missing_values
 ):
     if 'knn' not in algorithm.lower():
         arguments = [latent_dim, epochs, batch_size]
@@ -508,6 +508,7 @@ if __name__ == '__main__':
 
     # change window size
     root.geometry('800x810')
+    center(root)
 
     # change icon
     root.iconbitmap(icons_path + 'vaes.ico')

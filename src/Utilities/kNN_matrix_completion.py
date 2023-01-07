@@ -74,7 +74,7 @@ def kNNMatrixCompletion(X_train, X_test, K, missing_value, use_softmax_weights=T
         predicted_pixels = np.sum(closest_k_data, axis=0).T
 
         X_test_predicted[i, np.where(X_test_i == missing_value)] = \
-                predicted_pixels[np.where(X_test_i == missing_value)].T
+            predicted_pixels[np.where(X_test_i == missing_value)].T
 
     if binarize:
         X_test_predicted = np.round(X_test_predicted + 0.3)

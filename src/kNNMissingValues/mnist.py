@@ -3,7 +3,6 @@ import time
 
 import matplotlib.pyplot as plt
 import numpy as np
-from src.Utilities.get_mnist_dataset import get_mnist_dataset
 
 from src.Utilities.constants import *
 from src.Utilities.kNN_matrix_completion import kNNMatrixCompletion

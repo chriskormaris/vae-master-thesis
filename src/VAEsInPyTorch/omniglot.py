@@ -1,7 +1,6 @@
 # WORKS BETTER WITH THE ENGLISH ALPHABET! THE GREEK ALPHABET HAS VERY FEW EXAMPLES. #
 
 import os
-import sys
 import time
 
 import matplotlib.pyplot as plt

@@ -213,7 +213,7 @@ def omniglot(
             )
             fig.savefig(
                 output_images_path + '/masked_data_characters_11-20.png'.format(str(epoch).zfill(3)),
-                    bbox_inches='tight'
+                bbox_inches='tight'
             )
             plt.close()
             if language.lower() == 'greek':

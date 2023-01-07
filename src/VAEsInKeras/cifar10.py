@@ -5,10 +5,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 from keras.callbacks import TensorBoard
 
+from src.Utilities.constants import *
 from src.Utilities.get_cifar10_dataset import get_cifar10_dataset
 from src.Utilities.utils import rmse, mae
 from src.Utilities.vae_in_keras import vae
-from src.Utilities.constants import *
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # hide tensorflow warnings
 

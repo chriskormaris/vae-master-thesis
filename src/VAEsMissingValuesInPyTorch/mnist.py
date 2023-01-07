@@ -3,9 +3,9 @@ import time
 
 import matplotlib.pyplot as plt
 import numpy as np
-from src.Utilities.get_mnist_dataset import get_mnist_dataset
 
 from src.Utilities.constants import *
+from src.Utilities.get_mnist_dataset import get_mnist_dataset
 from src.Utilities.plot_dataset_samples import plot_mnist_or_omniglot_data
 from src.Utilities.utils import reduce_data, construct_missing_data, get_non_zero_percentage, rmse, mae
 from src.Utilities.vae_in_pytorch import initialize_weights, train

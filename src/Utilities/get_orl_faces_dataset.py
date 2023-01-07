@@ -11,7 +11,6 @@ K = 40  # number of classes
 # The faces are from 40 different people.
 # 10 faces for each person are included, thus 40 * 10 = 400.
 def get_orl_faces_dataset(db_of_faces_path, one_hot=False, print_progress=False):
-
     X = np.array([[]])
     y = np.array([])
 
