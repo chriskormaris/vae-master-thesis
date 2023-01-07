@@ -6,7 +6,7 @@ import numpy as np
 
 from src.Utilities.constants import *
 from src.Utilities.get_orl_faces_dataset import get_orl_faces_dataset
-from src.Utilities.kNN_matrix_completion import kNNMatrixCompletion
+from src.Utilities.knn_matrix_completion import kNNMatrixCompletion
 from src.Utilities.plot_dataset_samples import plot_orl_faces
 from src.Utilities.utils import construct_missing_data, get_non_zero_percentage, rmse, mae
 

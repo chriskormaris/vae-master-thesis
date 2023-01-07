@@ -58,33 +58,33 @@ def run(
         learning_rate,
         batch_size,
         K,
-        digits_or_fashion_mnist,
-        rgb_or_grayscale_cifar,
+        mnist_digits_or_fashion,
+        cifar_rgb_or_grayscale,
         omniglot_language,
-        missing_values
+        missing_values_construction
 ):
     if 'knn' not in algorithm.lower():
         arguments = [latent_dim, epochs, batch_size]
         if 'keras' not in algorithm.lower():
             arguments.extend([learning_rate])
         if 'missing' in algorithm.lower() and dataset is not None and 'movielens' not in dataset.lower():
-            arguments.extend([missing_values])
+            arguments.extend([missing_values_construction])
         if dataset_var.get() == 'mnist':
-            arguments.extend([digits_or_fashion_mnist])
+            arguments.extend([mnist_digits_or_fashion])
         elif dataset_var.get() == 'cifar10':
-            arguments.extend([rgb_or_grayscale_cifar])
+            arguments.extend([cifar_rgb_or_grayscale])
         elif dataset_var.get() == 'omniglot':
             arguments.extend([omniglot_language])
     else:
         arguments = [K]
         if 'missing' in algorithm.lower() and dataset is not None and 'movielens' not in dataset.lower():
-            arguments.extend([missing_values_var])
+            arguments.extend([missing_values_construction])
         if dataset_var.get() == 'mnist':
-            arguments.extend([digits_or_fashion_mnist_var])
+            arguments.extend([mnist_digits_or_fashion])
         elif dataset_var.get() == 'cifar10':
-            arguments.extend([rgb_or_grayscale_cifar_var])
+            arguments.extend([cifar_rgb_or_grayscale])
         elif dataset_var.get() == 'omniglot':
-            arguments.extend([omniglot_language_var])
+            arguments.extend([omniglot_language])
 
     print('********************')
     print(f'Running {algorithm}.{dataset}')
@@ -557,10 +557,10 @@ if __name__ == '__main__':
     batch_size_var = tk.StringVar(root, '250')
     K_var = tk.IntVar(root, 10)
 
-    digits_or_fashion_mnist_var = tk.StringVar(root, 'digits')
-    rgb_or_grayscale_cifar_var = tk.StringVar(root, 'grayscale')
+    mnist_digits_or_fashion_var = tk.StringVar(root, 'digits')
+    cifar_rgb_or_grayscale_var = tk.StringVar(root, 'grayscale')
     omniglot_language_var = tk.StringVar(root, 'english')
-    missing_values_var = tk.StringVar(root, 'structured')
+    missing_values_construction_var = tk.StringVar(root, 'structured')
 
     latent_dim_label = tk.Label(vaeFrame, text='latent dimension:')
     latent_dim_label.pack()
@@ -653,7 +653,7 @@ if __name__ == '__main__':
             mnistDatasetFrame,
             text=value,
             padx=2,
-            variable=digits_or_fashion_mnist_var,
+            variable=mnist_digits_or_fashion_var,
             value=value.lower()
         ).pack(anchor=tk.CENTER)
 
@@ -665,7 +665,7 @@ if __name__ == '__main__':
             cifarDatasetFrame,
             text=value,
             padx=2,
-            variable=rgb_or_grayscale_cifar_var,
+            variable=cifar_rgb_or_grayscale_var,
             value=value.lower()
         ).pack(anchor=tk.CENTER)
 
@@ -689,7 +689,7 @@ if __name__ == '__main__':
             missingValuesFrame,
             text=value,
             padx=2,
-            variable=missing_values_var,
+            variable=missing_values_construction_var,
             value=value.lower()
         ).pack(anchor=tk.CENTER)
     empty_line_label = tk.Label(missingValuesFrame, text='\r')
@@ -787,10 +787,10 @@ if __name__ == '__main__':
             learning_rate_var.get(),
             batch_size_var.get(),
             K_var.get(),
-            digits_or_fashion_mnist_var.get(),
-            rgb_or_grayscale_cifar_var.get(),
+            mnist_digits_or_fashion_var.get(),
+            cifar_rgb_or_grayscale_var.get(),
             omniglot_language_var.get(),
-            missing_values_var.get()
+            missing_values_construction_var.get()
         )
     )
     runButton.pack(side=tk.BOTTOM)

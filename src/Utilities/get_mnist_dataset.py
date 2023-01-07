@@ -74,7 +74,7 @@ def get_mnist_dataset(mnist_dataset_base_path):
     X_train = X_train / 255.  # normalize values between 0 and 1
 
     X_test, y_test = loadlocal_mnist(images_path=X_test_file_path, labels_path=y_test_file_path)
-    X_test = X_train / 255.  # normalize values between 0 and 1
+    X_test = X_test / 255.  # normalize values between 0 and 1
 
     os.remove(X_train_file_path)
     os.remove(y_train_file_path)

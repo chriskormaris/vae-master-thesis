@@ -7,7 +7,7 @@ import pandas as pd
 
 from src.Utilities.constants import *
 from src.Utilities.get_movielens_dataset import get_movielens_dataset
-from src.Utilities.kNN_matrix_completion import kNNMatrixCompletion
+from src.Utilities.knn_matrix_completion import kNNMatrixCompletion
 from src.Utilities.plot_dataset_samples import plot_movielens_data
 from src.Utilities.utils import get_non_zero_percentage, rmse, mae
 

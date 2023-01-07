@@ -5,7 +5,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from src.Utilities.constants import *
-from src.Utilities.kNN_matrix_completion import kNNMatrixCompletion
+from src.Utilities.get_mnist_dataset import get_mnist_dataset
+from src.Utilities.knn_matrix_completion import kNNMatrixCompletion
 from src.Utilities.plot_dataset_samples import plot_mnist_or_omniglot_data
 from src.Utilities.utils import reduce_data, construct_missing_data, get_non_zero_percentage, rmse, mae
 
@@ -20,7 +21,7 @@ def mnist(K=10, structured_or_random='structured', digits_or_fashion='digits'):
         output_images_path = output_img_base_path + 'kNNMissingValues/fashion_mnist'
         dataset_path = fashion_mnist_dataset_path
 
-    mnist = load_data(dataset_path, one_hot=True)
+    mnist = get_mnist_dataset(dataset_path)
 
     X_train = mnist[0][0]
     X_train.reshape((-1, 784))
@@ -43,17 +44,13 @@ def mnist(K=10, structured_or_random='structured', digits_or_fashion='digits'):
 
     # build train data
     print('Building TRAIN data...')
-    y_train = np.argmax(t_train, axis=1)
     # reduce the number of train examples from 55000 to 10000
     X_train, y_train, _ = reduce_data(X_train, X_train.shape[0], 10000, y_train)
-    # X_train = binarize_data(X_train)
 
     # build test data
     print('Building TEST data...')
-    y_test = np.argmax(t_test, axis=1)
     # reduce the number of test examples from 10000 to 250
     X_test, y_test, _ = reduce_data(X_test, X_test.shape[0], 250, y_test)
-    # X_test = binarize_data(X_test)
 
     # construct data with missing values
     X_train_missing, X_train, y_train = construct_missing_data(

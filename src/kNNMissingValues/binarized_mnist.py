@@ -6,7 +6,7 @@ import numpy as np
 
 from src.Utilities.constants import *
 from src.Utilities.get_binarized_mnist_dataset import get_binarized_mnist_dataset, get_binarized_mnist_labels, obtain
-from src.Utilities.kNN_matrix_completion import kNNMatrixCompletion
+from src.Utilities.knn_matrix_completion import kNNMatrixCompletion
 from src.Utilities.plot_dataset_samples import plot_mnist_or_omniglot_data
 from src.Utilities.utils import reduce_data, construct_missing_data, get_non_zero_percentage, rmse, mae
 
@@ -69,7 +69,6 @@ def binarized_mnist(K=10, structured_or_random='structured'):
     print('non missing values percentage in the TEST data: ' + str(percentage) + ' %')
 
     # convert variables to numpy matrices
-    X_train = np.array(X_train)
     X_test_missing = np.array(X_test_missing)
     y_test = np.array(y_test)
 
