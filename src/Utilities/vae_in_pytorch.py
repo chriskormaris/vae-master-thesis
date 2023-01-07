@@ -8,8 +8,7 @@ import torch.optim as optim
 from torch.autograd import Variable
 
 
-#####
-
+# HELPER FUNCTIONS #
 
 def xavier_init(size):
     in_dim = size[0]
@@ -58,6 +57,7 @@ def initialize_weights(X_dim, hidden_encoder_dim, hidden_decoder_dim, Z_dim, lr=
     return params, solver
 
 
+# VARIATIONAL AUTOENCODER IMPLEMENTATION IN PYTORCH #
 # @: denotes matrix multiplication
 def train(x, mb_size, Z_dim, params, solver):
     x = Variable(torch.from_numpy(x).float())

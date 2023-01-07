@@ -10,8 +10,6 @@ from src.Utilities.plot_dataset_samples import plot_mnist_or_omniglot_data
 from src.Utilities.utils import construct_missing_data, get_non_zero_percentage, rmse, mae
 from src.Utilities.vae_in_pytorch import initialize_weights, train
 
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # hide tensorflow warnings
-
 
 def binarized_mnist(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
     missing_value = 0.5

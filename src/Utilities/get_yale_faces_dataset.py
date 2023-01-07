@@ -3,11 +3,11 @@ import os
 import numpy as np
 from PIL import Image
 
-D = 32256  # 168 x 192
-K = 38  # number of classes
-
 
 def get_yale_faces_dataset(yale_dataset_path, one_hot=False, print_progress=False):
+    D = 32256  # 168 x 192
+    K = 38  # number of classes
+
     X = np.array([[]])
     y = np.array([])
 

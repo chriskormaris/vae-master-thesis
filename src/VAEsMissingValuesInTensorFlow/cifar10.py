@@ -12,8 +12,6 @@ from src.Utilities.plot_dataset_samples import plot_cifar10_data
 from src.Utilities.utils import reduce_data, construct_missing_data, get_non_zero_percentage, rmse, mae
 from src.Utilities.vae_in_tensorflow import vae
 
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # hide tensorflow warnings
-
 
 def cifar10(
         latent_dim=64,

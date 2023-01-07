@@ -12,8 +12,6 @@ from src.Utilities.plot_dataset_samples import plot_movielens_data
 from src.Utilities.utils import get_non_zero_percentage, rmse, mae
 from src.Utilities.vae_in_tensorflow import vae
 
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # hide tensorflow warnings
-
 
 def movielens(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
     missing_value = 0

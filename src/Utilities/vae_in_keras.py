@@ -3,12 +3,10 @@ import os
 from keras.layers import Input, Dense
 from keras.models import Model
 
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # hide tensorflow warnings
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # hide TensorFlow warnings
 
 
-#####
-
-
+# VARIATIONAL AUTOENCODER IMPLEMENTATION IN KERAS #
 def vae(input_dim, latent_dim):
     # latent_dim: this is the size of our encoded representations
     # latent_dim = 32  # 32 floats -> compression of factor 24.5, assuming the input is 784 floats

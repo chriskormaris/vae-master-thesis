@@ -4,9 +4,6 @@ import numpy as np
 np.seterr(all='ignore')
 
 
-##########
-
-
 # Customized Euclidean distance function.
 def sqdist(X_train, X_test_instance, missing_value):
     Ntrain = X_train.shape[0]

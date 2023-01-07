@@ -10,8 +10,6 @@ from src.Utilities.plot_dataset_samples import plot_mnist_or_omniglot_data
 from src.Utilities.utils import rmse, mae
 from src.Utilities.vae_in_pytorch import initialize_weights, train
 
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # hide tensorflow warnings
-
 
 def mnist(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, digits_or_fashion='digits'):
     if digits_or_fashion == 'digits':

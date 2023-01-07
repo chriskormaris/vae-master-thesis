@@ -3,14 +3,14 @@ import os
 import numpy as np
 from PIL import Image
 
-D = 10304  # 92 x 112
-K = 40  # number of classes
-
 
 # The dataset contains images 400 images of faces.
 # The faces are from 40 different people.
 # 10 faces for each person are included, thus 40 * 10 = 400.
 def get_orl_faces_dataset(db_of_faces_path, one_hot=False, print_progress=False):
+    D = 10304  # 92 x 112
+    K = 40  # number of classes
+
     X = np.array([[]])
     y = np.array([])
 

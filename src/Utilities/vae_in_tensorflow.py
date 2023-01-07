@@ -1,10 +1,11 @@
 # Based on the Vanilla VAE with TensorFlow from this url:
 # https://github.com/wiseodd/generative-models
+import os
 
 import tensorflow as tf
 
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # hide TensorFlow warnings
 
-#####
 
 # HELPER FUNCTIONS #
 
@@ -18,11 +19,7 @@ def initialize_bias_variable(shape, name=''):
     return tf.Variable(initial, name=name)
 
 
-#####
-
-
 # VARIATIONAL AUTOENCODER IMPLEMENTATION IN TENSORFLOW #
-
 def vae(batch_size, input_dim, hidden_encoder_dim, hidden_decoder_dim, latent_dim, lr=0.01):
     # Reset the default graph
     # IMPORTANT: WE NEED THIS to rerun the TensorFlow operation

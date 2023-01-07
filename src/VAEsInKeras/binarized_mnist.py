@@ -10,8 +10,6 @@ from src.Utilities.get_binarized_mnist_dataset import get_binarized_mnist_datase
 from src.Utilities.utils import rmse, mae
 from src.Utilities.vae_in_keras import vae
 
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # hide tensorflow warnings
-
 
 def binarized_mnist(latent_dim=64, epochs=100, batch_size='N'):
     input_dim = 784

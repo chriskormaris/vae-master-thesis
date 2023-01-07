@@ -1,4 +1,3 @@
-import os
 import time
 
 import matplotlib.pyplot as plt
@@ -9,8 +8,6 @@ from src.Utilities.constants import *
 from src.Utilities.get_omniglot_dataset import get_omniglot_dataset
 from src.Utilities.utils import rmse, mae
 from src.Utilities.vae_in_keras import vae
-
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # hide tensorflow warnings
 
 
 def omniglot(latent_dim=64, epochs=100, batch_size='250', language='English'):
