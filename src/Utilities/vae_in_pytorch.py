@@ -75,17 +75,17 @@ def train(x, mb_size, Z_dim, params, solver):
 
     # ============================== Q(Z|X) = Q(Z) - Encoder NN ============================== #
 
-    # hidden_layer_encoder = nn.relu(x @ torch.transpose(phi1, 0, 1) + bias_phi1.repeat(mb_size, 1))
-    hidden_layer_encoder = nn.relu(torch.mm(x, torch.transpose(phi1, 0, 1)) +
-                                   bias_phi1.repeat(mb_size, 1))
-    # mu_encoder = hidden_layer_encoder @ torch.transpose(phi_mu, 0, 1) + \
-    #              bias_phi_mu.repeat(hidden_layer_encoder.size(0), 1)
-    mu_encoder = torch.mm(hidden_layer_encoder, torch.transpose(phi_mu, 0, 1)) + \
+    hidden_layer_encoder = nn.relu(x @ torch.transpose(phi1, 0, 1) + bias_phi1.repeat(mb_size, 1))
+    # hidden_layer_encoder = nn.relu(torch.mm(x, torch.transpose(phi1, 0, 1)) +
+    #                                bias_phi1.repeat(mb_size, 1))
+    mu_encoder = hidden_layer_encoder @ torch.transpose(phi_mu, 0, 1) + \
                  bias_phi_mu.repeat(hidden_layer_encoder.size(0), 1)
-    # logvar_encoder = hidden_layer_encoder @ torch.transpose(phi_logvar, 0, 1) + \
-    #                  bias_phi_logvar.repeat(hidden_layer_encoder.size(0), 1)
-    logvar_encoder = torch.mm(hidden_layer_encoder, torch.transpose(phi_logvar, 0, 1)) + \
+    # mu_encoder = torch.mm(hidden_layer_encoder, torch.transpose(phi_mu, 0, 1)) + \
+    #              bias_phi_mu.repeat(hidden_layer_encoder.size(0), 1)
+    logvar_encoder = hidden_layer_encoder @ torch.transpose(phi_logvar, 0, 1) + \
                      bias_phi_logvar.repeat(hidden_layer_encoder.size(0), 1)
+    # logvar_encoder = torch.mm(hidden_layer_encoder, torch.transpose(phi_logvar, 0, 1)) + \
+    #                  bias_phi_logvar.repeat(hidden_layer_encoder.size(0), 1)
 
     # Sample epsilon from the Gaussian distribution. #
     epsilon = Variable(torch.randn(mb_size, Z_dim))
@@ -96,11 +96,11 @@ def train(x, mb_size, Z_dim, params, solver):
 
     # ============================== P(X|Z) - Decoder NN ============================== #
 
-    # hidden_layer_decoder = nn.relu(z @ torch.transpose(theta1, 0, 1) + bias_theta1.repeat(z.size(0), 1))
-    hidden_layer_decoder = nn.relu(torch.mm(z, torch.transpose(theta1, 0, 1)) + bias_theta1.repeat(z.size(0), 1))
-    # x_hat = hidden_layer_decoder @ torch.transpose(theta2, 0, 1) + bias_theta2.repeat(hidden_layer_decoder.size(0), 1)
-    x_hat = torch.mm(hidden_layer_decoder, torch.transpose(theta2, 0, 1)) + \
-            bias_theta2.repeat(hidden_layer_decoder.size(0), 1)
+    hidden_layer_decoder = nn.relu(z @ torch.transpose(theta1, 0, 1) + bias_theta1.repeat(z.size(0), 1))
+    # hidden_layer_decoder = nn.relu(torch.mm(z, torch.transpose(theta1, 0, 1)) + bias_theta1.repeat(z.size(0), 1))
+    x_hat = hidden_layer_decoder @ torch.transpose(theta2, 0, 1) + bias_theta2.repeat(hidden_layer_decoder.size(0), 1)
+    # x_hat = torch.mm(hidden_layer_decoder, torch.transpose(theta2, 0, 1)) + \
+    #         bias_theta2.repeat(hidden_layer_decoder.size(0), 1)
     x_recon_samples = torch.sigmoid(x_hat)
 
     # Loss #
