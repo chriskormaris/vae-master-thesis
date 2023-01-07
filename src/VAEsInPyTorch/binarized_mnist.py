@@ -44,6 +44,10 @@ def binarized_mnist(latent_dim=64, epochs=100, batch_size='N', learning_rate=0.0
     hidden_encoder_dim = 400  # M1
     hidden_decoder_dim = hidden_encoder_dim  # M2
     # latent_dim = Z_dim
+    if batch_size == 'N':
+        batch_size = N
+    else:
+        batch_size = int(batch_size)
 
     #####
 
