@@ -13,7 +13,7 @@ from src.Utilities.vae_in_keras import vae
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # hide tensorflow warnings
 
 
-def mnist(latent_dim=64, epochs=100, batch_size='N', digits_or_fashion='digits'):
+def mnist(latent_dim=64, epochs=100, batch_size='250', digits_or_fashion='digits'):
     input_dim = 784
 
     if digits_or_fashion == 'digits':

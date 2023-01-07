@@ -14,7 +14,7 @@ from src.Utilities.vae_in_tensorflow import vae
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # hide tensorflow warnings
 
 
-def yale_faces(latent_dim=64, epochs=100, batch_size='N', learning_rate=0.01):
+def yale_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
     output_images_path = output_img_base_path + 'VAEsInTensorFlow/yale_faces'
     logdir = tensorflow_logs_path + 'yale_faces_vae'
     save_path = save_base_path + 'yale_faces_vae'
@@ -119,7 +119,8 @@ def yale_faces(latent_dim=64, epochs=100, batch_size='N', learning_rate=0.01):
                 fig = plot_yale_faces(
                     cur_samples,
                     batch_labels,
-                    categories=list(range(10)), title='Epoch {}'.format(str(epoch).zfill(3))
+                    categories=list(range(10)),
+                    title='Epoch {}'.format(str(epoch).zfill(3))
                 )
                 fig.savefig(output_images_path + '/epoch_{}_faces.png'.format(str(epoch).zfill(3)))
                 plt.close()

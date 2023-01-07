@@ -16,7 +16,7 @@ from src.Utilities.vae_in_pytorch import initialize_weights, train
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # hide tensorflow warnings
 
 
-def yale_faces(latent_dim=64, epochs=100, batch_size='N', learning_rate=0.01, structured_or_random='structured'):
+def yale_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, structured_or_random='structured'):
     missing_value = 0.5
 
     output_images_path = output_img_base_path + 'VAEsMissingValuesInPyTorch/yale_faces'

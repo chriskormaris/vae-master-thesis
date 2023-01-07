@@ -16,6 +16,7 @@ def plot_mnist_or_omniglot_data(
 ):
     # show n samples for each class
     fig = plt.figure(figsize=(n, len(categories)))
+    plt.title(title)
     if mnist_or_omniglot == 'omniglot':
         num_columns = 5
     else:
@@ -49,9 +50,12 @@ def plot_mnist_or_omniglot_data(
     return fig
 
 
-def plot_cifar10_data(X, y, categories=list(range(10)), n=10, title='', grayscale=False, show_plot=False):
+def plot_cifar10_data(X, y, categories=None, n=10, title='', grayscale=False, show_plot=False):
+    if categories is None:
+        categories = list(range(10))
     # show n samples for each class
     fig = plt.figure(figsize=(n, len(categories)))
+    plt.title(title)
     for c, category in enumerate(categories):
         if int(n * c + 1) < int(n * len(categories)):
             i = 0
@@ -82,9 +86,12 @@ def plot_cifar10_data(X, y, categories=list(range(10)), n=10, title='', grayscal
     return fig
 
 
-def plot_orl_faces(X, y, categories=list(range(1, 11)), n=10, title='', grayscale=True, show_plot=False):
+def plot_orl_faces(X, y, categories=None, n=10, title='', grayscale=True, show_plot=False):
+    if categories is None:
+        categories = list(range(1, 11))
     # show n samples for each class
     fig = plt.figure(figsize=(n, len(categories)))
+    plt.title(title)
     for c, category in enumerate(categories):
         if int(n * c + 1) < int(n * len(categories)):
             i = 0
@@ -115,14 +122,17 @@ def plot_orl_faces(X, y, categories=list(range(1, 11)), n=10, title='', grayscal
     return fig
 
 
-def plot_yale_faces(X, y, categories=list(range(1, 11)), n=10, title='', grayscale=True, show_plot=False):
+def plot_yale_faces(X, y, categories=None, n=10, title='', grayscale=True, show_plot=False):
+    if categories is None:
+        categories = list(range(1, 11))
     # show n samples for each class
     fig = plt.figure(figsize=(n, len(categories)))
+    plt.title(title)
     for c, category in enumerate(categories):
         if int(n * c + 1) < int(n * len(categories)):
             i = 0
             # plot the first n data of each category
-            for col in range(2):
+            for col in range(len(categories)):
                 while y[i] != category:
                     i = i + 1
                 ax = plt.subplot(10, 10, col + c * 10 + 1)

@@ -13,7 +13,7 @@ from src.Utilities.constants import *
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # hide tensorflow warnings
 
 
-def cifar10(latent_dim=64, epochs=100, batch_size='N', rgb_or_grayscale='rgb'):
+def cifar10(latent_dim=64, epochs=100, batch_size='250', rgb_or_grayscale='rgb'):
     if rgb_or_grayscale.lower() == 'rgb':
         input_dim = 3072
     else:

@@ -15,7 +15,7 @@ from src.Utilities.vae_in_tensorflow import vae
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # hide tensorflow warnings
 
 
-def movielens(latent_dim=64, epochs=100, batch_size='N', learning_rate=0.01):
+def movielens(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
     missing_value = 0
 
     output_data_path = movielens_output_data_base_path + 'VAEsMissingValuesInTensorFlow/'

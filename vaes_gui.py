@@ -553,7 +553,7 @@ if __name__ == '__main__':
     latent_dim_var = tk.IntVar(root, 64)
     epochs_var = tk.IntVar(root, 100)
     learning_rate_var = tk.DoubleVar(root, 0.01)
-    batch_size_var = tk.StringVar(root, 'N')
+    batch_size_var = tk.StringVar(root, '250')
     K_var = tk.IntVar(root, 10)
 
     digits_or_fashion_mnist_var = tk.StringVar(root, 'digits')

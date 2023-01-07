@@ -16,7 +16,7 @@ from src.Utilities.vae_in_tensorflow import vae
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # hide tensorflow warnings
 
 
-def cifar10(latent_dim=64, epochs=100, batch_size='N', learning_rate=0.01, rgb_or_grayscale='grayscale'):
+def cifar10(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, rgb_or_grayscale='grayscale'):
     if rgb_or_grayscale.lower() == 'grayscale':
         output_images_path = output_img_base_path + 'VAEsInTensorFlow/cifar10_grayscale'
         logdir = tensorflow_logs_path + 'cifar10_grayscale_vae'

@@ -14,7 +14,7 @@ from src.Utilities.vae_in_pytorch import initialize_weights, train
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # hide tensorflow warnings
 
 
-def binarized_mnist(latent_dim=64, epochs=100, batch_size='N', learning_rate=0.01):
+def binarized_mnist(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
     output_images_path = output_img_base_path + 'VAEsInPyTorch/binarized_mnist'
 
     if not os.path.exists(output_images_path):

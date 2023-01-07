@@ -144,10 +144,15 @@ def vae(batch_size, input_dim, hidden_encoder_dim, hidden_decoder_dim, latent_di
             tf.compat.v1.summary.image('image_data', tf.reshape(x_recon_samples, shape=[-1, 32, 32, 1]))
         elif input_dim == 3072:  # for CIFAR-10 RGB dataset
             tf.compat.v1.summary.image('image_data', tf.reshape(x_recon_samples, shape=[-1, 32, 32, 3]))
-        elif input_dim == 10304:  # for 'Faces' dataset
+        elif input_dim == 10304:  # for ORL Faces dataset
             tf.compat.v1.summary.image(
                 'image_data',
                 tf.transpose(tf.reshape(x_recon_samples, shape=[-1, 92, 112, 1]), perm=[0, 2, 1, 3])
+            )
+        elif input_dim == 32256:  # for Yale Faces dataset
+            tf.compat.v1.summary.image(
+                'image_data',
+                tf.transpose(tf.reshape(x_recon_samples, shape=[-1, 192, 168, 1]), perm=[0, 2, 1, 3])
             )
 
     # ============================== TRAINING ============================== #
@@ -186,10 +191,12 @@ def vae(batch_size, input_dim, hidden_encoder_dim, hidden_decoder_dim, latent_di
 
         # Gradient Descent Optimizer #
         '''
-        grads_and_vars = tf.train.GradientDescentOptimizer(learning_rate=lr). \
-                         compute_gradients(loss=elbo, var_list=phis.extend(thetas))
-        apply_updates = tf.train.GradientDescentOptimizer(learning_rate=lr). \
-                        apply_gradients(grads_and_vars=grads_and_vars)
+        grads_and_vars = tf.compat.v1.train.GradientDescentOptimizer(learning_rate=lr).compute_gradients(
+            loss=elbo,
+            var_list=phis.extend(thetas)
+        )
+        apply_updates = tf.compat.v1.train.GradientDescentOptimizer(learning_rate=lr).apply_gradients(
+            grads_and_vars=grads_and_vars)
         '''
 
     # add op for merging summary
