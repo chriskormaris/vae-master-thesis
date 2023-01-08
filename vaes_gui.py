@@ -535,7 +535,7 @@ if __name__ == '__main__':
     image_label = tk.Label(welcomeFrame, image=aueb_logo, anchor=tk.CENTER)
     image_label.pack()
 
-    welcome_label = tk.Label(welcomeFrame, text='Welcome to the Variational autoencoders graphical user interface.')
+    welcome_label = tk.Label(welcomeFrame, text='Welcome to the Variational Autoencoders graphical user interface.')
     welcome_label.pack()
     instructions_label = tk.Label(
         welcomeFrame,
