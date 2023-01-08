@@ -40,9 +40,6 @@ def binarized_mnist(K=10, structured_or_random='structured'):
     # build test data
     # print('Building TEST data...')
     X_test = get_binarized_mnist_dataset(binarized_dataset_path + 'binarized_mnist_test.amat', 'TEST')
-    print(X_test.shape[0])
-    X_valid = get_binarized_mnist_dataset(binarized_dataset_path + 'binarized_mnist_valid.amat', 'VALID')
-    print(X_valid.shape[0])
     y_test = get_binarized_mnist_labels(binarized_dataset_path + 'binarized_mnist_test_labels.txt', 'TEST')
     # reduce the number of test examples from 10000 to 500
     X_test, y_test, _ = reduce_data(X_test, X_test.shape[0], 500, y=y_test)
