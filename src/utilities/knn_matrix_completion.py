@@ -34,6 +34,10 @@ def sqdist(X_train, X_test_instance, missing_value):
     return dist
 
 
+def softmax(x):
+    return np.divide(np.exp(x), np.sum(np.exp(x), axis=0))
+
+
 def kNNMatrixCompletion(X_train, X_test, K, missing_value, use_softmax_weights=True, binarize=False):
     Ntest = X_test.shape[0]
 
@@ -62,7 +66,7 @@ def kNNMatrixCompletion(X_train, X_test, K, missing_value, use_softmax_weights=T
             weights = softmax(-a * closest_k_data_distances)
         else:
             # ALTERNATIVE: all weights equal to 1 / K
-            weights = np.ones((K, 1)) / float(K)
+            weights = np.ones((K, 1)) / K
 
         weights = np.reshape(weights, newshape=(K, 1))
         closest_k_data = closest_k_data * np.repeat(weights, closest_k_data.shape[1], axis=1)
@@ -77,7 +81,3 @@ def kNNMatrixCompletion(X_train, X_test, K, missing_value, use_softmax_weights=T
         X_test_predicted = np.round(X_test_predicted + 0.3)
 
     return X_test_predicted
-
-
-def softmax(x):
-    return np.divide(np.exp(x), np.sum(np.exp(x), axis=0))
