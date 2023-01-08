@@ -4,8 +4,12 @@ import pandas as pd
 
 def get_movielens_dataset(movielens_dataset_path):
     # TRAIN data
-    dataframe = pd.read_csv(movielens_dataset_path + '/ua.base',
-                            sep='\t', header=None, names=['userID', 'movieId', 'rating', 'col3'])
+    dataframe = pd.read_csv(
+        movielens_dataset_path + '/ua.base',
+        sep='\t',
+        header=None,
+        names=['userID', 'movieId', 'rating', 'col3']
+    )
     dataframe['userID'] = dataframe['userID'] - 1
     dataframe['movieId'] = dataframe['movieId'] - 1
     del dataframe['col3']

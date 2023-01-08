@@ -43,12 +43,14 @@ import src.vaes_missing_values_in_tensorflow.orl_faces
 import src.vaes_missing_values_in_tensorflow.yale_faces
 from src.utilities.constants import *
 
+# global variables #
 isAlgorithmSelected = False
 isDatasetSelected = False
 
 
 #####
 
+# functions #
 
 def run(
         algorithm,
