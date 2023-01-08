@@ -2,7 +2,10 @@
 __pycache__
 *.pyc
 *.exe.stackdump
-build
-dist
-save
-tensorflow_logs
+build/
+dist/
+save/
+tensorflow_logs/
+logs/
+*.xml
+*.iml
