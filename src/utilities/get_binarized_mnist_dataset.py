@@ -33,8 +33,8 @@ def obtain(dir_path):
     binarized_mnist_base_url = 'http://www.cs.toronto.edu/~larocheh/public/datasets/binarized_mnist/'
 
     binarized_mnist_train_filename = 'binarized_mnist_train.amat'
-    binarized_mnist_valid_filename = 'binarized_mnist_valid.amat'
     binarized_mnist_test_filename = 'binarized_mnist_test.amat'
+    binarized_mnist_valid_filename = 'binarized_mnist_valid.amat'
 
     if not os.path.exists(dir_path + binarized_mnist_train_filename):
         print('Downloading Binarized MNIST train images file...')
