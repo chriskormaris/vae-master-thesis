@@ -9,8 +9,8 @@ pd.set_option('display.width', 1000)
 pd.set_option('display.max_rows', 200)
 
 
-# D = 784  # number of input layers (or number of pixels in the digit image)
-# K = 10  # number of output layers (or number of categories or number of digits)
+# D = 784  # number of input layers (aka number of pixels in the digit image)
+# K = 10  # number of output layers (aka number of categories or number of digits)
 
 
 def get_binarized_mnist_dataset(file_path, train_or_test_or_valid):
