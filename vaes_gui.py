@@ -221,7 +221,7 @@ def check_algorithm_and_show_vae_frame():
         omniglotDatasetFrame.pack()
     if isAlgorithmSelected and isDatasetSelected:
         runFrame.pack(side='bottom')
-        status.config(text='Algorithm selected: ' + algorithm_var.get() + ', dataset selected: ' + dataset_var.get())
+        status.config(text='Selected algorithm: ' + algorithm_var.get() + ', selected dataset: ' + dataset_var.get())
 
 
 def check_algorithm_and_show_knn_frame():
