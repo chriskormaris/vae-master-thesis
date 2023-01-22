@@ -3,9 +3,10 @@ import time
 
 import matplotlib.pyplot as plt
 import numpy as np
+from keras.datasets import fashion_mnist as fashion_mnist_dataset
+from keras.datasets import mnist as mnist_dataset
 
 from src.utilities.constants import *
-from src.utilities.get_mnist_dataset import get_mnist_dataset
 from src.utilities.knn_matrix_completion import kNNMatrixCompletion
 from src.utilities.plot_dataset_samples import plot_mnist_or_omniglot_data
 from src.utilities.utils import reduce_data, construct_missing_data, get_non_zero_percentage, rmse, mae
@@ -16,22 +17,24 @@ def mnist(K=10, structured_or_random='structured', digits_or_fashion='digits'):
 
     if digits_or_fashion == 'digits':
         output_images_path = output_img_base_path + 'knn_missing_values/mnist'
-        dataset_path = mnist_dataset_path
+        mnist_data = mnist_dataset.load_data(os.getcwd() + '\\' + mnist_dataset_path + 'mnist.npz')
     else:
         output_images_path = output_img_base_path + 'knn_missing_values/fashion_mnist'
-        dataset_path = fashion_mnist_dataset_path
+        mnist_data = fashion_mnist_dataset.load_data()
 
-    mnist = get_mnist_dataset(dataset_path)
+    X_train, y_train = mnist_data[0]
+    X_test, y_test = mnist_data[1]
 
-    X_train = mnist[0][0]
-    X_train.reshape((-1, 784))
-    y_train = mnist[0][1]
+    # We will normalize all values between 0 and 1,
+    # and we will flatten the 28x28 images into vectors of size 784.
+    X_train = X_train / 255.
+    X_test = X_test / 255.
+    X_train = X_train.reshape((-1, np.prod(X_train.shape[1:])))
+    X_test = X_test.reshape((-1, np.prod(X_test.shape[1:])))
+
     t_train = np.zeros((y_train.size, 10))
     t_train[np.arange(y_train.size), y_train] = 1
 
-    X_test = mnist[1][0]
-    X_test.reshape((-1, 784))
-    y_test = mnist[1][1]
     t_test = np.zeros((y_test.size, 10))
     t_test[np.arange(y_test.size), y_test] = 1
 

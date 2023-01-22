@@ -1,11 +1,13 @@
+import os
 import time
 
 import matplotlib.pyplot as plt
 import numpy as np
 from keras.callbacks import TensorBoard
+from keras.datasets import fashion_mnist as fashion_mnist_dataset
+from keras.datasets import mnist as mnist_dataset
 
 from src.utilities.constants import *
-from src.utilities.get_mnist_dataset import get_mnist_dataset
 from src.utilities.utils import rmse, mae
 from src.utilities.vae_in_keras import vae
 
@@ -14,9 +16,9 @@ def mnist(latent_dim=64, epochs=100, batch_size='250', digits_or_fashion='digits
     input_dim = 784
 
     if digits_or_fashion == 'digits':
-        dataset_path = mnist_dataset_path
+        mnist_data = mnist_dataset.load_data(os.getcwd() + '\\' + mnist_dataset_path + 'mnist.npz')
     else:
-        dataset_path = fashion_mnist_dataset_path
+        mnist_data = fashion_mnist_dataset.load_data()
 
     encoder, decoder, autoencoder = vae(input_dim, latent_dim)
 
@@ -24,19 +26,15 @@ def mnist(latent_dim=64, epochs=100, batch_size='250', digits_or_fashion='digits
     # We're using MNIST images, and we're discarding the labels
     # (since we're only interested in encoding/decoding the input images).
 
-    mnist = get_mnist_dataset(dataset_path)
+    X_train, y_train = mnist_data[0]
+    X_test, y_test = mnist_data[1]
 
-    X_train = mnist[0][0]
-    X_test = mnist[1][0]
-
-    # We will normalize all values between 0 and 1
+    # We will normalize all values between 0 and 1,
     # and we will flatten the 28x28 images into vectors of size 784.
-
-    X_train = X_train.astype('float32') / 255.
-    X_test = X_test.astype('float32') / 255.
-
-    X_train = X_train.reshape((len(X_train), np.prod(X_train.shape[1:])))
-    X_test = X_test.reshape((len(X_test), np.prod(X_test.shape[1:])))
+    X_train = X_train / 255.
+    X_test = X_test / 255.
+    X_train = X_train.reshape((-1, np.prod(X_train.shape[1:])))
+    X_test = X_test.reshape((-1, np.prod(X_test.shape[1:])))
 
     # Now let's train our autoencoder for a given number of epochs. #
     if batch_size == 'N':

@@ -4,9 +4,10 @@ import time
 import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
+from keras.datasets import fashion_mnist as fashion_mnist_dataset
+from keras.datasets import mnist as mnist_dataset
 
 from src.utilities.constants import *
-from src.utilities.get_mnist_dataset import get_mnist_dataset
 from src.utilities.plot_dataset_samples import plot_mnist_or_omniglot_data
 from src.utilities.utils import reduce_data, construct_missing_data, get_non_zero_percentage, rmse, mae
 from src.utilities.vae_in_tensorflow import vae
@@ -26,12 +27,12 @@ def mnist(
         output_images_path = output_img_base_path + 'vaes_missing_values_in_tensorflow/mnist'
         logdir = tensorflow_logs_path + 'mnist_vae_missing_values'
         save_path = save_base_path + 'mnist_vae_missing_values'
-        dataset_path = mnist_dataset_path
+        mnist_data = mnist_dataset.load_data(os.getcwd() + '\\' + mnist_dataset_path + 'mnist.npz')
     else:
         output_images_path = output_img_base_path + 'vaes_missing_values_in_tensorflow/fashion_mnist'
         logdir = tensorflow_logs_path + 'fashion_mnist_vae_missing_values'
         save_path = save_base_path + 'fashion_mnist_vae_missing_values'
-        dataset_path = fashion_mnist_dataset_path
+        mnist_data = fashion_mnist_dataset.load_data()
 
     if not os.path.exists(output_images_path):
         os.makedirs(output_images_path)
@@ -39,11 +40,12 @@ def mnist(
     if not os.path.exists(save_path):
         os.makedirs(save_path)
 
-    mnist = get_mnist_dataset(dataset_path)
+    X_train, y_train = mnist_data[0]
 
-    X_train = mnist[0][0]
-    X_train = X_train.reshape(-1, 784)
-    y_train = mnist[0][1]
+    # We will normalize all values between 0 and 1,
+    # and we will flatten the 28x28 images into vectors of size 784.
+    X_train = X_train / 255.
+    X_train = X_train.reshape((-1, np.prod(X_train.shape[1:])))
 
     #####
 
@@ -51,8 +53,11 @@ def mnist(
     X_train, y_train, _ = reduce_data(X_train, X_train.shape[0], 30000, y=y_train)
 
     # construct data with missing values
-    X_train_missing, X_train, y_train = construct_missing_data(X_train, y_train,
-                                                               structured_or_random=structured_or_random)
+    X_train_missing, X_train, y_train = construct_missing_data(
+        X_train,
+        y_train,
+        structured_or_random=structured_or_random
+    )
 
     print('')
 

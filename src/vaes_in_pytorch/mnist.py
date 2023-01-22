@@ -3,9 +3,10 @@ import time
 
 import matplotlib.pyplot as plt
 import numpy as np
+from keras.datasets import fashion_mnist as fashion_mnist_dataset
+from keras.datasets import mnist as mnist_dataset
 
 from src.utilities.constants import *
-from src.utilities.get_mnist_dataset import get_mnist_dataset
 from src.utilities.plot_dataset_samples import plot_mnist_or_omniglot_data
 from src.utilities.utils import rmse, mae
 from src.utilities.vae_in_pytorch import initialize_weights, train
@@ -14,19 +15,18 @@ from src.utilities.vae_in_pytorch import initialize_weights, train
 def mnist(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, digits_or_fashion='digits'):
     if digits_or_fashion == 'digits':
         output_images_path = output_img_base_path + 'vaes_in_pytorch/mnist'
-        dataset_path = mnist_dataset_path
+        mnist_data = mnist_dataset.load_data(os.getcwd() + '\\' + mnist_dataset_path + 'mnist.npz')
     else:
         output_images_path = output_img_base_path + 'vaes_in_pytorch/fashion_mnist'
-        dataset_path = fashion_mnist_dataset_path
+        mnist_data = fashion_mnist_dataset.load_data()
 
     if not os.path.exists(output_images_path):
         os.makedirs(output_images_path)
 
-    mnist = get_mnist_dataset(dataset_path)
+    X_train, y_train = mnist_data[0]
 
-    X_train = mnist[0][0]
-    X_train = X_train.reshape(-1, 784)
-    y_train = mnist[0][1]
+    X_train = X_train / 255.
+    X_train = X_train.reshape((-1, np.prod(X_train.shape[1:])))
 
     print('')
 
