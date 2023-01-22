@@ -12,9 +12,10 @@ This repository was created for the purposes of my Master Thesis for the MSc in 
 
 
 ## ResearchGate links ##
-You can find the `.pdf` files of my master thesis on the site of ResearchGate in two languages, English & Greek:
-- English translation: https://www.researchgate.net/publication/337000568
-- Greek translation: https://www.researchgate.net/publication/349465619
+You can find the `.pdf` files of my master thesis on the site of ResearchGate in two languages, English & Greek.
+
+* English translation: https://www.researchgate.net/publication/337000568
+* Greek translation: https://www.researchgate.net/publication/349465619
 
 
 ## Description ##
@@ -113,9 +114,11 @@ The results of the algorithm will be new images of the faces, with their missing
 
 # VAE Missing Values algorithm #
 
-There are also two different implementations of the Variational Autoencoder Missing Values algorithm of the VAEs included: 
-1) using TensorFlow and 
-2) using PyTorch
+There are also two different implementations of the Variational Autoencoder Missing Values algorithm of the VAEs included.
+
+1. using TensorFlow and 
+2. using PyTorch
+
 The datasets included are: MNIST, Binarized MNIST, CIFAR-10, OMNIGLOT, ORL Face Database, Yale Faces & the Movielens dataset.
 The algorithm uses a Variational Autoencoder to predict only the missing pixel values, based on the training data.
 
