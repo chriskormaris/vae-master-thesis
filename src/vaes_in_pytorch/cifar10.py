@@ -43,35 +43,30 @@ def cifar10(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, rgb
     X_test_dogs = X_test[np.where(y_test == category)[0], :]
     y_test_dogs = y_test[np.where(y_test == category)[0]]
 
-    X_train = np.concatenate((X_train_cats, X_train_dogs), axis=0)
-    y_train = np.concatenate((y_train_cats, y_train_dogs), axis=0)
-    X_test = np.concatenate((X_test_cats, X_test_dogs), axis=0)
-    y_test = np.concatenate((y_test_cats, y_test_dogs), axis=0)
-
     # Merge train and test data together to increase the train dataset size.
-    X_train = np.concatenate((X_train, X_test), axis=0)  # X_train: N x 3072
-    y_train = np.concatenate((y_train, y_test), axis=0)
+    X_merged = np.concatenate((X_train_cats, X_train_dogs, X_test_cats, X_test_dogs), axis=0)
+    y_merged = np.concatenate((y_train_cats, y_train_dogs, y_test_cats, y_test_dogs), axis=0)
 
     # randomize data
-    s = np.random.permutation(X_train.shape[0])
-    X_train = X_train[s, :]
-    y_train = y_train[s]
+    s = np.random.permutation(X_merged.shape[0])
+    X_merged = X_merged[s, :]
+    y_merged = y_merged[s]
 
     if rgb_or_grayscale.lower() == 'grayscale':
         # Convert colored images from 3072 dimensions to 1024 grayscale images.
-        X_train = np.dot(X_train[:, :, :, :3], [0.299, 0.587, 0.114])
-        X_train = np.reshape(X_train, newshape=(-1, 1024))  # X_train: N x 1024
+        X_merged = np.dot(X_merged[:, :, :, :3], [0.299, 0.587, 0.114])
+        X_merged = np.reshape(X_merged, newshape=(-1, 1024))  # X_merged: N x 1024
     else:
         # We will flatten the 32x32 images into vectors of size 3072.
-        X_train = X_train.reshape((-1, 3072))
+        X_merged = X_merged.reshape((-1, 3072))
 
     # We will normalize all values between 0 and 1.
-    X_train = X_train / 255.
+    X_merged = X_merged / 255.
 
     #####
 
-    N = X_train.shape[0]
-    input_dim = X_train.shape[1]  # D: 3072 or 1024
+    N = X_merged.shape[0]
+    input_dim = X_merged.shape[1]  # D: 3072 or 1024
     # M1: number of neurons in the encoder
     # M2: number of neurons in the decoder
     hidden_encoder_dim = 400  # M1
@@ -94,6 +89,8 @@ def cifar10(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, rgb
     cur_elbo = None
     X_recon = np.zeros((N, input_dim))
 
+    print('')
+
     iterations = int(N / batch_size)
     start_time = time.time()
     for epoch in range(1, epochs + 1):
@@ -101,8 +98,8 @@ def cifar10(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, rgb
             start_index = (i - 1) * batch_size
             end_index = i * batch_size
 
-            batch_data = X_train[start_index:end_index, :]
-            batch_labels = y_train[start_index:end_index]
+            batch_data = X_merged[start_index:end_index, :]
+            batch_labels = y_merged[start_index:end_index]
 
             cur_samples, cur_elbo = train(batch_data, batch_size, latent_dim, params, solver)
 
@@ -113,15 +110,15 @@ def cifar10(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, rgb
         if epoch == 1:
             if input_dim == 1024:
                 fig = plot_cifar10_data(
-                    X_train[start_index:end_index, :],
-                    y_train[start_index:end_index],
+                    X_merged[start_index:end_index, :],
+                    y_merged[start_index:end_index],
                     categories=categories,
                     grayscale=True
                 )
             elif input_dim == 3072:
                 fig = plot_cifar10_data(
-                    X_train[start_index:end_index, :],
-                    y_train[start_index:end_index],
+                    X_merged[start_index:end_index, :],
+                    y_merged[start_index:end_index],
                     categories=categories,
                     grayscale=False
                 )
@@ -153,10 +150,10 @@ def cifar10(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, rgb
     print(f'training time: {elapsed_time} secs')
     print('')
 
-    error1 = rmse(X_train, X_recon)
+    error1 = rmse(X_merged, X_recon)
     print(f'root mean squared error: {error1}')
 
-    error2 = mae(X_train, X_recon)
+    error2 = mae(X_merged, X_recon)
     print(f'mean absolute error: {error2}')
 
 
