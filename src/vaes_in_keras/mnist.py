@@ -26,8 +26,7 @@ def mnist(latent_dim=64, epochs=100, batch_size='250', digits_or_fashion='digits
     # We're using MNIST images, and we're discarding the labels
     # (since we're only interested in encoding/decoding the input images).
 
-    X_train, y_train = mnist_data[0]
-    X_test, y_test = mnist_data[1]
+    (X_train, y_train), (X_test, y_test) = mnist_data
 
     # We will normalize all values between 0 and 1,
     # and we will flatten the 28x28 images into vectors of size 784.

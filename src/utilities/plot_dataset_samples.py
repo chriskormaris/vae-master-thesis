@@ -7,25 +7,22 @@ import numpy as np
 def plot_mnist_or_omniglot_data(
         X,
         y,
-        categories=list(range(10)),
+        categories=None,
         n=10,
         title='',
         grayscale=True,
-        show_plot=False,
-        mnist_or_omniglot='mnist'
+        show_plot=False
 ):
     # show n samples for each class
-    fig = plt.figure(figsize=(n, len(categories)))
+    if categories is None:
+        categories = list(range(10))
+    fig = plt.figure(figsize=(n, n))
     plt.title(title)
-    if mnist_or_omniglot == 'omniglot':
-        num_columns = 5
-    else:
-        num_columns = len(categories)
     for c, category in enumerate(categories):
         if int(n * c + 1) < int(n * len(categories)):
             i = 0
             # plot the first n data of each category
-            for col in range(num_columns):
+            for col in range(n):
                 while y[i] != category:
                     i = i + 1
                 ax = plt.subplot(10, 10, col + c * 10 + 1)
@@ -54,13 +51,13 @@ def plot_cifar10_data(X, y, categories=None, n=10, title='', grayscale=False, sh
     if categories is None:
         categories = list(range(10))
     # show n samples for each class
-    fig = plt.figure(figsize=(n, len(categories)))
+    fig = plt.figure(figsize=(n, n))
     plt.title(title)
     for c, category in enumerate(categories):
         if int(n * c + 1) < int(n * len(categories)):
             i = 0
             # plot the first n data of each category
-            for col in range(5):
+            for col in range(n):
                 while y[i] != category:
                     i = i + 1
                 ax = plt.subplot(10, 10, col + c * n + 1)
@@ -90,13 +87,13 @@ def plot_orl_faces(X, y, categories=None, n=10, title='', grayscale=True, show_p
     if categories is None:
         categories = list(range(1, 11))
     # show n samples for each class
-    fig = plt.figure(figsize=(n, len(categories)))
+    fig = plt.figure(figsize=(n, n))
     plt.title(title)
     for c, category in enumerate(categories):
         if int(n * c + 1) < int(n * len(categories)):
             i = 0
             # plot the first n data of each category
-            for col in range(len(categories)):
+            for col in range(n):
                 while y[i] != category:
                     i = i + 1
                 ax = plt.subplot(10, 10, col + c * 10 + 1)
@@ -126,13 +123,13 @@ def plot_yale_faces(X, y, categories=None, n=10, title='', grayscale=True, show_
     if categories is None:
         categories = list(range(1, 11))
     # show n samples for each class
-    fig = plt.figure(figsize=(n, len(categories)))
+    fig = plt.figure(figsize=(n, n))
     plt.title(title)
     for c, category in enumerate(categories):
         if int(n * c + 1) < int(n * len(categories)):
             i = 0
             # plot the first n data of each category
-            for col in range(len(categories)):
+            for col in range(n):
                 while y[i] != category:
                     i = i + 1
                 ax = plt.subplot(10, 10, col + c * 10 + 1)

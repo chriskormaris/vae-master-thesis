@@ -109,9 +109,9 @@ def omniglot(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, la
 
         for epoch in range(1, epochs + 1):
             iterations = int(N / batch_size)
-            for i in range(iterations):
-                start_index = i * batch_size
-                end_index = (i + 1) * batch_size
+            for i in range(1, iterations + 1):
+                start_index = (i - 1) * batch_size
+                end_index = i * batch_size
 
                 batch_data = X_merged[start_index:end_index, :]
                 batch_labels = y_merged[start_index:end_index]
@@ -130,12 +130,10 @@ def omniglot(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, la
             print('Epoch {0} | Loss (ELBO): {1}'.format(epoch, cur_elbo))
 
             if epoch % 10 == 0 or epoch == 1:
-
                 fig = plot_mnist_or_omniglot_data(
                     cur_samples,
                     batch_labels,
-                    categories=list(range(1, 11)), n=5, title='Epoch {}'.format(str(epoch).zfill(3)),
-                    mnist_or_omniglot='omniglot'
+                    categories=list(range(1, 11)), n=5, title='Epoch {}'.format(str(epoch).zfill(3))
                 )
                 fig.savefig(
                     output_images_path + '/epoch_{}_characters_1-10.png'.format(str(epoch).zfill(3)),
@@ -145,8 +143,7 @@ def omniglot(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, la
                 fig = plot_mnist_or_omniglot_data(
                     cur_samples,
                     batch_labels,
-                    categories=list(range(11, 21)), n=5, title='Epoch {}'.format(str(epoch).zfill(3)),
-                    mnist_or_omniglot='omniglot'
+                    categories=list(range(11, 21)), n=5, title='Epoch {}'.format(str(epoch).zfill(3))
                 )
                 fig.savefig(
                     output_images_path + '/epoch_{}_characters_11-20.png'.format(str(epoch).zfill(3)),
@@ -157,8 +154,7 @@ def omniglot(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, la
                     fig = plot_mnist_or_omniglot_data(
                         cur_samples,
                         batch_labels,
-                        categories=list(range(21, 25)), n=5, title='Epoch {}'.format(str(epoch).zfill(3)),
-                        mnist_or_omniglot='omniglot'
+                        categories=list(range(21, 25)), n=5, title='Epoch {}'.format(str(epoch).zfill(3))
                     )
                     fig.savefig(
                         output_images_path + '/epoch_{}_characters_21-24.png'.format(str(epoch).zfill(3)),
@@ -170,8 +166,7 @@ def omniglot(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, la
                         batch_labels,
                         categories=list(range(21, 27)),
                         n=5,
-                        title='Epoch {}'.format(str(epoch).zfill(3)),
-                        mnist_or_omniglot='omniglot'
+                        title='Epoch {}'.format(str(epoch).zfill(3))
                     )
                     fig.savefig(
                         output_images_path + '/epoch_{}_characters_21-26.png'.format(str(epoch).zfill(3)),

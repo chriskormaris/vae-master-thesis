@@ -97,9 +97,9 @@ def movielens(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
 
         for epoch in range(1, epochs + 1):
             iterations = int(N / batch_size)
-            for i in range(iterations):
-                start_index = i * batch_size
-                end_index = (i + 1) * batch_size
+            for i in range(1, iterations + 1):
+                start_index = (i - 1) * batch_size
+                end_index = i * batch_size
 
                 batch_data = X_filled[start_index:end_index, :]
 

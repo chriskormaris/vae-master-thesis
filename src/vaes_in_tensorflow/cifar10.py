@@ -6,9 +6,9 @@ import time
 import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
+from keras.datasets import cifar10 as cifar10_dataset
 
 from src.utilities.constants import *
-from src.utilities.get_cifar10_dataset import get_cifar10_dataset
 from src.utilities.plot_dataset_samples import plot_cifar10_data
 from src.utilities.utils import mae, rmse
 from src.utilities.vae_in_tensorflow import vae
@@ -31,9 +31,9 @@ def cifar10(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, rgb
         os.makedirs(save_path)
 
     # LOAD CIFAR-10 DATASET #
-    (X_train, y_train), (X_test, y_test) = get_cifar10_dataset(cifar10_dataset_path)
+    (X_train, y_train), (X_test, y_test) = cifar10_dataset.load_data()
 
-    # We will normalize all values between 0 and 1
+    # We will normalize all values between 0 and 1,
     # and we will flatten the 32x32 images into vectors of size 3072.
 
     # reduce train and test data to only two categories, the class 3 ('cat') and the class 5 ('dog')
@@ -70,11 +70,11 @@ def cifar10(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, rgb
         X_train = np.dot(X_train[:, :, :, :3], [0.299, 0.587, 0.114])
         X_train = np.reshape(X_train, newshape=(-1, 1024))  # X_train: N x 1024
     else:
-        # We will normalize all values between 0 and 1
+        # We will normalize all values between 0 and 1,
         # and we will flatten the 32x32 images into vectors of size 3072.
-        X_train = X_train.reshape((len(X_train), 3072))
+        X_train = X_train.reshape((-1, 3072))
 
-    X_train = X_train.astype('float32') / 255.
+    X_train = X_train / 255.
 
     #####
 
@@ -124,15 +124,17 @@ def cifar10(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, rgb
         for epoch in range(1, epochs + 1):
             iterations = int(N / batch_size)
             for i in range(1, iterations + 1):
-                start_index = (iterations - 1) * batch_size
-                end_index = iterations * batch_size
+                start_index = (i - 1) * batch_size
+                end_index = i * batch_size
 
                 batch_data = X_train[start_index:end_index, :]
                 batch_labels = y_train[start_index:end_index]
 
                 feed_dict = {x: batch_data}
                 loss_str, _, summary_str, cur_elbo, cur_samples = sess.run(
-                    [loss_summ, apply_updates, summary_op, elbo, x_recon_samples], feed_dict=feed_dict)
+                    [loss_summ, apply_updates, summary_op, elbo, x_recon_samples],
+                    feed_dict=feed_dict
+                )
 
                 X_recon[start_index:end_index, :] = cur_samples
 

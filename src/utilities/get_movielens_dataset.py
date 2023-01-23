@@ -21,8 +21,12 @@ def get_movielens_dataset(movielens_dataset_path):
     X_train[dataframe['userID'], dataframe['movieId']] = dataframe['rating'].apply(pd.to_numeric)
 
     # TEST data
-    dataframe_test = pd.read_csv(movielens_dataset_path + '/ua.test',
-                                 sep='\t', header=None, names=['userID', 'movieId', 'rating', 'col3'])
+    dataframe_test = pd.read_csv(
+        movielens_dataset_path + '/ua.test',
+        sep='\t',
+        header=None,
+        names=['userID', 'movieId', 'rating', 'col3']
+    )
     dataframe_test['userID'] = dataframe_test['userID'] - 1
     dataframe_test['movieId'] = dataframe_test['movieId'] - 1
     del dataframe_test['col3']

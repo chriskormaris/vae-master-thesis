@@ -5,9 +5,9 @@ import time
 
 import matplotlib.pyplot as plt
 import numpy as np
+from keras.datasets import cifar10 as cifar10_dataset
 
 from src.utilities.constants import *
-from src.utilities.get_cifar10_dataset import get_cifar10_dataset
 from src.utilities.plot_dataset_samples import plot_cifar10_data
 from src.utilities.utils import rmse, mae
 from src.utilities.vae_in_pytorch import initialize_weights, train
@@ -23,9 +23,7 @@ def cifar10(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, rgb
         os.makedirs(output_images_path)
 
     # LOAD CIFAR-10 DATASET #
-    (X_train, y_train), (X_test, y_test) = get_cifar10_dataset(cifar10_dataset_path)
-
-    N = X_train.shape[0]
+    (X_train, y_train), (X_test, y_test) = cifar10_dataset.load_data()
 
     # We will normalize all values between 0 and 1,
     # and we will flatten the 32x32 images into vectors of size 3072.
@@ -64,14 +62,15 @@ def cifar10(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, rgb
         X_train = np.dot(X_train[:, :, :, :3], [0.299, 0.587, 0.114])
         X_train = np.reshape(X_train, newshape=(-1, 1024))  # X_train: N x 1024
     else:
-        # We will normalize all values between 0 and 1,
-        # and we will flatten the 32x32 images into vectors of size 3072.
-        X_train = X_train.reshape((len(X_train), 3072))
+        # We will flatten the 32x32 images into vectors of size 3072.
+        X_train = X_train.reshape((-1, 3072))
 
-    X_train = X_train.astype('float32') / 255.
+    # We will normalize all values between 0 and 1.
+    X_train = X_train / 255.
 
     #####
 
+    N = X_train.shape[0]
     input_dim = X_train.shape[1]  # D: 3072 or 1024
     # M1: number of neurons in the encoder
     # M2: number of neurons in the decoder
@@ -95,12 +94,12 @@ def cifar10(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, rgb
     cur_elbo = None
     X_recon = np.zeros((N, input_dim))
 
+    iterations = int(N / batch_size)
     start_time = time.time()
     for epoch in range(1, epochs + 1):
-        iterations = int(N / batch_size)
-        for i in range(iterations):
-            start_index = i * batch_size
-            end_index = (i + 1) * batch_size
+        for i in range(1, iterations + 1):
+            start_index = (i - 1) * batch_size
+            end_index = i * batch_size
 
             batch_data = X_train[start_index:end_index, :]
             batch_labels = y_train[start_index:end_index]
@@ -113,22 +112,40 @@ def cifar10(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, rgb
 
         if epoch == 1:
             if input_dim == 1024:
-                fig = plot_cifar10_data(X_train[start_index:end_index, :], y_train[start_index:end_index],
-                                        categories=categories, grayscale=True)
+                fig = plot_cifar10_data(
+                    X_train[start_index:end_index, :],
+                    y_train[start_index:end_index],
+                    categories=categories,
+                    grayscale=True
+                )
             elif input_dim == 3072:
-                fig = plot_cifar10_data(X_train[start_index:end_index, :], y_train[start_index:end_index],
-                                        categories=categories, grayscale=False)
+                fig = plot_cifar10_data(
+                    X_train[start_index:end_index, :],
+                    y_train[start_index:end_index],
+                    categories=categories,
+                    grayscale=False
+                )
             fig.savefig(output_images_path + '/original_data.png', bbox_inches='tight')
             plt.close()
 
         if epoch % 10 == 0 or epoch == 1:
 
             if input_dim == 1024:
-                fig = plot_cifar10_data(cur_samples, batch_labels, title='Epoch {}'.format(str(epoch).zfill(3)),
-                                        categories=categories, grayscale=True)
+                fig = plot_cifar10_data(
+                    cur_samples,
+                    batch_labels,
+                    title='Epoch {}'.format(str(epoch).zfill(3)),
+                    categories=categories,
+                    grayscale=True
+                )
             elif input_dim == 3072:
-                fig = plot_cifar10_data(cur_samples, batch_labels, title='Epoch {}'.format(str(epoch).zfill(3)),
-                                        categories=categories, grayscale=False)
+                fig = plot_cifar10_data(
+                    cur_samples,
+                    batch_labels,
+                    title='Epoch {}'.format(str(epoch).zfill(3)),
+                    categories=categories,
+                    grayscale=False
+                )
             fig.savefig(output_images_path + '/epoch_{}.png'.format(str(epoch).zfill(3)), bbox_inches='tight')
             plt.close()
     elapsed_time = time.time() - start_time

@@ -4,9 +4,9 @@ import time
 
 import matplotlib.pyplot as plt
 import numpy as np
+from keras.datasets import cifar10 as cifar10_dataset
 
 from src.utilities.constants import *
-from src.utilities.get_cifar10_dataset import get_cifar10_dataset
 from src.utilities.plot_dataset_samples import plot_cifar10_data
 from src.utilities.utils import reduce_data, construct_missing_data, get_non_zero_percentage, rmse, mae
 from src.utilities.vae_in_pytorch import initialize_weights, train
@@ -31,7 +31,7 @@ def cifar10(
         os.makedirs(output_images_path)
 
     # LOAD CIFAR-10 DATASET #
-    (X_train, y_train), (X_test, y_test) = get_cifar10_dataset(cifar10_dataset_path)
+    (X_train, y_train), (X_test, y_test) = cifar10_dataset.load_data()
 
     # Reduce data to avoid memory error.
     X_train, y_train, _ = reduce_data(X_train, X_train.shape[0], 15000, y=y_train)
@@ -71,11 +71,11 @@ def cifar10(
         X_train = np.dot(X_train[:, :, :, :3], [0.299, 0.587, 0.114])
         X_train = np.reshape(X_train, newshape=(-1, 1024))  # X_train: N x 1024
     else:
-        # We will normalize all values between 0 and 1
-        # and we will flatten the 32x32 images into vectors of size 3072.
-        X_train = X_train.reshape((len(X_train), 3072))
+        # We will flatten the 32x32 images into vectors of size 3072.
+        X_train = X_train.reshape((-1, 3072))
 
-    X_train = X_train.astype('float32') / 255.
+    # We will normalize all values between 0 and 1.
+    X_train = X_train / 255.
 
     #####
 
@@ -124,12 +124,12 @@ def cifar10(
 
     print('')
 
+    iterations = int(N / batch_size)
     start_time = time.time()
     for epoch in range(1, epochs + 1):
-        iterations = int(N / batch_size)
-        for i in range(iterations):
-            start_index = i * batch_size
-            end_index = (i + 1) * batch_size
+        for i in range(1, iterations + 1):
+            start_index = (i - 1) * batch_size
+            end_index = i * batch_size
 
             batch_data = X_filled[start_index:end_index, :]
             batch_labels = y_train[start_index:end_index]

@@ -94,12 +94,12 @@ def omniglot(
 
     print('')
 
+    iterations = int(N / batch_size)
     start_time = time.time()
     for epoch in range(1, epochs + 1):
-        iterations = int(N / batch_size)
-        for i in range(iterations):
-            start_index = i * batch_size
-            end_index = (i + 1) * batch_size
+        for i in range(1, iterations + 1):
+            start_index = (i - 1) * batch_size
+            end_index = i * batch_size
 
             batch_data = X_filled[start_index:end_index, :]
             batch_labels = y_merged[start_index:end_index]
@@ -117,8 +117,7 @@ def omniglot(
                 X_merged[start_index:end_index, :],
                 y_merged[start_index:end_index],
                 categories=list(range(1, 11)),
-                title='Original Data',
-                mnist_or_omniglot='omniglot'
+                title='Original Data'
             )
             fig.savefig(output_images_path + '/original_data_characters_1-10.png', bbox_inches='tight')
             plt.close()
@@ -126,8 +125,7 @@ def omniglot(
                 X_merged[start_index:end_index, :],
                 y_merged[start_index:end_index],
                 categories=list(range(11, 21)),
-                title='Original Data',
-                mnist_or_omniglot='omniglot'
+                title='Original Data'
             )
             fig.savefig(output_images_path + '/original_data_characters_11-20.png', bbox_inches='tight')
             plt.close()
@@ -136,8 +134,7 @@ def omniglot(
                     X_merged[start_index:end_index, :],
                     y_merged[start_index:end_index],
                     categories=list(range(21, 24)),
-                    title='Original Data',
-                    mnist_or_omniglot='omniglot'
+                    title='Original Data'
                 )
                 fig.savefig(output_images_path + '/original_data_characters_21-24.png', bbox_inches='tight')
             else:
@@ -145,8 +142,7 @@ def omniglot(
                     X_merged[start_index:end_index, :],
                     y_merged[start_index:end_index],
                     categories=list(range(21, 27)),
-                    title='Original Data',
-                    mnist_or_omniglot='omniglot'
+                    title='Original Data'
                 )
                 fig.savefig(output_images_path + '/original_data_characters_21-26.png', bbox_inches='tight')
             plt.close()
@@ -155,8 +151,7 @@ def omniglot(
                 X_merged_missing[start_index:end_index, :],
                 y_merged[start_index:end_index],
                 categories=list(range(1, 11)),
-                title='Original Data',
-                mnist_or_omniglot='omniglot'
+                title='Original Data'
             )
             fig.savefig(output_images_path + '/missing_data_characters_1-10.png', bbox_inches='tight')
             plt.close()
@@ -164,8 +159,7 @@ def omniglot(
                 X_merged_missing[start_index:end_index, :],
                 y_merged[start_index:end_index],
                 categories=list(range(11, 21)),
-                title='Original Data',
-                mnist_or_omniglot='omniglot'
+                title='Original Data'
             )
             fig.savefig(output_images_path + '/missing_data_characters_11-20.png', bbox_inches='tight')
             plt.close()
@@ -174,8 +168,7 @@ def omniglot(
                     X_merged_missing[start_index:end_index, :],
                     y_merged[start_index:end_index],
                     categories=list(range(21, 25)),
-                    title='Original Data',
-                    mnist_or_omniglot='omniglot'
+                    title='Original Data'
                 )
                 fig.savefig(output_images_path + '/missing_data_characters_21-24.png', bbox_inches='tight')
             else:
@@ -183,8 +176,7 @@ def omniglot(
                     X_merged_missing[start_index:end_index, :],
                     y_merged[start_index:end_index],
                     categories=list(range(21, 27)),
-                    title='Epoch {}'.format(str(epoch).zfill(3)),
-                    mnist_or_omniglot='omniglot'
+                    title='Epoch {}'.format(str(epoch).zfill(3))
                 )
                 fig.savefig(output_images_path + '/missing_data_characters_21-26.png'.format(str(epoch).zfill(3)),
                             bbox_inches='tight')
@@ -194,8 +186,7 @@ def omniglot(
                 masked_batch_data,
                 batch_labels,
                 categories=list(range(1, 11)),
-                title='Masked Data',
-                mnist_or_omniglot='omniglot'
+                title='Masked Data'
             )
             fig.savefig(
                 output_images_path + '/masked_data_characters_1-10.png'.format(str(epoch).zfill(3)),
@@ -206,8 +197,7 @@ def omniglot(
                 masked_batch_data,
                 batch_labels,
                 categories=list(range(1, 11)),
-                title='Masked Data',
-                mnist_or_omniglot='omniglot'
+                title='Masked Data'
             )
             fig.savefig(
                 output_images_path + '/masked_data_characters_11-20.png'.format(str(epoch).zfill(3)),
@@ -219,8 +209,7 @@ def omniglot(
                     masked_batch_data,
                     batch_labels,
                     categories=list(range(1, 11)),
-                    title='Masked Data',
-                    mnist_or_omniglot='omniglot'
+                    title='Masked Data'
                 )
                 fig.savefig(
                     output_images_path + '/masked_data_characters_21-24.png'.format(str(epoch).zfill(3)),
@@ -231,8 +220,7 @@ def omniglot(
                     masked_batch_data,
                     batch_labels,
                     categories=list(range(1, 11)),
-                    title='Masked Data',
-                    mnist_or_omniglot='omniglot'
+                    title='Masked Data'
                 )
                 fig.savefig(
                     output_images_path + '/masked_data_characters_21-26.png'.format(str(epoch).zfill(3)),
@@ -245,8 +233,7 @@ def omniglot(
                 cur_samples,
                 batch_labels,
                 categories=list(range(1, 11)),
-                title='Epoch {}'.format(str(epoch).zfill(3)),
-                mnist_or_omniglot='omniglot'
+                title='Epoch {}'.format(str(epoch).zfill(3))
             )
             fig.savefig(
                 output_images_path + '/epoch_{}_characters_1-10.png'.format(str(epoch).zfill(3)),
@@ -257,8 +244,7 @@ def omniglot(
                 cur_samples,
                 batch_labels,
                 categories=list(range(11, 21)),
-                title='Epoch {}'.format(str(epoch).zfill(3)),
-                mnist_or_omniglot='omniglot'
+                title='Epoch {}'.format(str(epoch).zfill(3))
             )
             fig.savefig(
                 output_images_path + '/epoch_{}_characters_11-20.png'.format(str(epoch).zfill(3)),
@@ -270,8 +256,7 @@ def omniglot(
                     cur_samples,
                     batch_labels,
                     categories=list(range(21, 25)),
-                    title='Epoch {}'.format(str(epoch).zfill(3)),
-                    mnist_or_omniglot='omniglot'
+                    title='Epoch {}'.format(str(epoch).zfill(3))
                 )
                 fig.savefig(
                     output_images_path + '/epoch_{}_characters_21-24.png'.format(str(epoch).zfill(3)),
@@ -282,8 +267,7 @@ def omniglot(
                     cur_samples,
                     batch_labels,
                     categories=list(range(21, 27)),
-                    title='Epoch {}'.format(str(epoch).zfill(3)),
-                    mnist_or_omniglot='omniglot'
+                    title='Epoch {}'.format(str(epoch).zfill(3))
                 )
                 fig.savefig(
                     output_images_path + '/epoch_{}_characters_21-26.png'.format(str(epoch).zfill(3)),
