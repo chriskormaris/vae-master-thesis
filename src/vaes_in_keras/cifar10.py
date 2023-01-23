@@ -3,9 +3,8 @@ import time
 import matplotlib.pyplot as plt
 import numpy as np
 from keras.callbacks import TensorBoard
+from keras.datasets import cifar10 as cifar10_dataset
 
-from src.utilities.constants import *
-from src.utilities.get_cifar10_dataset import get_cifar10_dataset
 from src.utilities.utils import rmse, mae
 from src.utilities.vae_in_keras import vae
 
@@ -23,8 +22,7 @@ def cifar10(latent_dim=64, epochs=100, batch_size='250', rgb_or_grayscale='rgb')
     # (since we're only interested in encoding/decoding the input images).
 
     # LOAD CIFAR-10 DATASET #
-    (X_train, y_train), (X_test, y_test) = get_cifar10_dataset(cifar10_dataset_path)
-    print('')
+    (X_train, y_train), (X_test, y_test) = cifar10_dataset.load_data()
 
     # reduce data to avoid Memory error
     X_train = X_train[:10000, :]
@@ -37,21 +35,13 @@ def cifar10(latent_dim=64, epochs=100, batch_size='250', rgb_or_grayscale='rgb')
         X_test = np.dot(X_test[:, :, :, :3], [0.299, 0.587, 0.114])
         X_test = np.reshape(X_test, newshape=(-1, 1024))  # X_test: N x 1024
     else:
-        # We will normalize all values between 0 and 1
-        # and we will flatten the 32x32 images into vectors of size 3072.
-        X_train = X_train.reshape((len(X_train), input_dim))
-        X_test = X_test.reshape((len(X_test), input_dim))
+        # We will flatten the 32x32 images into vectors of size input_dim.
+        X_train = X_train.reshape((-1, input_dim))
+        X_test = X_test.reshape((-1, input_dim))
 
-    X_train = X_train.astype('float32') / 255.
-    X_test = X_test.astype('float32') / 255.
-
-    # We will normalize all values between 0 and 1
-    # and we will flatten the 32x32 images into vectors of size input_dim.
-
-    X_train = X_train.astype('float32') / 255.
-    X_test = X_test.astype('float32') / 255.
-    X_train = X_train.reshape((len(X_train), input_dim))
-    X_test = X_test.reshape((len(X_test), input_dim))
+    # We will normalize all values between 0 and 1.
+    X_train = X_train / 255.
+    X_test = X_test / 255.
 
     # Now let's train our autoencoder for a given number of epochs. #
     if batch_size == 'N':

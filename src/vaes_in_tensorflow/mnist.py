@@ -31,7 +31,7 @@ def mnist(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, digit
     if not os.path.exists(save_path):
         os.makedirs(save_path)
 
-    X_train, y_train = mnist_data[0]
+    (X_train, y_train), (_, _) = mnist_data
 
     # We will normalize all values between 0 and 1,
     # and we will flatten the 28x28 images into vectors of size 784.
@@ -90,9 +90,9 @@ def mnist(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, digit
 
         for epoch in range(1, epochs + 1):
             iterations = int(N / batch_size)
-            for i in range(iterations):
-                start_index = i * batch_size
-                end_index = (i + 1) * batch_size
+            for i in range(1, iterations + 1):
+                start_index = (i - 1) * batch_size
+                end_index = i * batch_size
 
                 # batch_data, batch_labels = mnist.train.next_batch(batch_size=batch_size)
                 # ALTERNATIVE

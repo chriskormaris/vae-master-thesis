@@ -1,3 +1,4 @@
+import ssl
 import tkinter as tk
 import webbrowser
 from tkinter import ttk
@@ -42,6 +43,8 @@ import src.vaes_missing_values_in_tensorflow.omniglot
 import src.vaes_missing_values_in_tensorflow.orl_faces
 import src.vaes_missing_values_in_tensorflow.yale_faces
 from src.utilities.constants import *
+
+ssl._create_default_https_context = ssl._create_stdlib_context
 
 # global variables #
 isAlgorithmSelected = False

@@ -22,8 +22,7 @@ def mnist(K=10, structured_or_random='structured', digits_or_fashion='digits'):
         output_images_path = output_img_base_path + 'knn_missing_values/fashion_mnist'
         mnist_data = fashion_mnist_dataset.load_data()
 
-    X_train, y_train = mnist_data[0]
-    X_test, y_test = mnist_data[1]
+    (X_train, y_train), (X_test, y_test) = mnist_data
 
     # We will normalize all values between 0 and 1,
     # and we will flatten the 28x28 images into vectors of size 784.

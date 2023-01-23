@@ -58,8 +58,7 @@ def omniglot(K=10, structured_or_random='structured', language='English'):
         y_merged,
         categories=list(range(1, 11)),
         n=10,
-        show_plot=False,
-        mnist_or_omniglot='omniglot'
+        show_plot=False
     )
     fig.savefig(output_images_path + '/Binarized Merged Data Characters 1-10.png', bbox_inches='tight')
     plt.close()
@@ -68,8 +67,7 @@ def omniglot(K=10, structured_or_random='structured', language='English'):
         y_merged,
         categories=list(range(11, 21)),
         n=10,
-        show_plot=False,
-        mnist_or_omniglot='omniglot'
+        show_plot=False
     )
     fig.savefig(output_images_path + '/Binarized Merged Data Characters 11-20.png', bbox_inches='tight')
     plt.close()
@@ -79,8 +77,7 @@ def omniglot(K=10, structured_or_random='structured', language='English'):
             y_merged,
             categories=list(range(21, 25)),
             n=10,
-            show_plot=False,
-            mnist_or_omniglot='omniglot'
+            show_plot=False
         )
         fig.savefig(output_images_path + '/Binarized Merged Data Characters 21-24.png', bbox_inches='tight')
     else:
@@ -89,8 +86,7 @@ def omniglot(K=10, structured_or_random='structured', language='English'):
             y_merged,
             categories=list(range(21, 27)),
             n=10,
-            show_plot=False,
-            mnist_or_omniglot='omniglot'
+            show_plot=False
         )
         fig.savefig(output_images_path + '/Binarized Merged Data Characters 21-26.png', bbox_inches='tight')
     plt.close()
@@ -101,8 +97,7 @@ def omniglot(K=10, structured_or_random='structured', language='English'):
         y_merged,
         categories=list(range(1, 11)),
         n=10,
-        show_plot=False,
-        mnist_or_omniglot='omniglot'
+        show_plot=False
     )
     fig.savefig(
         output_images_path + '/Merged Data with Mixed Missing Values K=' + str(K) + ' Characters 1-10.png',
@@ -114,8 +109,7 @@ def omniglot(K=10, structured_or_random='structured', language='English'):
         y_merged,
         categories=list(range(11, 21)),
         n=10,
-        show_plot=False,
-        mnist_or_omniglot='omniglot'
+        show_plot=False
     )
     fig.savefig(
         output_images_path + '/Merged Data with Mixed Missing Values K=' + str(K) + ' Characters 11-20.png',
@@ -128,8 +122,7 @@ def omniglot(K=10, structured_or_random='structured', language='English'):
             y_merged,
             categories=list(range(21, 25)),
             n=10,
-            show_plot=False,
-            mnist_or_omniglot='omniglot'
+            show_plot=False
         )
         fig.savefig(
             output_images_path + '/Merged Data with Mixed Missing Values K=' + str(K) + ' Characters 21-24.png',
@@ -141,8 +134,7 @@ def omniglot(K=10, structured_or_random='structured', language='English'):
             y_merged,
             categories=list(range(21, 27)),
             n=10,
-            show_plot=False,
-            mnist_or_omniglot='omniglot'
+            show_plot=False
         )
         fig.savefig(
             output_images_path + '/Merged Data with Mixed Missing Values K=' + str(K) + ' Characters 21-26.png',
@@ -179,8 +171,7 @@ def omniglot(K=10, structured_or_random='structured', language='English'):
         y_merged,
         categories=list(range(1, 11)),
         n=10,
-        show_plot=False,
-        mnist_or_omniglot='omniglot'
+        show_plot=False
     )
     fig.savefig(
         output_images_path + '/Predicted Merged Data K=' + str(K) + ' Characters 1-10.png',
@@ -192,8 +183,7 @@ def omniglot(K=10, structured_or_random='structured', language='English'):
         y_merged,
         categories=list(range(11, 21)),
         n=10,
-        show_plot=False,
-        mnist_or_omniglot='omniglot'
+        show_plot=False
     )
     fig.savefig(output_images_path + '/Predicted Merged Data K=' + str(K) + ' Characters 11-20.png',
                 bbox_inches='tight')
@@ -204,8 +194,7 @@ def omniglot(K=10, structured_or_random='structured', language='English'):
             y_merged,
             categories=list(range(21, 25)),
             n=10,
-            show_plot=False,
-            mnist_or_omniglot='omniglot'
+            show_plot=False
         )
         fig.savefig(
             output_images_path + '/Predicted Merged Data K=' + str(K) + ' Characters 21-24.png',
@@ -217,8 +206,7 @@ def omniglot(K=10, structured_or_random='structured', language='English'):
             y_merged,
             categories=list(range(21, 27)),
             n=10,
-            show_plot=False,
-            mnist_or_omniglot='omniglot'
+            show_plot=False
         )
         fig.savefig(
             output_images_path + '/Predicted Merged Data K=' + str(K) + ' Characters 21-26.png',

@@ -3,9 +3,9 @@ import time
 
 import matplotlib.pyplot as plt
 import numpy as np
+from keras.datasets import cifar10 as cifar10_dataset
 
 from src.utilities.constants import *
-from src.utilities.get_cifar10_dataset import get_cifar10_dataset
 from src.utilities.knn_matrix_completion import kNNMatrixCompletion
 from src.utilities.plot_dataset_samples import plot_cifar10_data
 from src.utilities.utils import reduce_data, construct_missing_data, get_non_zero_percentage, rmse, mae
@@ -23,7 +23,7 @@ def cifar10(K=10, structured_or_random='structured', rgb_or_grayscale='grayscale
         os.makedirs(output_images_path)
 
     # LOAD CIFAR-10 DATASET #
-    (X_train, y_train), (X_test, y_test) = get_cifar10_dataset(cifar10_dataset_path)
+    (X_train, y_train), (X_test, y_test) = cifar10_dataset.load_data()
 
     if rgb_or_grayscale.lower() == 'grayscale':
         # convert colored images from 3072 dimensions to 1024 grayscale images
@@ -32,13 +32,13 @@ def cifar10(K=10, structured_or_random='structured', rgb_or_grayscale='grayscale
         X_test = np.dot(X_test[:, :, :, :3], [0.299, 0.587, 0.114])
         X_test = np.reshape(X_test, newshape=(-1, 1024))  # X_test: N x 1024
     else:
-        # We will normalize all values between 0 and 1
-        # and we will flatten the 32x32 images into vectors of size 3072.
-        X_train = X_train.reshape((len(X_train), 3072))
-        X_test = X_test.reshape((len(X_test), 3072))
+        # We will flatten the 32x32 images into vectors of size 3072.
+        X_train = X_train.reshape((-1, 3072))
+        X_test = X_test.reshape((-1, 3072))
 
-    X_train = X_train.astype('float32') / 255.
-    X_test = X_test.astype('float32') / 255.
+    # We will normalize all values between 0 and 1,
+    X_train = X_train / 255.
+    X_test = X_test / 255.
 
     # reduce train and test data to only two categories, the class 3 ('cat') and the class 5 ('dog')
     categories = [3, 5]
