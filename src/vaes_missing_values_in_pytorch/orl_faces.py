@@ -63,11 +63,11 @@ def orl_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, s
     X_train_masked[np.where(X_train_masked == missing_value)] = 0
 
     non_zero_percentage = get_non_zero_percentage(X_train_masked)
-    print('non missing values percentage: ' + str(non_zero_percentage) + ' %')
+    print(f'non missing values percentage: {non_zero_percentage} %')
 
     X_filled = np.array(X_missing)
 
-    print('')
+    print()
 
     iterations = int(N / batch_size)
     start_time = time.time()
@@ -96,7 +96,7 @@ def orl_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, s
                     title='Original Faces',
                     show_plot=False
                 )
-                fig.savefig(output_images_path + f'/original_faces_{i + 1}-{i + 10}.png')
+                fig.savefig(f'{output_images_path}/original_faces_{i + 1}-{i + 10}.png')
                 plt.close()
 
             for i in range(0, 40, 10):
@@ -107,7 +107,7 @@ def orl_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, s
                     title='Missing Faces',
                     show_plot=False
                 )
-                fig.savefig(output_images_path + f'/missing_faces_{i + 1}-{i + 10}.png')
+                fig.savefig(f'{output_images_path}/missing_faces_{i + 1}-{i + 10}.png')
                 plt.close()
 
             for i in range(0, 40, 10):
@@ -118,7 +118,7 @@ def orl_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, s
                     title='Masked Faces',
                     show_plot=False
                 )
-                fig.savefig(output_images_path + f'/masked_faces_{i + 1}-{i + 10}.png')
+                fig.savefig(f'{output_images_path}/masked_faces_{i + 1}-{i + 10}.png')
                 plt.close()
 
         if epoch % 10 == 0 or epoch == 1:
@@ -131,12 +131,12 @@ def orl_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, s
                     title=f'Epoch {str(epoch).zfill(3)}',
                     show_plot=False
                 )
-                fig.savefig(output_images_path + f'/epoch_{str(epoch).zfill(3)}_faces_{i + 1}-{i + 10}.png')
+                fig.savefig(f'{output_images_path}/epoch_{str(epoch).zfill(3)}_faces_{i + 1}-{i + 10}.png')
                 plt.close()
     elapsed_time = time.time() - start_time
 
     print(f'training time: {elapsed_time} secs')
-    print('')
+    print()
 
     error1 = rmse(X, X_filled)
     print(f'root mean squared error: {error1}')

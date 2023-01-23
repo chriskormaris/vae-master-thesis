@@ -28,11 +28,11 @@ def movielens(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
 
     _, _, X_merged = get_movielens_dataset(movielens_dataset_path)
 
-    no_users = X_merged.shape[0]
-    no_movies = X_merged.shape[1]
+    num_users = X_merged.shape[0]
+    num_movies = X_merged.shape[1]
 
-    print('number of users: ' + str(no_users))
-    print('number of movies: ' + str(no_movies))
+    print(f'number of users: {num_users}')
+    print(f'number of movies: {num_movies}')
 
     X_df = pd.DataFrame(X_merged)
     X_df = X_df.replace(to_replace=0.0, value='---')
@@ -43,12 +43,12 @@ def movielens(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
         header=False
     )
 
-    print('')
+    print()
 
     #####
 
-    N = no_users
-    input_dim = no_movies  # D
+    N = num_users
+    input_dim = num_movies  # D
     # M1: number of neurons in the encoder
     # M2: number of neurons in the decoder
     hidden_encoder_dim = 400  # M1
@@ -79,7 +79,7 @@ def movielens(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
     X_merged_masked[np.where(X_merged_masked == missing_value)] = 0
 
     non_zero_percentage = get_non_zero_percentage(X_merged_masked)
-    print('non missing values percentage: ' + str(non_zero_percentage) + ' %')
+    print(f'non missing values percentage: {non_zero_percentage} %')
 
     X_filled = np.array(X_merged)
 
@@ -93,7 +93,7 @@ def movielens(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
             print('Initializing parameters')
             sess.run(tf.compat.v1.global_variables_initializer())
 
-        print('')
+        print()
 
         for epoch in range(1, epochs + 1):
             iterations = int(N / batch_size)
@@ -124,7 +124,7 @@ def movielens(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
     elapsed_time = time.time() - start_time
 
     print(f'training time: {elapsed_time} secs')
-    print('')
+    print()
 
     X_filled[np.where(X_filled == missing_value)] = 1
 

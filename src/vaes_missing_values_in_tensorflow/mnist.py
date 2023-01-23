@@ -59,7 +59,7 @@ def mnist(
         structured_or_random=structured_or_random
     )
 
-    print('')
+    print()
 
     #####
 
@@ -100,7 +100,7 @@ def mnist(
     X_train_masked[np.where(X_train_masked == missing_value)] = 0
 
     non_zero_percentage = get_non_zero_percentage(X_train_masked)
-    print('non missing values percentage: ' + str(non_zero_percentage) + ' %')
+    print(f'non missing values percentage: {non_zero_percentage} %')
 
     X_filled = np.array(X_train_missing)
 
@@ -114,7 +114,7 @@ def mnist(
             print('Initializing parameters')
             sess.run(tf.compat.v1.global_variables_initializer())
 
-        print('')
+        print()
 
         for epoch in range(1, epochs + 1):
             iterations = int(N / batch_size)
@@ -147,7 +147,7 @@ def mnist(
                     batch_labels,
                     title='Original Data'
                 )
-                fig.savefig(output_images_path + '/original_data.png', bbox_inches='tight')
+                fig.savefig(f'{output_images_path}/original_data.png', bbox_inches='tight')
                 plt.close()
 
                 fig = plot_mnist_or_omniglot_data(
@@ -155,7 +155,7 @@ def mnist(
                     batch_labels,
                     title='Original Data'
                 )
-                fig.savefig(output_images_path + '/missing_data.png', bbox_inches='tight')
+                fig.savefig(f'{output_images_path}/missing_data.png', bbox_inches='tight')
                 plt.close()
 
                 fig = plot_mnist_or_omniglot_data(
@@ -163,7 +163,7 @@ def mnist(
                     batch_labels,
                     title='Masked Data'
                 )
-                fig.savefig(output_images_path + '/masked_data.png', bbox_inches='tight')
+                fig.savefig(f'{output_images_path}/masked_data.png', bbox_inches='tight')
                 plt.close()
 
             if epoch % 10 == 0 or epoch == 1:
@@ -172,7 +172,7 @@ def mnist(
                     batch_labels,
                     title=f'Epoch {str(epoch).zfill(3)}'
                 )
-                fig.savefig(output_images_path + f'/epoch_{str(epoch).zfill(3)}.png', bbox_inches='tight')
+                fig.savefig(f'{output_images_path}/epoch_{str(epoch).zfill(3)}.png', bbox_inches='tight')
                 plt.close()
 
             if epoch % 2 == 0:
@@ -180,7 +180,7 @@ def mnist(
     elapsed_time = time.time() - start_time
 
     print(f'training time: {elapsed_time} secs')
-    print('')
+    print()
 
     error1 = rmse(X_train, X_filled)
     print(f'root mean squared error: {error1}')

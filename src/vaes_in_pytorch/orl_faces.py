@@ -40,7 +40,7 @@ def orl_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
 
     for i in range(0, 40, 10):
         fig = plot_orl_faces(X, y, categories=list(range(i, i + 10)), title='Original Faces', show_plot=False)
-        fig.savefig(output_images_path + '/original_faces_' + str(i + 1) + '-' + str(i + 10) + '.png')
+        fig.savefig(f'{output_images_path}/original_faces_{i + 1}-{i + 10}.png')
         plt.close()
 
     #####
@@ -52,7 +52,7 @@ def orl_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
     cur_elbo = None
     X_recon = np.zeros((N, input_dim))
 
-    print('')
+    print()
 
     iterations = int(N / batch_size)
     start_time = time.time()
@@ -80,12 +80,12 @@ def orl_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
                     title=f'Epoch {str(epoch).zfill(3)}',
                     show_plot=False
                 )
-                fig.savefig(output_images_path + f'/epoch_{str(epoch).zfill(3)}_faces_{i + 1}-{i + 10}.png')
+                fig.savefig(f'{output_images_path}/epoch_{str(epoch).zfill(3)}_faces_{i + 1}-{i + 10}.png')
                 plt.close()
     elapsed_time = time.time() - start_time
 
     print(f'training time: {elapsed_time} secs')
-    print('')
+    print()
 
     error1 = rmse(X, X_recon)
     print(f'root mean squared error: {error1}')

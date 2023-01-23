@@ -2,7 +2,6 @@ import os
 import time
 
 import matplotlib.pyplot as plt
-import numpy as np
 
 from src.utilities.constants import *
 from src.utilities.get_orl_faces_dataset import get_orl_faces_dataset
@@ -31,7 +30,7 @@ def orl_faces(K=10, structured_or_random='structured'):
     for i in range(0, 40, 10):
         fig = plot_orl_faces(X, y, categories=list(range(i, i + 10)), show_plot=False)
         fig.savefig(
-            output_images_path + '/Original Faces ' + str(i + 1) + '-' + str(i + 10) + ' K=' + str(K) + '.png',
+            f'{output_images_path}/Original Faces {i + 1}-{i + 10} K={K}.png',
             bbox_inches='tight'
         )
         plt.close()
@@ -40,8 +39,7 @@ def orl_faces(K=10, structured_or_random='structured'):
     for i in range(0, 40, 10):
         fig = plot_orl_faces(X_missing, y, categories=list(range(i, i + 10)), show_plot=False)
         fig.savefig(
-            output_images_path + '/Faces ' + str(i + 1) + '-' + str(i + 10)
-            + ' with Mixed Missing Values K=' + str(K) + '.png',
+            f'{output_images_path}/Faces {i + 1}-{i + 10} with Mixed Missing Values K={K}.png',
             bbox_inches='tight'
         )
         plt.close()
@@ -49,30 +47,26 @@ def orl_faces(K=10, structured_or_random='structured'):
     # Compute how sparse is the matrix X_train.
     # Print the percentage of non-missing entries compared to the total entries of the matrix.
     percentage = get_non_zero_percentage(X_missing)
-    print('non missing values percentage: ' + str(percentage) + ' %')
+    print(f'non missing values percentage: {percentage} %')
 
-    # convert variables to numpy matrices
-    X = np.array(X)
-    X_missing = np.array(X_missing)
-
-    print('')
+    print()
 
     # run K-NN
     print('Running %i-NN algorithm...' % K)
-    print('')
+    print()
 
     start_time = time.time()
     X_predicted = kNNMatrixCompletion(X, X_missing, K, missing_value)
     elapsed_time = time.time() - start_time
 
-    print('k-nn predictions calculations time: ' + str(elapsed_time))
-    print('')
+    print(f'k-nn predictions calculations time: {elapsed_time}')
+    print()
 
     # plot predicted data
     for i in range(0, 40, 10):
         fig = plot_orl_faces(X_predicted, y, categories=list(range(i, i + 10)), show_plot=False)
         fig.savefig(
-            output_images_path + '/Predicted Faces ' + str(i + 1) + '-' + str(i + 10) + ' K=' + str(K) + '.png',
+            f'{output_images_path}/Predicted Faces {i + 1}-{i + 10} K={K}.png',
             bbox_inches='tight'
         )
         plt.close()

@@ -38,7 +38,7 @@ def mnist(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, digit
     X_train = X_train / 255.
     X_train = X_train.reshape((-1, np.prod(X_train.shape[1:])))
 
-    print('')
+    print()
 
     #####
 
@@ -57,7 +57,7 @@ def mnist(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, digit
     #####
 
     fig = plot_mnist_or_omniglot_data(X_train, y_train, title='Original Data')
-    fig.savefig(output_images_path + '/original_data.png', bbox_inches='tight')
+    fig.savefig(f'{output_images_path}/original_data.png', bbox_inches='tight')
     plt.close()
 
     #####
@@ -86,7 +86,7 @@ def mnist(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, digit
             print('Initializing parameters')
             sess.run(tf.compat.v1.global_variables_initializer())
 
-        print('')
+        print()
 
         for epoch in range(1, epochs + 1):
             iterations = int(N / batch_size)
@@ -118,7 +118,7 @@ def mnist(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, digit
                     batch_labels,
                     title=f'Epoch {str(epoch).zfill(3)}'
                 )
-                fig.savefig(output_images_path + f'/epoch_{str(epoch).zfill(3)}.png', bbox_inches='tight')
+                fig.savefig(f'{output_images_path}/epoch_{str(epoch).zfill(3)}.png', bbox_inches='tight')
                 plt.close()
 
             if epoch % 2 == 0:
@@ -126,7 +126,7 @@ def mnist(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, digit
     elapsed_time = time.time() - start_time
 
     print(f'training time: {elapsed_time} secs')
-    print('')
+    print()
 
     error1 = rmse(X_train, X_recon)
     print(f'root mean squared error: {error1}')

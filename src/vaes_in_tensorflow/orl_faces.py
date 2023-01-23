@@ -52,7 +52,7 @@ def orl_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
             title='Original Faces',
             show_plot=False
         )
-        fig.savefig(output_images_path + '/original_faces_' + str(i + 1) + '-' + str(i + 10) + '.png')
+        fig.savefig(f'{output_images_path}/original_faces_{i + 1}-{i + 10}.png')
         plt.close()
 
     #####
@@ -81,7 +81,7 @@ def orl_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
             print('Initializing parameters')
             sess.run(tf.compat.v1.global_variables_initializer())
 
-        print('')
+        print()
 
         for epoch in range(1, epochs + 1):
             iterations = int(N / batch_size)
@@ -113,7 +113,7 @@ def orl_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
                     title=f'Epoch {str(epoch).zfill(3)}',
                     show_plot=False
                 )
-                fig.savefig(output_images_path + f'/epoch_{str(epoch).zfill(3)}_faces.png')
+                fig.savefig(f'{output_images_path}/epoch_{str(epoch).zfill(3)}_faces.png')
                 plt.close()
 
             if epoch % 2 == 0:
@@ -121,7 +121,7 @@ def orl_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
     elapsed_time = time.time() - start_time
 
     print(f'training time: {elapsed_time} secs')
-    print('')
+    print()
 
     error1 = rmse(X, X_recon)
     print(f'root mean squared error: {error1}')
