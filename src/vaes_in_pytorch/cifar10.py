@@ -13,7 +13,7 @@ from src.utilities.utils import rmse, mae
 from src.utilities.vae_in_pytorch import initialize_weights, train
 
 
-def cifar10(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, rgb_or_grayscale='grayscale'):
+def cifar10(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, rgb_or_grayscale='grayscale', category=3):
     if rgb_or_grayscale.lower() == 'grayscale':
         output_images_path = output_img_base_path + 'vaes_in_pytorch/cifar10_grayscale'
     else:
@@ -28,45 +28,31 @@ def cifar10(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, rgb
     # We will normalize all values between 0 and 1,
     # and we will flatten the 32x32 images into vectors of size 3072.
 
-    # Reduce train and test data to only two categories, the class 3 ('cat') and the class 5 ('dog').
-    categories = [3, 5]
-
-    category = 3
-    X_train_cats = X_train[np.where(y_train == category)[0], :]
-    y_train_cats = y_train[np.where(y_train == category)[0]]
-    X_test_cats = X_test[np.where(y_test == category)[0], :]
-    y_test_cats = y_test[np.where(y_test == category)[0]]
-
-    category = 5
-    X_train_dogs = X_train[np.where(y_train == category)[0], :]
-    y_train_dogs = y_train[np.where(y_train == category)[0]]
-    X_test_dogs = X_test[np.where(y_test == category)[0], :]
-    y_test_dogs = y_test[np.where(y_test == category)[0]]
+    X_train = X_train[np.where(y_train == category)[0], :]
+    X_test = X_test[np.where(y_test == category)[0], :]
 
     # Merge train and test data together to increase the train dataset size.
-    X_merged = np.concatenate((X_train_cats, X_train_dogs, X_test_cats, X_test_dogs), axis=0)
-    y_merged = np.concatenate((y_train_cats, y_train_dogs, y_test_cats, y_test_dogs), axis=0)
+    X_train = np.concatenate((X_train, X_test), axis=0)
 
     # randomize data
-    s = np.random.permutation(X_merged.shape[0])
-    X_merged = X_merged[s, :]
-    y_merged = y_merged[s]
+    s = np.random.permutation(X_train.shape[0])
+    X_train = X_train[s, :]
 
     if rgb_or_grayscale.lower() == 'grayscale':
         # Convert colored images from 3072 dimensions to 1024 grayscale images.
-        X_merged = np.dot(X_merged[:, :, :, :3], [0.299, 0.587, 0.114])
-        X_merged = np.reshape(X_merged, newshape=(-1, 1024))  # X_merged: N x 1024
+        X_train = np.dot(X_train[:, :, :, :3], [0.299, 0.587, 0.114])
+        X_train = np.reshape(X_train, newshape=(-1, 1024))  # X_merged: N x 1024
     else:
         # We will flatten the 32x32 images into vectors of size 3072.
-        X_merged = X_merged.reshape((-1, 3072))
+        X_train = X_train.reshape((-1, 3072))
 
     # We will normalize all values between 0 and 1.
-    X_merged = X_merged / 255.
+    X_train = X_train / 255.
 
     #####
 
-    N = X_merged.shape[0]
-    input_dim = X_merged.shape[1]  # D: 3072 or 1024
+    N = X_train.shape[0]
+    input_dim = X_train.shape[1]  # D: 3072 or 1024
     # M1: number of neurons in the encoder
     # M2: number of neurons in the decoder
     hidden_encoder_dim = 400  # M1
@@ -84,7 +70,6 @@ def cifar10(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, rgb
     fig = None
     start_index = None
     end_index = None
-    batch_labels = None
     cur_samples = None
     cur_elbo = None
     X_recon = np.zeros((N, input_dim))
@@ -98,30 +83,19 @@ def cifar10(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, rgb
             start_index = (i - 1) * batch_size
             end_index = i * batch_size
 
-            batch_data = X_merged[start_index:end_index, :]
-            batch_labels = y_merged[start_index:end_index]
+            batch_data = X_train[start_index:end_index, :]
 
             cur_samples, cur_elbo = train(batch_data, batch_size, latent_dim, params, solver)
 
             X_recon[start_index:end_index, :] = cur_samples
 
-        print('Epoch {0} | Loss (ELBO): {1}'.format(epoch, cur_elbo))
+        print(f'Epoch {epoch} | Loss (ELBO): {cur_elbo}')
 
         if epoch == 1:
             if input_dim == 1024:
-                fig = plot_cifar10_data(
-                    X_merged[start_index:end_index, :],
-                    y_merged[start_index:end_index],
-                    categories=categories,
-                    grayscale=True
-                )
+                fig = plot_cifar10_data(X_train[start_index:end_index, :], grayscale=True)
             elif input_dim == 3072:
-                fig = plot_cifar10_data(
-                    X_merged[start_index:end_index, :],
-                    y_merged[start_index:end_index],
-                    categories=categories,
-                    grayscale=False
-                )
+                fig = plot_cifar10_data(X_train[start_index:end_index, :], grayscale=False)
             fig.savefig(output_images_path + '/original_data.png', bbox_inches='tight')
             plt.close()
 
@@ -129,31 +103,27 @@ def cifar10(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, rgb
 
             if input_dim == 1024:
                 fig = plot_cifar10_data(
-                    cur_samples,
-                    batch_labels,
-                    title='Epoch {}'.format(str(epoch).zfill(3)),
-                    categories=categories,
+                    X=cur_samples,
+                    title=f'Epoch {str(epoch).zfill(3)}',
                     grayscale=True
                 )
             elif input_dim == 3072:
                 fig = plot_cifar10_data(
-                    cur_samples,
-                    batch_labels,
-                    title='Epoch {}'.format(str(epoch).zfill(3)),
-                    categories=categories,
+                    X=cur_samples,
+                    title=f'Epoch {str(epoch).zfill(3)}',
                     grayscale=False
                 )
-            fig.savefig(output_images_path + '/epoch_{}.png'.format(str(epoch).zfill(3)), bbox_inches='tight')
+            fig.savefig(output_images_path + f'/epoch_{str(epoch).zfill(3)}.png', bbox_inches='tight')
             plt.close()
     elapsed_time = time.time() - start_time
 
     print(f'training time: {elapsed_time} secs')
     print('')
 
-    error1 = rmse(X_merged, X_recon)
+    error1 = rmse(X_train, X_recon)
     print(f'root mean squared error: {error1}')
 
-    error2 = mae(X_merged, X_recon)
+    error2 = mae(X_train, X_recon)
     print(f'mean absolute error: {error2}')
 
 

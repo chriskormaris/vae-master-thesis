@@ -4,20 +4,10 @@ import numpy as np
 
 
 # used for MNIST or OMNIGLOT dataset
-def plot_mnist_or_omniglot_data(
-        X,
-        y,
-        categories=None,
-        n=10,
-        title='',
-        grayscale=True,
-        show_plot=False
-):
-    # show n samples for each class
+def plot_mnist_or_omniglot_data(X, y, categories=None, n=10, title='', grayscale=True, show_plot=False):
     if categories is None:
         categories = list(range(10))
-    fig = plt.figure(figsize=(n, n))
-    plt.title(title)
+    fig = plt.figure(figsize=(10, 10))
     for c, category in enumerate(categories):
         if int(n * c + 1) < int(n * len(categories)):
             i = 0
@@ -25,7 +15,7 @@ def plot_mnist_or_omniglot_data(
             for col in range(n):
                 while y[i] != category:
                     i = i + 1
-                ax = plt.subplot(10, 10, col + c * 10 + 1)
+                ax = plt.subplot(n, n, col + c * n + 1)
                 plt.axis('off')
                 ax.set_xticklabels([])
                 ax.set_yticklabels([])
@@ -41,43 +31,37 @@ def plot_mnist_or_omniglot_data(
                     plt.imshow(image)
 
                 i = i + 1
-    # fig.canvas.set_window_title(title)
+    fig.canvas.manager.set_window_title(title)
     if show_plot:
         plt.show()
     return fig
 
 
-def plot_cifar10_data(X, y, categories=None, n=10, title='', grayscale=False, show_plot=False):
-    if categories is None:
-        categories = list(range(10))
-    # show n samples for each class
-    fig = plt.figure(figsize=(n, n))
-    plt.title(title)
-    for c, category in enumerate(categories):
-        if int(n * c + 1) < int(n * len(categories)):
-            i = 0
-            # plot the first n data of each category
-            for col in range(n):
-                while y[i] != category:
-                    i = i + 1
-                ax = plt.subplot(10, 10, col + c * n + 1)
-                plt.axis('off')
-                ax.set_xticklabels([])
-                ax.set_yticklabels([])
-                ax.set_aspect('equal')
+# We assume that X contains only one category of data, e.g. category = 3 ('cat').
+def plot_cifar10_data(X, n=10, title='', grayscale=False, show_plot=False):
+    fig = plt.figure(figsize=(10, 10))
+    # plot n rows
+    for i in range(n):
+        # plot n images for each row
+        for j in range(n):
+            index = j + i * n
+            ax = plt.subplot(n, n, index + 1)
+            plt.axis('off')
+            ax.set_xticklabels([])
+            ax.set_yticklabels([])
+            ax.set_aspect('equal')
 
-                if grayscale:
-                    # 1024 = 32 x 32
-                    image = X[i].reshape(32, 32)
-                    plt.imshow(image, cmap='Greys_r')
-                    plt.gray()
-                else:
-                    # 3072 = 32 x 32 x 3
-                    image = X[i].reshape(32, 32, 3)
-                    plt.imshow(image)
+            if grayscale:
+                # 1024 = 32 x 32
+                image = X[index].reshape(32, 32)
+                plt.imshow(image, cmap='Greys_r')
+                plt.gray()
+            else:
+                # 3072 = 32 x 32 x 3
+                image = X[index].reshape(32, 32, 3)
+                plt.imshow(image)
 
-                i = i + 1
-    # fig.canvas.set_window_title(title)
+    fig.canvas.manager.set_window_title(title)
     if show_plot:
         plt.show()
     return fig
@@ -85,10 +69,8 @@ def plot_cifar10_data(X, y, categories=None, n=10, title='', grayscale=False, sh
 
 def plot_orl_faces(X, y, categories=None, n=10, title='', grayscale=True, show_plot=False):
     if categories is None:
-        categories = list(range(1, 11))
-    # show n samples for each class
-    fig = plt.figure(figsize=(n, n))
-    plt.title(title)
+        categories = list(range(10))
+    fig = plt.figure(figsize=(10, 10))
     for c, category in enumerate(categories):
         if int(n * c + 1) < int(n * len(categories)):
             i = 0
@@ -96,7 +78,7 @@ def plot_orl_faces(X, y, categories=None, n=10, title='', grayscale=True, show_p
             for col in range(n):
                 while y[i] != category:
                     i = i + 1
-                ax = plt.subplot(10, 10, col + c * 10 + 1)
+                ax = plt.subplot(n, n, col + c * n + 1)
                 plt.axis('off')
                 ax.set_xticklabels([])
                 ax.set_yticklabels([])
@@ -113,7 +95,7 @@ def plot_orl_faces(X, y, categories=None, n=10, title='', grayscale=True, show_p
 
                 i = i + 1
 
-    # fig.canvas.set_window_title(title)
+    fig.canvas.manager.set_window_title(title)
     if show_plot:
         plt.show()
     return fig
@@ -121,10 +103,8 @@ def plot_orl_faces(X, y, categories=None, n=10, title='', grayscale=True, show_p
 
 def plot_yale_faces(X, y, categories=None, n=10, title='', grayscale=True, show_plot=False):
     if categories is None:
-        categories = list(range(1, 11))
-    # show n samples for each class
-    fig = plt.figure(figsize=(n, n))
-    plt.title(title)
+        categories = list(range(10))
+    fig = plt.figure(figsize=(10, 10))
     for c, category in enumerate(categories):
         if int(n * c + 1) < int(n * len(categories)):
             i = 0
@@ -132,7 +112,7 @@ def plot_yale_faces(X, y, categories=None, n=10, title='', grayscale=True, show_
             for col in range(n):
                 while y[i] != category:
                     i = i + 1
-                ax = plt.subplot(10, 10, col + c * 10 + 1)
+                ax = plt.subplot(n, n, col + c * n + 1)
                 plt.axis('off')
                 ax.set_xticklabels([])
                 ax.set_yticklabels([])
@@ -149,7 +129,7 @@ def plot_yale_faces(X, y, categories=None, n=10, title='', grayscale=True, show_
 
                 i = i + 1
 
-    # fig.canvas.set_window_title(title)
+    fig.canvas.manager.set_window_title(title)
     if show_plot:
         plt.show()
     return fig

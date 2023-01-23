@@ -117,7 +117,7 @@ def movielens(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
                 summary_writer.add_summary(loss_str, epoch)
                 summary_writer.add_summary(summary_str, epoch)
 
-            print('Epoch {0} | Loss (ELBO): {1}'.format(epoch, cur_elbo))
+            print(f'Epoch {epoch} | Loss (ELBO): {cur_elbo}')
 
             if epoch % 2 == 0:
                 saver.save(sess, save_path + '/model.ckpt')

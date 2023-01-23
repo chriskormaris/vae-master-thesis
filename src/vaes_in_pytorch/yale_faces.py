@@ -72,16 +72,16 @@ def yale_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
 
             X_recon[start_index:end_index] = cur_samples
 
-        print('Epoch {0} | Loss (ELBO): {1}'.format(epoch, cur_elbo))
+        print(f'Epoch {epoch} | Loss (ELBO): {cur_elbo}')
 
         if epoch % 10 == 0 or epoch == 1:
             fig = plot_yale_faces(
                 cur_samples,
                 batch_labels,
                 categories=list(range(10)),
-                title='Epoch {}'.format(str(epoch).zfill(3))
+                title=f'Epoch {str(epoch).zfill(3)}'
             )
-            fig.savefig(output_images_path + '/epoch_{}_faces.png'.format(str(epoch).zfill(3)))
+            fig.savefig(output_images_path + f'/epoch_{str(epoch).zfill(3)}_faces.png')
             plt.close()
     elapsed_time = time.time() - start_time
 

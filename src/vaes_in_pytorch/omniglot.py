@@ -114,7 +114,7 @@ def omniglot(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, la
 
             X_recon[start_index:end_index] = cur_samples
 
-        print('Epoch {0} | Loss (ELBO): {1}'.format(epoch, cur_elbo))
+        print(f'Epoch {epoch} | Loss (ELBO): {cur_elbo}')
 
         if epoch % 10 == 0 or epoch == 1:
 
@@ -123,20 +123,24 @@ def omniglot(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, la
                 batch_labels,
                 categories=list(range(1, 11)),
                 n=5,
-                title='Epoch {}'.format(str(epoch).zfill(3))
+                title=f'Epoch {str(epoch).zfill(3)}'
             )
-            fig.savefig(output_images_path + '/epoch_{}_characters_1-10.png'.format(str(epoch).zfill(3)),
-                        bbox_inches='tight')
+            fig.savefig(
+                output_images_path + f'/epoch_{str(epoch).zfill(3)}_characters_1-10.png',
+                bbox_inches='tight'
+            )
             plt.close()
             fig = plot_mnist_or_omniglot_data(
                 cur_samples,
                 batch_labels,
                 categories=list(range(11, 21)),
                 n=5,
-                title='Epoch {}'.format(str(epoch).zfill(3))
+                title=f'Epoch {str(epoch).zfill(3)}'
             )
-            fig.savefig(output_images_path + '/epoch_{}_characters_11-20.png'.format(str(epoch).zfill(3)),
-                        bbox_inches='tight')
+            fig.savefig(
+                output_images_path + f'/epoch_{str(epoch).zfill(3)}_characters_11-20.png',
+                bbox_inches='tight'
+            )
             plt.close()
             if language.lower() == 'greek':
                 fig = plot_mnist_or_omniglot_data(
@@ -144,20 +148,22 @@ def omniglot(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, la
                     batch_labels,
                     categories=list(range(21, 25)),
                     n=5,
-                    title='Epoch {}'.format(str(epoch).zfill(3))
+                    title=f'Epoch {str(epoch).zfill(3)}'
                 )
-                fig.savefig(output_images_path + '/epoch_{}_characters_21-24.png'.format(str(epoch).zfill(3)),
-                            bbox_inches='tight')
+                fig.savefig(
+                    output_images_path + f'/epoch_{str(epoch).zfill(3)}_characters_21-24.png',
+                    bbox_inches='tight'
+                )
             else:
                 fig = plot_mnist_or_omniglot_data(
                     cur_samples,
                     batch_labels,
                     categories=list(range(21, 27)),
                     n=5,
-                    title='Epoch {}'.format(str(epoch).zfill(3))
+                    title=f'Epoch {str(epoch).zfill(3)}'
                 )
                 fig.savefig(
-                    output_images_path + '/epoch_{}_characters_21-26.png'.format(str(epoch).zfill(3)),
+                    output_images_path + f'/epoch_{str(epoch).zfill(3)}_characters_21-26.png',
                     bbox_inches='tight'
                 )
             plt.close()

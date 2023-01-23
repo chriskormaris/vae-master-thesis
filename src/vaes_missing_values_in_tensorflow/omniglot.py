@@ -139,7 +139,7 @@ def omniglot(
                 summary_writer.add_summary(loss_str, epoch)
                 summary_writer.add_summary(summary_str, epoch)
 
-            print('Epoch {0} | Loss (ELBO): {1}'.format(epoch, cur_elbo))
+            print(f'Epoch {epoch} | Loss (ELBO): {cur_elbo}')
 
             if epoch == 1:
                 fig = plot_mnist_or_omniglot_data(
@@ -205,10 +205,9 @@ def omniglot(
                         X_merged_missing[start_index:end_index, :],
                         y_merged[start_index:end_index],
                         categories=list(range(21, 27)),
-                        title='Epoch {}'.format(str(epoch).zfill(3))
+                        title=f'Epoch {str(epoch).zfill(3)}'
                     )
-                    fig.savefig(output_images_path + '/missing_data_characters_21-26.png'.format(str(epoch).zfill(3)),
-                                bbox_inches='tight')
+                    fig.savefig(output_images_path + '/missing_data_characters_21-26.png', bbox_inches='tight')
                 plt.close()
 
                 fig = plot_mnist_or_omniglot_data(
@@ -217,13 +216,18 @@ def omniglot(
                     categories=list(range(1, 11)),
                     title='Masked Data'
                 )
-                fig.savefig(output_images_path + '/masked_data_characters_1-10.png'.format(str(epoch).zfill(3)),
-                            bbox_inches='tight')
+                fig.savefig(output_images_path + '/masked_data_characters_1-10.png', bbox_inches='tight')
                 plt.close()
-                fig = plot_mnist_or_omniglot_data(masked_batch_data, batch_labels, categories=list(range(1, 11)),
-                                                  title='Masked Data')
-                fig.savefig(output_images_path + '/masked_data_characters_11-20.png'.format(str(epoch).zfill(3)),
-                            bbox_inches='tight')
+                fig = plot_mnist_or_omniglot_data(
+                    masked_batch_data,
+                    batch_labels,
+                    categories=list(range(1, 11)),
+                    title='Masked Data'
+                )
+                fig.savefig(
+                    output_images_path + '/masked_data_characters_11-20.png',
+                    bbox_inches='tight'
+                )
                 plt.close()
                 if language.lower() == 'greek':
                     fig = plot_mnist_or_omniglot_data(
@@ -232,8 +236,7 @@ def omniglot(
                         categories=list(range(1, 11)),
                         title='Masked Data'
                     )
-                    fig.savefig(output_images_path + '/masked_data_characters_21-24.png'.format(str(epoch).zfill(3)),
-                                bbox_inches='tight')
+                    fig.savefig(output_images_path + '/masked_data_characters_21-24.png', bbox_inches='tight')
                 else:
                     fig = plot_mnist_or_omniglot_data(
                         masked_batch_data,
@@ -241,8 +244,7 @@ def omniglot(
                         categories=list(range(1, 11)),
                         title='Masked Data'
                     )
-                    fig.savefig(output_images_path + '/masked_data_characters_21-26.png'.format(str(epoch).zfill(3)),
-                                bbox_inches='tight')
+                    fig.savefig(output_images_path + '/masked_data_characters_21-26.png', bbox_inches='tight')
                 plt.close()
 
             if epoch % 10 == 0 or epoch == 1:
@@ -250,10 +252,10 @@ def omniglot(
                     cur_samples,
                     batch_labels,
                     categories=list(range(1, 11)),
-                    title='Epoch {}'.format(str(epoch).zfill(3))
+                    title=f'Epoch {str(epoch).zfill(3)}'
                 )
                 fig.savefig(
-                    output_images_path + '/epoch_{}_characters_1-10.png'.format(str(epoch).zfill(3)),
+                    output_images_path + f'/epoch_{str(epoch).zfill(3)}_characters_1-10.png',
                     bbox_inches='tight'
                 )
                 plt.close()
@@ -261,10 +263,10 @@ def omniglot(
                     cur_samples,
                     batch_labels,
                     categories=list(range(11, 21)),
-                    title='Epoch {}'.format(str(epoch).zfill(3))
+                    title=f'Epoch {str(epoch).zfill(3)}'
                 )
                 fig.savefig(
-                    output_images_path + '/epoch_{}_characters_11-20.png'.format(str(epoch).zfill(3)),
+                    output_images_path + f'/epoch_{str(epoch).zfill(3)}_characters_11-20.png',
                     bbox_inches='tight'
                 )
                 plt.close()
@@ -273,10 +275,10 @@ def omniglot(
                         cur_samples,
                         batch_labels,
                         categories=list(range(21, 25)),
-                        title='Epoch {}'.format(str(epoch).zfill(3))
+                        title=f'Epoch {str(epoch).zfill(3)}'
                     )
                     fig.savefig(
-                        output_images_path + '/epoch_{}_characters_21-24.png'.format(str(epoch).zfill(3)),
+                        output_images_path + f'/epoch_{str(epoch).zfill(3)}_characters_21-24.png',
                         bbox_inches='tight'
                     )
                 else:
@@ -284,10 +286,10 @@ def omniglot(
                         cur_samples,
                         batch_labels,
                         categories=list(range(21, 27)),
-                        title='Epoch {}'.format(str(epoch).zfill(3))
+                        title=f'Epoch {str(epoch).zfill(3)}'
                     )
                     fig.savefig(
-                        output_images_path + '/epoch_{}_characters_21-26.png'.format(str(epoch).zfill(3)),
+                        output_images_path + f'/epoch_{str(epoch).zfill(3)}_characters_21-26.png',
                         bbox_inches='tight'
                     )
                 plt.close()
