@@ -18,7 +18,7 @@ def mnist(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, digit
         output_images_path = output_img_base_path + 'vaes_in_tensorflow/mnist'
         logdir = tensorflow_logs_path + 'mnist_vae'
         save_path = save_base_path + 'mnist_vae'
-        mnist_data = mnist_dataset.load_data(os.getcwd() + '\\' + mnist_dataset_path + 'mnist.npz')
+        mnist_data = mnist_dataset.load_data()
     else:
         output_images_path = output_img_base_path + 'vaes_in_tensorflow/fashion_mnist'
         logdir = tensorflow_logs_path + 'fashion_mnist_vae'
@@ -31,7 +31,7 @@ def mnist(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, digit
     if not os.path.exists(save_path):
         os.makedirs(save_path)
 
-    (X_train, y_train), (_, _) = mnist_data
+    X_train, y_train = mnist_data[0]
 
     # We will normalize all values between 0 and 1,
     # and we will flatten the 28x28 images into vectors of size 784.

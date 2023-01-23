@@ -10,8 +10,6 @@ save_base_path = 'save\\'
 datasets_base_path = '..\\DATASETS\\'
 
 binarized_dataset_path = datasets_base_path + 'Binarized_MNIST_dataset\\'
-cifar10_dataset_path = datasets_base_path + 'CIFAR_dataset\\CIFAR-10\\'
-mnist_dataset_path = datasets_base_path + 'MNIST_dataset\\'
 movielens_dataset_path = datasets_base_path + 'MovieLens_dataset\\ml-100k\\'
 omniglot_dataset_path = datasets_base_path + 'OMNIGLOT_dataset\\'
 orl_faces_dataset_path = datasets_base_path + 'ORL_Face_dataset\\'

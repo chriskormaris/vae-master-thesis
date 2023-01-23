@@ -15,7 +15,7 @@ from src.utilities.vae_in_pytorch import initialize_weights, train
 def mnist(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, digits_or_fashion='digits'):
     if digits_or_fashion == 'digits':
         output_images_path = output_img_base_path + 'vaes_in_pytorch/mnist'
-        mnist_data = mnist_dataset.load_data(os.getcwd() + '\\' + mnist_dataset_path + 'mnist.npz')
+        mnist_data = mnist_dataset.load_data()
     else:
         output_images_path = output_img_base_path + 'vaes_in_pytorch/fashion_mnist'
         mnist_data = fashion_mnist_dataset.load_data()
@@ -23,7 +23,7 @@ def mnist(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, digit
     if not os.path.exists(output_images_path):
         os.makedirs(output_images_path)
 
-    (X_train, y_train), (_, _) = mnist_data
+    X_train, y_train = mnist_data[0]
 
     X_train = X_train / 255.
     X_train = X_train.reshape((-1, np.prod(X_train.shape[1:])))
