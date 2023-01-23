@@ -116,7 +116,7 @@ def yale_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, 
                 summary_writer.add_summary(loss_str, epoch)
                 summary_writer.add_summary(summary_str, epoch)
 
-            print('Epoch {0} | Loss (ELBO): {1}'.format(epoch, cur_elbo))
+            print(f'Epoch {epoch} | Loss (ELBO): {cur_elbo}')
 
             if epoch == 1:
                 fig = plot_yale_faces(
@@ -126,7 +126,7 @@ def yale_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, 
                     title='Original Faces',
                     show_plot=False
                 )
-                fig.savefig(output_images_path + '/original_faces_' + str(1) + '-' + str(10) + '.png')
+                fig.savefig(output_images_path + '/original_faces_1-10.png')
                 plt.close()
 
                 fig = plot_yale_faces(
@@ -135,7 +135,7 @@ def yale_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, 
                     title='Missing Faces',
                     show_plot=False
                 )
-                fig.savefig(output_images_path + '/missing_faces_' + str(1) + '-' + str(10) + '.png')
+                fig.savefig(output_images_path + '/missing_faces_1-10.png')
                 plt.close()
 
                 fig = plot_yale_faces(
@@ -145,7 +145,7 @@ def yale_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, 
                     title='Masked Faces',
                     show_plot=False
                 )
-                fig.savefig(output_images_path + '/masked_faces_' + str(1) + '-' + str(10) + '.png')
+                fig.savefig(output_images_path + '/masked_faces_1-10.png')
                 plt.close()
 
             if epoch % 10 == 0 or epoch == 1:
@@ -153,11 +153,10 @@ def yale_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, 
                     cur_samples,
                     batch_labels,
                     categories=list(range(10)),
-                    title='Epoch {}'.format(str(epoch).zfill(3)),
+                    title=f'Epoch {str(epoch).zfill(3)}',
                     show_plot=False
                 )
-                fig.savefig(output_images_path + '/epoch_{}'
-                            .format(str(epoch).zfill(3)) + '_faces_' + str(1) + '-' + str(10) + '.png')
+                fig.savefig(output_images_path + f'/epoch_{str(epoch).zfill(3)}_faces_1-10.png')
                 plt.close()
 
             if epoch % 2 == 0:

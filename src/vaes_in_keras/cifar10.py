@@ -22,7 +22,7 @@ def cifar10(latent_dim=64, epochs=100, batch_size='250', rgb_or_grayscale='rgb')
     # (since we're only interested in encoding/decoding the input images).
 
     # LOAD CIFAR-10 DATASET #
-    (X_train, y_train), (X_test, y_test) = cifar10_dataset.load_data()
+    (X_train, _), (X_test, _) = cifar10_dataset.load_data()
 
     # reduce data to avoid Memory error
     X_train = X_train[:10000, :]
@@ -74,7 +74,7 @@ def cifar10(latent_dim=64, epochs=100, batch_size='250', rgb_or_grayscale='rgb')
 
     print(f'encoded_imgs mean: {encoded_imgs.mean()}')
 
-    n = 10  # how many digits we will display
+    n = 10  # how many images we will display
     plt.figure(figsize=(20, 4))
     for i in range(n):
         # display original

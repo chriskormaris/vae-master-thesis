@@ -31,7 +31,7 @@ def yale_faces(K=10, structured_or_random='structured'):
     # plot original data X
     fig = plot_yale_faces(X, y, categories=list(range(10)), show_plot=False)
     fig.savefig(
-        output_images_path + '/Original Faces ' + str(1) + '-' + str(10) + ' K=' + str(K) + '.png',
+        output_images_path + '/Original Faces 1-10 K=' + str(K) + '.png',
         bbox_inches='tight'
     )
     plt.close()
@@ -39,7 +39,7 @@ def yale_faces(K=10, structured_or_random='structured'):
     # plot data with missing values
     fig = plot_yale_faces(X_missing, y, categories=list(range(10)), show_plot=False)
     fig.savefig(
-        output_images_path + '/Faces ' + str(1) + '-' + str(10) + ' with Mixed Missing Values K=' + str(K) + '.png',
+        output_images_path + '/Faces 1-10 with Mixed Missing Values K=' + str(K) + '.png',
         bbox_inches='tight'
     )
     plt.close()
@@ -69,7 +69,7 @@ def yale_faces(K=10, structured_or_random='structured'):
     # plot predicted data
     fig = plot_yale_faces(X_predicted, y, categories=list(range(10)), show_plot=False)
     fig.savefig(
-        output_images_path + '/Predicted Faces ' + str(1) + '-' + str(10) + ' K=' + str(K) + '.png',
+        output_images_path + '/Predicted Faces 1-10 K=' + str(K) + '.png',
         bbox_inches='tight'
     )
     plt.close()

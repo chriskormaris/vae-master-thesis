@@ -64,7 +64,8 @@ def run(
         batch_size,
         K,
         mnist_digits_or_fashion,
-        cifar_rgb_or_grayscale,
+        cifar10_rgb_or_grayscale,
+        cifar10_category,
         omniglot_language,
         missing_values_construction
 ):
@@ -74,22 +75,17 @@ def run(
             arguments.extend([learning_rate])
         if 'missing' in algorithm.lower() and dataset is not None and 'movielens' not in dataset.lower():
             arguments.extend([missing_values_construction])
-        if dataset_var.get() == 'mnist':
-            arguments.extend([mnist_digits_or_fashion])
-        elif dataset_var.get() == 'cifar10':
-            arguments.extend([cifar_rgb_or_grayscale])
-        elif dataset_var.get() == 'omniglot':
-            arguments.extend([omniglot_language])
     else:
         arguments = [K]
         if 'missing' in algorithm.lower() and dataset is not None and 'movielens' not in dataset.lower():
             arguments.extend([missing_values_construction])
-        if dataset_var.get() == 'mnist':
-            arguments.extend([mnist_digits_or_fashion])
-        elif dataset_var.get() == 'cifar10':
-            arguments.extend([cifar_rgb_or_grayscale])
-        elif dataset_var.get() == 'omniglot':
-            arguments.extend([omniglot_language])
+
+    if dataset_var.get() == 'mnist':
+        arguments.extend([mnist_digits_or_fashion])
+    elif dataset_var.get() == 'cifar10':
+        arguments.extend([cifar10_rgb_or_grayscale, cifar10_categories[cifar10_category]])
+    elif dataset_var.get() == 'omniglot':
+        arguments.extend([omniglot_language])
 
     print('********************')
     print(f'Running {algorithm}.{dataset}')
@@ -283,7 +279,7 @@ def center(win):
     height = win.winfo_height()
     x = (win.winfo_screenwidth() // 2) - (width // 2)
     y = (win.winfo_screenheight() // 2) - (height // 2)
-    win.geometry('{}x{}+{}+{}'.format(width, height, x, y))
+    win.geometry(f'{width}x{height}+{x}+{y}')
 
 
 def about_window():
@@ -385,7 +381,7 @@ def datasets_details_window():
     sep = ttk.Separator(window, orient='horizontal')
     sep.pack(fill='x')
 
-    cifar_10_ds_label = tk.Label(
+    cifar10_10_ds_label = tk.Label(
         window,
         text='CIFAR-10 dataset\n'
              '# TRAIN data: 50000, # TEST data: 10000\n'
@@ -393,10 +389,10 @@ def datasets_details_window():
              'RGB Dimensions: 32x32x3 pixels\n'
              'Grayscale Dimensions: 32x32x1 pixels'
     )
-    cifar_10_ds_label.pack()
-    cifar_10_link = tk.Label(window, text='CIFAR-10 dataset link', fg='blue', cursor='hand2')
-    cifar_10_link.pack()
-    cifar_10_link.bind('<Button-1>', cifar_link_command)
+    cifar10_10_ds_label.pack()
+    cifar10_10_link = tk.Label(window, text='CIFAR-10 dataset link', fg='blue', cursor='hand2')
+    cifar10_10_link.pack()
+    cifar10_10_link.bind('<Button-1>', cifar10_link_command)
     sep = ttk.Separator(window, orient='horizontal')
     sep.pack(fill='x')
 
@@ -482,7 +478,7 @@ def binarized_mnist_link_command(event):
     webbrowser.open_new(r'https://github.com/yburda/iwae/tree/master/datasets/BinaryMNIST')
 
 
-def cifar_link_command(event):
+def cifar10_link_command(event):
     webbrowser.open_new(r'https://www.cs.toronto.edu/~kriz/cifar.html')
 
 
@@ -563,7 +559,8 @@ if __name__ == '__main__':
     K_var = tk.IntVar(root, 10)
 
     mnist_digits_or_fashion_var = tk.StringVar(root, 'digits')
-    cifar_rgb_or_grayscale_var = tk.StringVar(root, 'grayscale')
+    cifar10_rgb_or_grayscale_var = tk.StringVar(root, 'grayscale')
+    cifar10_category_var = tk.StringVar(root, 'cat')
     omniglot_language_var = tk.StringVar(root, 'english')
     missing_values_construction_var = tk.StringVar(root, 'structured')
 
@@ -571,7 +568,7 @@ if __name__ == '__main__':
     latent_dim_label.pack()
     for i in [32, 64, 128]:
         tk.Radiobutton(
-            vaeFrame,
+            master=vaeFrame,
             text=i,
             padx=2,
             variable=latent_dim_var,
@@ -580,14 +577,14 @@ if __name__ == '__main__':
     latent_dim_text = tk.Entry(vaeFrame, textvariable=latent_dim_var)
     latent_dim_text.pack()
 
-    vae_empty_line_label = tk.Label(vaeFrame, text='\r')
+    vae_empty_line_label = tk.Label(vaeFrame, text='')
     vae_empty_line_label.pack()
 
     epochs_label = tk.Label(vaeFrame, text='epochs:')
     epochs_label.pack()
     for i in [20, 50, 100, 200]:
         tk.Radiobutton(
-            vaeFrame,
+            master=vaeFrame,
             text=i,
             padx=2,
             variable=epochs_var,
@@ -596,14 +593,14 @@ if __name__ == '__main__':
     epochs_text = tk.Entry(vaeFrame, textvariable=epochs_var)
     epochs_text.pack()
 
-    vae_empty_line_label = tk.Label(vaeFrame, text='\r')
+    vae_empty_line_label = tk.Label(vaeFrame, text='')
     vae_empty_line_label.pack()
 
     batch_size_label = tk.Label(vaeFrame, text='batch size:')
     batch_size_label.pack()
     for value in [250, 500, 'N']:
         tk.Radiobutton(
-            vaeFrame,
+            master=vaeFrame,
             text=value,
             padx=2,
             variable=batch_size_var,
@@ -612,7 +609,7 @@ if __name__ == '__main__':
     batch_size_text = tk.Entry(vaeFrame, textvariable=batch_size_var)
     batch_size_text.pack()
 
-    vae_empty_line_label = tk.Label(vaeFrame, text='\r')
+    vae_empty_line_label = tk.Label(vaeFrame, text='')
     vae_empty_line_label.pack()
 
     learning_rate_label = tk.Label(vaeFrame, text='learning rate:')
@@ -621,7 +618,7 @@ if __name__ == '__main__':
     learning_rate_frame.pack()
     for value in [0.1, 0.01, 0.001]:
         tk.Radiobutton(
-            learning_rate_frame,
+            master=learning_rate_frame,
             text=value,
             padx=2,
             variable=learning_rate_var,
@@ -635,7 +632,7 @@ if __name__ == '__main__':
     k_label.pack()
     for value in [1, 3, 10, 100]:
         tk.Radiobutton(
-            kNNFrame,
+            master=kNNFrame,
             text=value,
             padx=2,
             variable=K_var,
@@ -644,10 +641,10 @@ if __name__ == '__main__':
     k_text = tk.Entry(kNNFrame, textvariable=K_var)
     k_text.pack()
 
-    vae_empty_line_label = tk.Label(vaeFrame, text='\r')
+    vae_empty_line_label = tk.Label(vaeFrame, text='')
     vae_empty_line_label.pack()
 
-    knn_empty_line_label = tk.Label(kNNFrame, text='\r')
+    knn_empty_line_label = tk.Label(kNNFrame, text='')
     knn_empty_line_label.pack()
 
     # 4. mnistDatasetFrame Widgets #
@@ -655,7 +652,7 @@ if __name__ == '__main__':
     mnist_label.pack()
     for value in ['digits', 'fashion']:
         tk.Radiobutton(
-            mnistDatasetFrame,
+            master=mnistDatasetFrame,
             text=value,
             padx=2,
             variable=mnist_digits_or_fashion_var,
@@ -663,16 +660,39 @@ if __name__ == '__main__':
         ).pack(anchor=tk.CENTER)
 
     # 5. cifarDatasetFrame Widgets #
-    cifar_label = tk.Label(cifarDatasetFrame, text='Grayscale or RGB:')
-    cifar_label.pack()
+    cifar10_label1 = tk.Label(cifarDatasetFrame, text='Grayscale or RGB:')
+    cifar10_label1.pack()
     for value in ['grayscale', 'RGB']:
         tk.Radiobutton(
-            cifarDatasetFrame,
+            master=cifarDatasetFrame,
             text=value,
             padx=2,
-            variable=cifar_rgb_or_grayscale_var,
+            variable=cifar10_rgb_or_grayscale_var,
             value=value.lower()
         ).pack(anchor=tk.CENTER)
+
+    empty_line_label = tk.Label(cifarDatasetFrame, text='')
+    empty_line_label.pack()
+
+    cifar10_label2 = tk.Label(cifarDatasetFrame, text='Category:')
+    cifar10_label2.pack()
+    cifar10_categories = {
+        'airplane': 0,
+        'automobile': 1,
+        'bird': 2,
+        'cat': 3,
+        'deer': 4,
+        'dog': 5,
+        'frog': 6,
+        'horse': 7,
+        'ship': 8,
+        'truck': 9
+    }
+    tk.OptionMenu(
+        cifarDatasetFrame,
+        cifar10_category_var,
+        *cifar10_categories.keys()
+    ).pack(anchor=tk.CENTER)
 
     # 6. omniglotDatasetFrame Widgets #
     omniglot_label = tk.Label(omniglotDatasetFrame, text='Language:')
@@ -697,7 +717,8 @@ if __name__ == '__main__':
             variable=missing_values_construction_var,
             value=value.lower()
         ).pack(anchor=tk.CENTER)
-    empty_line_label = tk.Label(missingValuesFrame, text='\r')
+
+    empty_line_label = tk.Label(missingValuesFrame, text='')
     empty_line_label.pack()
 
     # Status Bar #
@@ -793,7 +814,8 @@ if __name__ == '__main__':
             batch_size_var.get(),
             K_var.get(),
             mnist_digits_or_fashion_var.get(),
-            cifar_rgb_or_grayscale_var.get(),
+            cifar10_rgb_or_grayscale_var.get(),
+            cifar10_category_var.get(),
             omniglot_language_var.get(),
             missing_values_construction_var.get()
         )

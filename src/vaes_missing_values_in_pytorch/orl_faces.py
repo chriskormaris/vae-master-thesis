@@ -85,7 +85,7 @@ def orl_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, s
             cur_samples = np.multiply(masked_batch_data, batch_data) + np.multiply(1 - masked_batch_data, cur_samples)
             X_filled[start_index:end_index, :] = cur_samples
 
-        print('Epoch {0} | Loss (ELBO): {1}'.format(epoch, cur_elbo))
+        print(f'Epoch {epoch} | Loss (ELBO): {cur_elbo}')
 
         if epoch == 1:
             for i in range(0, 40, 10):
@@ -96,7 +96,7 @@ def orl_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, s
                     title='Original Faces',
                     show_plot=False
                 )
-                fig.savefig(output_images_path + '/original_faces_' + str(i + 1) + '-' + str(i + 10) + '.png')
+                fig.savefig(output_images_path + f'/original_faces_{i + 1}-{i + 10}.png')
                 plt.close()
 
             for i in range(0, 40, 10):
@@ -107,7 +107,7 @@ def orl_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, s
                     title='Missing Faces',
                     show_plot=False
                 )
-                fig.savefig(output_images_path + '/missing_faces_' + str(i + 1) + '-' + str(i + 10) + '.png')
+                fig.savefig(output_images_path + f'/missing_faces_{i + 1}-{i + 10}.png')
                 plt.close()
 
             for i in range(0, 40, 10):
@@ -118,7 +118,7 @@ def orl_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, s
                     title='Masked Faces',
                     show_plot=False
                 )
-                fig.savefig(output_images_path + '/masked_faces_' + str(i + 1) + '-' + str(i + 10) + '.png')
+                fig.savefig(output_images_path + f'/masked_faces_{i + 1}-{i + 10}.png')
                 plt.close()
 
         if epoch % 10 == 0 or epoch == 1:
@@ -128,11 +128,10 @@ def orl_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, s
                     cur_samples,
                     batch_labels,
                     categories=list(range(i, i + 10)),
-                    title='Epoch {}'.format(str(epoch).zfill(3)),
+                    title=f'Epoch {str(epoch).zfill(3)}',
                     show_plot=False
                 )
-                fig.savefig(output_images_path + '/epoch_{}'
-                            .format(str(epoch).zfill(3)) + '_faces_' + str(i + 1) + '-' + str(i + 10) + '.png')
+                fig.savefig(output_images_path + f'/epoch_{str(epoch).zfill(3)}_faces_{i + 1}-{i + 10}.png')
                 plt.close()
     elapsed_time = time.time() - start_time
 

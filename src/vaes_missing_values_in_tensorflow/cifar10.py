@@ -19,7 +19,8 @@ def cifar10(
         batch_size='N',
         learning_rate=0.01,
         structured_or_random='structured',
-        rgb_or_grayscale='grayscale'
+        rgb_or_grayscale='grayscale',
+        category=3
 ):
     missing_value = 0.5
 
@@ -41,33 +42,19 @@ def cifar10(
     # LOAD CIFAR-10 DATASET #
     (X_train, y_train), (X_test, y_test) = cifar10_dataset.load_data()
 
-    # Reduce data to avoid memory error.
-    X_train, y_train, _ = reduce_data(X_train, X_train.shape[0], 15000, y=y_train)
-    X_test, y_test, _ = reduce_data(X_test, X_test.shape[0], 15000, y=y_test)
-
-    # reduce train and test data to only two categories, the class 3 ('cat') and the class 5 ('dog')
-    categories = [3, 5]
-
-    category = 3
-    X_train_cats = X_train[np.where(y_train == category)[0], :]
-    y_train_cats = y_train[np.where(y_train == category)[0]]
-    X_test_cats = X_test[np.where(y_test == category)[0], :]
-    y_test_cats = y_test[np.where(y_test == category)[0]]
-
-    category = 5
-    X_train_dogs = X_train[np.where(y_train == category)[0], :]
-    y_train_dogs = y_train[np.where(y_train == category)[0]]
-    X_test_dogs = X_test[np.where(y_test == category)[0], :]
-    y_test_dogs = y_test[np.where(y_test == category)[0]]
-
-    X_train = np.concatenate((X_train_cats, X_train_dogs), axis=0)
-    y_train = np.concatenate((y_train_cats, y_train_dogs), axis=0)
-    X_test = np.concatenate((X_test_cats, X_test_dogs), axis=0)
-    y_test = np.concatenate((y_test_cats, y_test_dogs), axis=0)
+    X_train = X_train[np.where(y_train == category)[0], :]
+    X_test = X_test[np.where(y_test == category)[0], :]
 
     # merge train and test data together to increase the train dataset size
     X_train = np.concatenate((X_train, X_test), axis=0)  # X_train: N x 3072
-    y_train = np.concatenate((y_train, y_test), axis=0)
+
+    # randomize data
+    s = np.random.permutation(X_train.shape[0])
+    X_train = X_train[s, :]
+
+    # Reduce data to avoid memory error.
+    X_train, _, _ = reduce_data(X_train, X_train.shape[0], 15000)
+    X_test, _, _ = reduce_data(X_test, X_test.shape[0], 15000)
 
     if rgb_or_grayscale.lower() == 'grayscale':
         # convert colored images from 3072 dimensions to 1024 grayscale images
@@ -83,11 +70,7 @@ def cifar10(
     #####
 
     # construct data with missing values
-    X_train_missing, X_train, y_train = construct_missing_data(
-        X_train,
-        y_train,
-        structured_or_random=structured_or_random
-    )
+    X_train_missing, X_train, _ = construct_missing_data(X=X_train, structured_or_random=structured_or_random)
 
     print('')
 
@@ -169,62 +152,30 @@ def cifar10(
                 summary_writer.add_summary(loss_str, epoch)
                 summary_writer.add_summary(summary_str, epoch)
 
-            print('Epoch {0} | Loss (ELBO): {1}'.format(epoch, cur_elbo))
+            print(f'Epoch {epoch} | Loss (ELBO): {cur_elbo}')
 
             if epoch == 1:
                 if input_dim == 1024:
-                    fig = plot_cifar10_data(
-                        X_train[start_index:end_index, :],
-                        y_train[start_index:end_index],
-                        categories=categories,
-                        grayscale=True
-                    )
+                    fig = plot_cifar10_data(X=X_train[start_index:end_index, :], grayscale=True)
                 elif input_dim == 3072:
-                    fig = plot_cifar10_data(
-                        X_train[start_index:end_index, :],
-                        y_train[start_index:end_index],
-                        categories=categories,
-                        grayscale=False
-                    )
+                    fig = plot_cifar10_data(X=X_train[start_index:end_index, :], grayscale=False)
                 fig.savefig(output_images_path + '/original_data.png', bbox_inches='tight')
                 plt.close()
 
                 if input_dim == 1024:
-                    fig = plot_cifar10_data(
-                        X_train_missing[start_index:end_index, :],
-                        y_train[start_index:end_index],
-                        categories=categories,
-                        grayscale=True
-                    )
+                    fig = plot_cifar10_data(X=X_train_missing[start_index:end_index, :], grayscale=True)
                 elif input_dim == 3072:
-                    fig = plot_cifar10_data(
-                        X_train_missing[start_index:end_index, :],
-                        y_train[start_index:end_index],
-                        categories=categories,
-                        grayscale=False
-                    )
+                    fig = plot_cifar10_data(X=X_train_missing[start_index:end_index, :], grayscale=False)
                 fig.savefig(output_images_path + '/missing_data.png', bbox_inches='tight')
                 plt.close()
 
             if epoch % 10 == 0 or epoch == 1:
 
                 if input_dim == 1024:
-                    fig = plot_cifar10_data(
-                        cur_samples,
-                        batch_labels,
-                        title='Epoch {}'.format(str(epoch).zfill(3)),
-                        categories=categories,
-                        grayscale=True
-                    )
+                    fig = plot_cifar10_data(X=cur_samples, title=f'Epoch {str(epoch).zfill(3)}', grayscale=True)
                 elif input_dim == 3072:
-                    fig = plot_cifar10_data(
-                        cur_samples,
-                        batch_labels,
-                        title='Epoch {}'.format(str(epoch).zfill(3)),
-                        categories=categories,
-                        grayscale=False
-                    )
-                fig.savefig(output_images_path + '/epoch_{}.png'.format(str(epoch).zfill(3)), bbox_inches='tight')
+                    fig = plot_cifar10_data(X=cur_samples, title=f'Epoch {str(epoch).zfill(3)}', grayscale=False)
+                fig.savefig(output_images_path + f'/epoch_{str(epoch).zfill(3)}.png', bbox_inches='tight')
                 plt.close()
 
             if epoch % 2 == 0:

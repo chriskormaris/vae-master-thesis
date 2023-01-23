@@ -75,11 +75,11 @@ def mnist(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, digit
 
             X_recon[start_index:end_index, :] = cur_samples
 
-        print('Epoch {0} | Loss (ELBO): {1}'.format(epoch, cur_elbo))
+        print(f'Epoch {epoch} | Loss (ELBO): {cur_elbo}')
 
         if epoch % 10 == 0 or epoch == 1:
-            fig = plot_mnist_or_omniglot_data(cur_samples, batch_labels, title='Epoch {}'.format(str(epoch).zfill(3)))
-            fig.savefig(output_images_path + '/epoch_{}.png'.format(str(epoch).zfill(3)), bbox_inches='tight')
+            fig = plot_mnist_or_omniglot_data(cur_samples, batch_labels, title=f'Epoch {str(epoch).zfill(3)}')
+            fig.savefig(output_images_path + f'/epoch_{str(epoch).zfill(3)}.png', bbox_inches='tight')
             plt.close()
     elapsed_time = time.time() - start_time
 

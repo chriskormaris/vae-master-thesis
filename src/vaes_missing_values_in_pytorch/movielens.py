@@ -93,7 +93,7 @@ def movielens(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
             cur_samples = np.multiply(masked_batch_data, batch_data) + np.multiply(1 - masked_batch_data, cur_samples)
             X_filled[start_index:end_index, :] = cur_samples
 
-        print('Epoch {0} | Loss (ELBO): {1}'.format(epoch, cur_elbo))
+        print(f'Epoch {epoch} | Loss (ELBO): {cur_elbo}')
     elapsed_time = time.time() - start_time
 
     print(f'training time: {elapsed_time} secs')
