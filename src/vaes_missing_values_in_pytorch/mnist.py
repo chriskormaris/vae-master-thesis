@@ -24,7 +24,7 @@ def mnist(
 
     if digits_or_fashion == 'digits':
         output_images_path = output_img_base_path + 'vaes_missing_values_in_pytorch/mnist'
-        mnist_data = mnist_dataset.load_data(os.getcwd() + '\\' + mnist_dataset_path + 'mnist.npz')
+        mnist_data = mnist_dataset.load_data()
     else:
         output_images_path = output_img_base_path + 'vaes_missing_values_in_pytorch/fashion_mnist'
         mnist_data = fashion_mnist_dataset.load_data()
@@ -32,7 +32,7 @@ def mnist(
     if not os.path.exists(output_images_path):
         os.makedirs(output_images_path)
 
-    (X_train, y_train), (_, _) = mnist_data
+    X_train, y_train = mnist_data[0]
 
     # We will normalize all values between 0 and 1,
     # and we will flatten the 28x28 images into vectors of size 784.

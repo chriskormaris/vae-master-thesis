@@ -17,7 +17,7 @@ def mnist(K=10, structured_or_random='structured', digits_or_fashion='digits'):
 
     if digits_or_fashion == 'digits':
         output_images_path = output_img_base_path + 'knn_missing_values/mnist'
-        mnist_data = mnist_dataset.load_data(os.getcwd() + '\\' + mnist_dataset_path + 'mnist.npz')
+        mnist_data = mnist_dataset.load_data()
     else:
         output_images_path = output_img_base_path + 'knn_missing_values/fashion_mnist'
         mnist_data = fashion_mnist_dataset.load_data()
