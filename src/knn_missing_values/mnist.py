@@ -31,16 +31,10 @@ def mnist(K=10, structured_or_random='structured', digits_or_fashion='digits'):
     X_train = X_train.reshape((-1, np.prod(X_train.shape[1:])))
     X_test = X_test.reshape((-1, np.prod(X_test.shape[1:])))
 
-    t_train = np.zeros((y_train.size, 10))
-    t_train[np.arange(y_train.size), y_train] = 1
-
-    t_test = np.zeros((y_test.size, 10))
-    t_test[np.arange(y_test.size), y_test] = 1
-
     if not os.path.exists(output_images_path):
         os.makedirs(output_images_path)
 
-    print('')
+    print()
 
     # num_classes = 10
 
@@ -55,66 +49,41 @@ def mnist(K=10, structured_or_random='structured', digits_or_fashion='digits'):
     X_test, y_test, _ = reduce_data(X_test, X_test.shape[0], 250, y_test)
 
     # construct data with missing values
-    X_train_missing, X_train, y_train = construct_missing_data(
-        X_train,
-        y_train,
-        structured_or_random=structured_or_random
-    )
-    X_test_missing, X_test, y_test = construct_missing_data(
-        X_test,
-        y_test,
-        structured_or_random=structured_or_random
-    )
-
-    # plot original data X_train
-    fig = plot_mnist_or_omniglot_data(X_train, y_train, show_plot=False)
-    fig.savefig(output_images_path + '/Train Data.png', bbox_inches='tight')
-    plt.close()
+    X_train_missing, _, _ = construct_missing_data(X_test, structured_or_random=structured_or_random)
+    X_test_missing, X_test, y_test = construct_missing_data(X_test, y_test, structured_or_random=structured_or_random)
 
     # plot X_test data
     fig = plot_mnist_or_omniglot_data(X_test, y_test, show_plot=False)
-    fig.savefig(output_images_path + '/Test Data.png', bbox_inches='tight')
-    plt.close()
-
-    # plot data X_train_missing data
-    fig = plot_mnist_or_omniglot_data(X_train_missing, y_train, show_plot=False)
-    fig.savefig(output_images_path + '/Train Data with Mixed Missing Values.png', bbox_inches='tight')
+    fig.savefig(f'{output_images_path}/Test Data.png', bbox_inches='tight')
     plt.close()
 
     # plot test data with missing values
     fig = plot_mnist_or_omniglot_data(X_test_missing, y_test, show_plot=False)
-    fig.savefig(output_images_path + '/Test Data with Mixed Missing Values K=' + str(K) + '.png', bbox_inches='tight')
+    fig.savefig(f'{output_images_path}/Test Data with Mixed Missing Values K={K}.png', bbox_inches='tight')
     plt.close()
 
     # Compute how sparse is the matrix X_train.
     # Print the percentage of non-missing entries compared to the total entries of the matrix.
 
-    percentage = get_non_zero_percentage(X_train_missing)
-    print('non missing values percentage in the TRAIN data: ' + str(percentage) + ' %')
     percentage = get_non_zero_percentage(X_test_missing)
-    print('non missing values percentage in the TEST data: ' + str(percentage) + ' %')
+    print(f'non missing values percentage in the TEST data: {percentage} %')
 
-    # convert variables to numpy matrices
-    # X_train = np.array(X_train)
-    X_test_missing = np.array(X_test_missing)
-    y_test = np.ravel(np.array(y_test))
-
-    print('')
+    print()
 
     # run K-NN
     print('Running %i-NN algorithm...' % K)
-    print('')
+    print()
 
     start_time = time.time()
     # X_test_predicted = kNNMatrixCompletion(X_train_missing, X_test_missing, K, missing_value, binarize=True)
     X_test_predicted = kNNMatrixCompletion(X_train_missing, X_test_missing, K, missing_value)
     elapsed_time = time.time() - start_time
 
-    print('k-nn predictions calculations time: ' + str(elapsed_time))
-    print('')
+    print(f'k-nn predictions calculations time: {elapsed_time}')
+    print()
 
     fig = plot_mnist_or_omniglot_data(X_test_predicted, y_test, show_plot=False)
-    fig.savefig(output_images_path + '/Predicted Test Data K=' + str(K) + '.png', bbox_inches='tight')
+    fig.savefig(f'{output_images_path}/Predicted Test Data K={K}.png', bbox_inches='tight')
     plt.close()
 
     error1 = rmse(X_test, X_test_predicted)

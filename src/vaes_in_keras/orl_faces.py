@@ -40,7 +40,7 @@ def orl_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
     elapsed_time = time.time() - start_time
 
     print(f'training time: {elapsed_time} secs')
-    print('')
+    print()
     # We can try to visualize the reconstructed inputs and the encoded representations.
     # We will use Matplotlib.
 
@@ -69,7 +69,7 @@ def orl_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
         ax.get_yaxis().set_visible(False)
     plt.show()
 
-    print('')
+    print()
 
     error1 = rmse(X, decoded_imgs)
     print(f'root mean squared error: {error1}')

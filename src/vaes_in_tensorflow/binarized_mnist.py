@@ -36,7 +36,7 @@ def binarized_mnist(latent_dim=64, epochs=100, batch_size='250', learning_rate=0
     X_test = X_test[s, :]
     y_test = y_test[s]
 
-    print('')
+    print()
 
     #####
 
@@ -55,7 +55,7 @@ def binarized_mnist(latent_dim=64, epochs=100, batch_size='250', learning_rate=0
     #####
 
     fig = plot_mnist_or_omniglot_data(X_test, y_test, title='Original Data')
-    fig.savefig(output_images_path + '/original_data.png', bbox_inches='tight')
+    fig.savefig(f'{output_images_path}/original_data.png', bbox_inches='tight')
     plt.close()
 
     #####
@@ -84,7 +84,7 @@ def binarized_mnist(latent_dim=64, epochs=100, batch_size='250', learning_rate=0
             print('Initializing parameters')
             sess.run(tf.compat.v1.global_variables_initializer())
 
-        print('')
+        print()
 
         for epoch in range(1, epochs + 1):
             iterations = int(N / batch_size)
@@ -114,17 +114,17 @@ def binarized_mnist(latent_dim=64, epochs=100, batch_size='250', learning_rate=0
                     batch_labels,
                     title=f'Epoch {str(epoch).zfill(3)}'
                 )
-                fig.savefig(output_images_path + f'/epoch_{str(epoch).zfill(3)}.png', bbox_inches='tight')
+                fig.savefig(f'{output_images_path}/epoch_{str(epoch).zfill(3)}.png', bbox_inches='tight')
                 plt.close()
 
             if epoch % 2 == 0:
                 saver.save(sess, save_path + '/model.ckpt')
 
-    print('')
+    print()
     elapsed_time = time.time() - start_time
 
     print(f'training time: {elapsed_time} secs')
-    print('')
+    print()
 
     error1 = rmse(X_test, X_recon)
     print(f'root mean squared error: {error1}')

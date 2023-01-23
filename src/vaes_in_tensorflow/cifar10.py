@@ -99,7 +99,7 @@ def cifar10(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, rgb
             print('Initializing parameters')
             sess.run(tf.compat.v1.global_variables_initializer())
 
-        print('')
+        print()
 
         for epoch in range(1, epochs + 1):
             iterations = int(N / batch_size)
@@ -127,7 +127,7 @@ def cifar10(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, rgb
                     fig = plot_cifar10_data(X=X_train[start_index:end_index, :], grayscale=True)
                 elif input_dim == 3072:
                     fig = plot_cifar10_data(X=X_train[start_index:end_index, :], grayscale=False)
-                fig.savefig(output_images_path + '/original_data.png', bbox_inches='tight')
+                fig.savefig(f'{output_images_path}/original_data.png', bbox_inches='tight')
                 plt.close()
 
             if epoch % 10 == 0 or epoch == 1:
@@ -136,7 +136,7 @@ def cifar10(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, rgb
                     fig = plot_cifar10_data(X=cur_samples, title=f'Epoch {str(epoch).zfill(3)}', grayscale=True)
                 elif input_dim == 3072:
                     fig = plot_cifar10_data(X=cur_samples, title=f'Epoch {str(epoch).zfill(3)}', grayscale=False)
-                fig.savefig(output_images_path + f'/epoch_{str(epoch).zfill(3)}.png', bbox_inches='tight')
+                fig.savefig(f'{output_images_path}/epoch_{str(epoch).zfill(3)}.png', bbox_inches='tight')
                 plt.close()
 
             if epoch % 2 == 0:
@@ -144,7 +144,7 @@ def cifar10(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, rgb
     elapsed_time = time.time() - start_time
 
     print(f'training time: {elapsed_time} secs')
-    print('')
+    print()
 
     error1 = rmse(X_train, X_recon)
     print(f'root mean squared error: {error1}')

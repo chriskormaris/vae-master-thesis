@@ -66,17 +66,17 @@ def omniglot(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, la
     #####
 
     fig = plot_mnist_or_omniglot_data(X_merged, y_merged, categories=list(range(1, 11)), title='Original Data')
-    fig.savefig(output_images_path + '/original_data_characters_1-10.png', bbox_inches='tight')
+    fig.savefig(f'{output_images_path}/original_data_characters_1-10.png', bbox_inches='tight')
     plt.close()
     fig = plot_mnist_or_omniglot_data(X_merged, y_merged, categories=list(range(11, 21)), title='Original Data')
-    fig.savefig(output_images_path + '/original_data_characters_11-20.png', bbox_inches='tight')
+    fig.savefig(f'{output_images_path}/original_data_characters_11-20.png', bbox_inches='tight')
     plt.close()
     if language.lower() == 'greek':
         fig = plot_mnist_or_omniglot_data(X_merged, y_merged, categories=list(range(21, 25)), title='Original Data')
-        fig.savefig(output_images_path + '/original_data_characters_21-24.png', bbox_inches='tight')
+        fig.savefig(f'{output_images_path}/original_data_characters_21-24.png', bbox_inches='tight')
     else:
         fig = plot_mnist_or_omniglot_data(X_merged, y_merged, categories=list(range(21, 27)), title='Original Data')
-        fig.savefig(output_images_path + '/original_data_characters_21-26.png', bbox_inches='tight')
+        fig.savefig(f'{output_images_path}/original_data_characters_21-26.png', bbox_inches='tight')
     plt.close()
 
     #####
@@ -105,7 +105,7 @@ def omniglot(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, la
             print('Initializing parameters')
             sess.run(tf.compat.v1.global_variables_initializer())
 
-        print('')
+        print()
 
         for epoch in range(1, epochs + 1):
             iterations = int(N / batch_size)
@@ -136,7 +136,7 @@ def omniglot(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, la
                     categories=list(range(1, 11)), n=5, title=f'Epoch {str(epoch).zfill(3)}'
                 )
                 fig.savefig(
-                    output_images_path + f'/epoch_{str(epoch).zfill(3)}_characters_1-10.png',
+                    f'{output_images_path}/epoch_{str(epoch).zfill(3)}_characters_1-10.png',
                     bbox_inches='tight'
                 )
                 plt.close()
@@ -146,7 +146,7 @@ def omniglot(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, la
                     categories=list(range(11, 21)), n=5, title=f'Epoch {str(epoch).zfill(3)}'
                 )
                 fig.savefig(
-                    output_images_path + f'/epoch_{str(epoch).zfill(3)}_characters_11-20.png',
+                    f'{output_images_path}/epoch_{str(epoch).zfill(3)}_characters_11-20.png',
                     bbox_inches='tight'
                 )
                 plt.close()
@@ -157,7 +157,7 @@ def omniglot(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, la
                         categories=list(range(21, 25)), n=5, title=f'Epoch {str(epoch).zfill(3)}'
                     )
                     fig.savefig(
-                        output_images_path + f'/epoch_{str(epoch).zfill(3)}_characters_21-24.png',
+                        f'{output_images_path}/epoch_{str(epoch).zfill(3)}_characters_21-24.png',
                         bbox_inches='tight'
                     )
                 else:
@@ -169,7 +169,7 @@ def omniglot(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, la
                         title=f'Epoch {str(epoch).zfill(3)}'
                     )
                     fig.savefig(
-                        output_images_path + f'/epoch_{str(epoch).zfill(3)}_characters_21-26.png',
+                        f'{output_images_path}/epoch_{str(epoch).zfill(3)}_characters_21-26.png',
                         bbox_inches='tight'
                     )
                 plt.close()
@@ -179,7 +179,7 @@ def omniglot(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, la
     elapsed_time = time.time() - start_time
 
     print(f'training time: {elapsed_time} secs')
-    print('')
+    print()
 
     error1 = rmse(X_merged, X_recon)
     print(f'root mean squared error: {error1}')

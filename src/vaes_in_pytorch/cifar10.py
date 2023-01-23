@@ -74,7 +74,7 @@ def cifar10(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, rgb
     cur_elbo = None
     X_recon = np.zeros((N, input_dim))
 
-    print('')
+    print()
 
     iterations = int(N / batch_size)
     start_time = time.time()
@@ -96,7 +96,7 @@ def cifar10(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, rgb
                 fig = plot_cifar10_data(X_train[start_index:end_index, :], grayscale=True)
             elif input_dim == 3072:
                 fig = plot_cifar10_data(X_train[start_index:end_index, :], grayscale=False)
-            fig.savefig(output_images_path + '/original_data.png', bbox_inches='tight')
+            fig.savefig(f'{output_images_path}/original_data.png', bbox_inches='tight')
             plt.close()
 
         if epoch % 10 == 0 or epoch == 1:
@@ -113,12 +113,12 @@ def cifar10(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, rgb
                     title=f'Epoch {str(epoch).zfill(3)}',
                     grayscale=False
                 )
-            fig.savefig(output_images_path + f'/epoch_{str(epoch).zfill(3)}.png', bbox_inches='tight')
+            fig.savefig(f'{output_images_path}/epoch_{str(epoch).zfill(3)}.png', bbox_inches='tight')
             plt.close()
     elapsed_time = time.time() - start_time
 
     print(f'training time: {elapsed_time} secs')
-    print('')
+    print()
 
     error1 = rmse(X_train, X_recon)
     print(f'root mean squared error: {error1}')

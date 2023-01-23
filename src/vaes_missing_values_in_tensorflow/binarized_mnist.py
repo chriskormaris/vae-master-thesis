@@ -40,7 +40,7 @@ def binarized_mnist(latent_dim=64, epochs=100, batch_size='250', learning_rate=0
     X_test = X_test[s, :]
     y_test = y_test[s]
 
-    print('')
+    print()
 
     #####
 
@@ -50,7 +50,7 @@ def binarized_mnist(latent_dim=64, epochs=100, batch_size='250', learning_rate=0
     # construct data with missing values
     X_test_missing, X_test, _ = construct_missing_data(X_test)
 
-    print('')
+    print()
 
     #####
 
@@ -70,12 +70,12 @@ def binarized_mnist(latent_dim=64, epochs=100, batch_size='250', learning_rate=0
 
     # plot X_test
     fig = plot_mnist_or_omniglot_data(X_test, y_test, title='Original Data')
-    fig.savefig(output_images_path + '/original_data.png', bbox_inches='tight')
+    fig.savefig(f'{output_images_path}/original_data.png', bbox_inches='tight')
     plt.close()
 
     # plot X_test_missing
     fig = plot_mnist_or_omniglot_data(X_test_missing, y_test, title='Missing Data')
-    fig.savefig(output_images_path + '/missing_data.png', bbox_inches='tight')
+    fig.savefig(f'{output_images_path}/missing_data.png', bbox_inches='tight')
     plt.close()
 
     #####
@@ -101,7 +101,7 @@ def binarized_mnist(latent_dim=64, epochs=100, batch_size='250', learning_rate=0
     X_test_masked[np.where(X_test_masked == missing_value)] = 0
 
     non_zero_percentage = get_non_zero_percentage(X_test_masked)
-    print('non missing values percentage: ' + str(non_zero_percentage) + ' %')
+    print(f'non missing values percentage: {non_zero_percentage} %')
 
     X_filled = np.array(X_test_missing)
 
@@ -115,7 +115,7 @@ def binarized_mnist(latent_dim=64, epochs=100, batch_size='250', learning_rate=0
             print('Initializing parameters')
             sess.run(tf.compat.v1.global_variables_initializer())
 
-        print('')
+        print()
 
         for epoch in range(1, epochs + 1):
             iterations = int(N / batch_size)
@@ -144,7 +144,7 @@ def binarized_mnist(latent_dim=64, epochs=100, batch_size='250', learning_rate=0
 
             if epoch == 1:
                 fig = plot_mnist_or_omniglot_data(masked_batch_data, batch_labels, title='Masked Data')
-                fig.savefig(output_images_path + '/masked_data.png', bbox_inches='tight')
+                fig.savefig(f'{output_images_path}/masked_data.png', bbox_inches='tight')
                 plt.close()
 
             if epoch % 10 == 0 or epoch == 1:
@@ -153,17 +153,17 @@ def binarized_mnist(latent_dim=64, epochs=100, batch_size='250', learning_rate=0
                     batch_labels,
                     title=f'Epoch {str(epoch).zfill(3)}'
                 )
-                fig.savefig(output_images_path + f'/epoch_{str(epoch).zfill(3)}.png', bbox_inches='tight')
+                fig.savefig(f'{output_images_path}/epoch_{str(epoch).zfill(3)}.png', bbox_inches='tight')
                 plt.close()
 
             if epoch % 2 == 0:
                 saver.save(sess, save_path + '/model.ckpt')
 
-    print('')
+    print()
     elapsed_time = time.time() - start_time
 
     print(f'training time: {elapsed_time} secs')
-    print('')
+    print()
 
     error1 = rmse(X_test, X_filled)
     print(f'root mean squared error: {error1}')

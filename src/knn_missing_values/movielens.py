@@ -26,13 +26,13 @@ def movielens(K=10):
     # Print the percentage of non-missing entries compared to the total entries of the matrix.
 
     percentage = get_non_zero_percentage(X_train)
-    print('non missing values percentage in the TRAIN data: ' + str(percentage) + ' %')
+    print(f'non missing values percentage in the TRAIN data: {percentage} %')
 
-    no_users = X_train.shape[0]
-    no_movies = X_train.shape[1]
+    num_users = X_train.shape[0]
+    num_movies = X_train.shape[1]
 
-    print('number of users: ' + str(no_users))
-    print('number of movies: ' + str(no_movies))
+    print(f'number of users: {num_users}')
+    print(f'number of movies: {num_movies}')
 
     X_df = pd.DataFrame(X_train)
     X_df = X_df.replace(to_replace=0.0, value='---')
@@ -43,18 +43,18 @@ def movielens(K=10):
         header=False
     )
 
-    print('')
+    print()
 
     # run K-NN
     print('Running %i-NN algorithm...' % K)
-    print('')
+    print()
 
     start_time = time.time()
     X_merged_predicted = kNNMatrixCompletion(X_train, X_merged, K, missing_value, binarize=True)
     elapsed_time = time.time() - start_time
 
-    print('k-nn predictions calculations time: ' + str(elapsed_time))
-    print('')
+    print(f'k-nn predictions calculations time: {elapsed_time}')
+    print()
 
     X_merged_predicted[np.where(X_merged_predicted == missing_value)] = 1
 
@@ -80,7 +80,7 @@ def movielens(K=10):
     X_merged_predicted[np.where(X_merged == 0)] = 0
     X_merged_predicted = np.round(X_merged_predicted)
     accuracy = np.not_equal(X_merged, X_merged_predicted).size / X_merged.size
-    print('accuracy: ' + str(accuracy))
+    print(f'accuracy: {accuracy}')
 
 
 if __name__ == '__main__':
