@@ -97,7 +97,8 @@ The results of the algorithm will be new images of binarized digits, with their 
 
 ### CIFAR-10 Dataset ###
 
-The results of the algorithm will be new images of cats and dogs, with their missing halves predicted.
+The results of the algorithm will be new images of the selected category (e.g. cats, dogs, etc.),
+with their missing halves predicted.
 
 ### OMNIGLOT Dataset ###
 
