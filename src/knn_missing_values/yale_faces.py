@@ -58,10 +58,7 @@ def yale_faces(K=10, structured_or_random='structured'):
 
     # plot predicted data
     fig = plot_yale_faces(X_predicted, y, categories=list(range(10)), show_plot=False)
-    fig.savefig(
-        f'{output_images_path}/Predicted Faces 1-10 K={K}.png',
-        bbox_inches='tight'
-    )
+    fig.savefig(f'{output_images_path}/Predicted Faces 1-10 K={K}.png', bbox_inches='tight')
     plt.close()
 
     error1 = rmse(X, X_predicted)

@@ -8,7 +8,7 @@ from keras.datasets import cifar10 as cifar10_dataset
 from src.utilities.constants import *
 from src.utilities.knn_matrix_completion import kNNMatrixCompletion
 from src.utilities.plot_dataset_samples import plot_cifar10_data
-from src.utilities.utils import reduce_data, construct_missing_data, get_non_zero_percentage, rmse, mae
+from src.utilities.utils import construct_missing_data, get_non_zero_percentage, rmse, mae
 
 
 def cifar10(K=10, structured_or_random='structured', rgb_or_grayscale='grayscale', category=3):
@@ -25,6 +25,10 @@ def cifar10(K=10, structured_or_random='structured', rgb_or_grayscale='grayscale
     # LOAD CIFAR-10 DATASET #
     (X_train, y_train), (X_test, y_test) = cifar10_dataset.load_data()
 
+    X_train = X_train[np.where(y_train == category)[0], :]
+    X_test = X_test[np.where(y_test == category)[0], :]
+    y_test = y_test[np.where(y_test == category)[0]]
+
     if rgb_or_grayscale.lower() == 'grayscale':
         # convert colored images from 3072 dimensions to 1024 grayscale images
         X_train = np.dot(X_train[:, :, :, :3], [0.299, 0.587, 0.114])
@@ -40,32 +44,36 @@ def cifar10(K=10, structured_or_random='structured', rgb_or_grayscale='grayscale
     X_train = X_train / 255.
     X_test = X_test / 255.
 
-    X_train = X_train[np.where(y_train == category)[0], :]
-    X_test = X_test[np.where(y_test == category)[0], :]
-
     # merge train and test data together to increase the train dataset size
-    X_train = np.concatenate((X_train, X_test), axis=0)  # X_merged: N x 3072
-
-    # reduce the number of test examples to 100
-    X_test, _, _ = reduce_data(X_test, X_test.shape[0], 100)
+    X_train = np.concatenate((X_train, X_test), axis=0)  # X_train: N x 3072
 
     # construct data with missing values
-    X_train_missing, _, _ = construct_missing_data(X_train, structured_or_random=structured_or_random)
-    X_test_missing, X_test, _ = construct_missing_data(X_test, structured_or_random=structured_or_random)
+    X_train_missing, _, _ = construct_missing_data(X=X_train, structured_or_random=structured_or_random)
+    X_test_missing, X_test, y_test = construct_missing_data(
+        X=X_test,
+        y=y_test,
+        structured_or_random=structured_or_random
+    )
 
     # plot test data
-    if rgb_or_grayscale.lower() == 'grayscale':
-        fig = plot_cifar10_data(X_test, grayscale=True)
-    else:
-        fig = plot_cifar10_data(X_test)
+    fig = plot_cifar10_data(
+        X=X_test,
+        y=y_test,
+        categories=[category],
+        n=100,
+        grayscale=True if rgb_or_grayscale.lower() == 'grayscale' else False
+    )
     fig.savefig(f'{output_images_path}/Test Data.png', bbox_inches='tight')
     plt.close()
 
     # plot original data with missing values
-    if rgb_or_grayscale.lower() == 'grayscale':
-        fig = plot_cifar10_data(X_test_missing, grayscale=True)
-    else:
-        fig = plot_cifar10_data(X_test_missing)
+    fig = plot_cifar10_data(
+        X=X_test_missing,
+        y=y_test,
+        categories=[category],
+        n=100,
+        grayscale=True if rgb_or_grayscale.lower() == 'grayscale' else False
+    )
     fig.savefig(f'{output_images_path}/Test Data with Mixed Missing Values K={K}', bbox_inches='tight')
     plt.close()
 
@@ -95,10 +103,13 @@ def cifar10(K=10, structured_or_random='structured', rgb_or_grayscale='grayscale
     print()
 
     # plot predicted test data
-    if rgb_or_grayscale.lower() == 'grayscale':
-        fig = plot_cifar10_data(X_test_predicted, grayscale=True)
-    else:
-        fig = plot_cifar10_data(X_test_predicted)
+    fig = plot_cifar10_data(
+        X=X_test_predicted,
+        y=y_test,
+        categories=[category],
+        n=100,
+        grayscale=True if rgb_or_grayscale.lower() == 'grayscale' else False
+    )
     fig.savefig(f'{output_images_path}/Predicted Test Data K={K}', bbox_inches='tight')
     plt.close()
 

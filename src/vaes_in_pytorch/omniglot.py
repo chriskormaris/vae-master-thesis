@@ -95,8 +95,8 @@ def omniglot(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, la
 
     params, solver = initialize_weights(input_dim, hidden_encoder_dim, hidden_decoder_dim, latent_dim, lr=learning_rate)
 
-    batch_labels = None
     cur_samples = None
+    batch_labels = None
     cur_elbo = None
     X_recon = np.zeros((N, input_dim))
 

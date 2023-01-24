@@ -66,8 +66,8 @@ def yale_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, 
 
     start_index = None
     end_index = None
-    batch_labels = None
     cur_samples = None
+    batch_labels = None
     cur_elbo = None
 
     # X_train_masked: array with 0s where the pixels are missing

@@ -153,7 +153,6 @@ def omniglot(K=10, structured_or_random='structured', language='English'):
 
     start_time = time.time()
     X_merged_predicted = kNNMatrixCompletion(X_train, X_merged_missing, K, missing_value, binarize=True)
-    # X_merged_predicted = kNNMatrixCompletion(X_train, X_merged_missing, K, missing_value)
     elapsed_time = time.time() - start_time
 
     print(f'k-nn predictions calculations time: {elapsed_time}')
