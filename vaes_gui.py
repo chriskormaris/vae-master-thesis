@@ -341,7 +341,7 @@ def datasets_details_window():
              'Dimensions: 28x28 pixels'
     )
     mnist_ds_label.pack()
-    mnist_ds_link = tk.Label(window, text='MNIST dataset link', fg='blue', cursor='hand2')
+    mnist_ds_link = tk.Label(window, text='MNIST dataset link (no need to download)', fg='blue', cursor='hand2')
     mnist_ds_link.pack()
     mnist_ds_link.bind('<Button-1>', mnist_link_command)
     sep = ttk.Separator(window, orient='horizontal')
@@ -354,7 +354,12 @@ def datasets_details_window():
              '# Classes: 10, Dimensions: 28x28 pixels'
     )
     fashion_mnist_ds_label.pack()
-    fashion_mnist_ds_link = tk.Label(window, text='Fashion MNIST dataset link', fg='blue', cursor='hand2')
+    fashion_mnist_ds_link = tk.Label(
+        window,
+        text='Fashion MNIST dataset link (no need to download)',
+        fg='blue',
+        cursor='hand2'
+    )
     fashion_mnist_ds_link.pack()
     fashion_mnist_ds_link.bind('<Button-1>', fashion_mnist_link_command)
     sep = ttk.Separator(window, orient='horizontal')
@@ -383,7 +388,7 @@ def datasets_details_window():
              'Grayscale Dimensions: 32x32x1 pixels'
     )
     cifar10_10_ds_label.pack()
-    cifar10_10_link = tk.Label(window, text='CIFAR-10 dataset link', fg='blue', cursor='hand2')
+    cifar10_10_link = tk.Label(window, text='CIFAR-10 dataset link (no need to download)', fg='blue', cursor='hand2')
     cifar10_10_link.pack()
     cifar10_10_link.bind('<Button-1>', cifar10_link_command)
     sep = ttk.Separator(window, orient='horizontal')
