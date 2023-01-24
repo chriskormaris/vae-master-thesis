@@ -5,10 +5,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
 
-from src.utilities.constants import *
+from src import *
+from src.utilities import rmse, mae
 from src.utilities.get_binarized_mnist_dataset import get_binarized_mnist_dataset, get_binarized_mnist_labels, obtain
 from src.utilities.plot_utils import plot_images
-from src.utilities.utils import rmse, mae
 from src.utilities.vae_in_tensorflow import vae
 
 

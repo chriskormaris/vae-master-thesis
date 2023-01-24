@@ -42,7 +42,7 @@ import src.vaes_missing_values_in_tensorflow.movielens
 import src.vaes_missing_values_in_tensorflow.omniglot
 import src.vaes_missing_values_in_tensorflow.orl_faces
 import src.vaes_missing_values_in_tensorflow.yale_faces
-from src.utilities.constants import *
+from src import *
 
 ssl._create_default_https_context = ssl._create_stdlib_context
 
