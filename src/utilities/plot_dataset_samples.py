@@ -9,12 +9,14 @@ def plot_mnist_or_omniglot_data(X, y, categories=None, n=10, title='', grayscale
         categories = list(range(10))
     fig = plt.figure(figsize=(10, 10))
     for c, category in enumerate(categories):
-        if int(n * c + 1) < int(n * len(categories)):
+        if c * n + 1 < n * len(categories):
             i = 0
             # plot the first n data of each category
             for col in range(n):
-                while y[i] != category:
+                while i < len(y) and y[i] != category:
                     i = i + 1
+                if i >= len(y):
+                    break
                 ax = plt.subplot(n, n, col + c * n + 1)
                 plt.axis('off')
                 ax.set_xticklabels([])
@@ -72,12 +74,14 @@ def plot_orl_faces(X, y, categories=None, n=10, title='', grayscale=True, show_p
         categories = list(range(10))
     fig = plt.figure(figsize=(10, 10))
     for c, category in enumerate(categories):
-        if int(n * c + 1) < int(n * len(categories)):
+        if c * n + 1 < n * len(categories):
             i = 0
             # plot the first n data of each category
             for col in range(n):
-                while y[i] != category:
+                while i < len(y) and y[i] != category:
                     i = i + 1
+                if i >= len(y):
+                    break
                 ax = plt.subplot(n, n, col + c * n + 1)
                 plt.axis('off')
                 ax.set_xticklabels([])
@@ -106,12 +110,14 @@ def plot_yale_faces(X, y, categories=None, n=10, title='', grayscale=True, show_
         categories = list(range(10))
     fig = plt.figure(figsize=(10, 10))
     for c, category in enumerate(categories):
-        if int(n * c + 1) < int(n * len(categories)):
+        if c * n + 1 < n * len(categories):
             i = 0
             # plot the first n data of each category
             for col in range(n):
-                while y[i] != category:
+                while i < len(y) and y[i] != category:
                     i = i + 1
+                if i >= len(y):
+                    break
                 ax = plt.subplot(n, n, col + c * n + 1)
                 plt.axis('off')
                 ax.set_xticklabels([])
