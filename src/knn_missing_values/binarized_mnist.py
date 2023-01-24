@@ -24,8 +24,6 @@ def binarized_mnist(K=10, structured_or_random='structured'):
 
     print()
 
-    # num_classes = 10
-
     # build train data
     # print('Building TRAIN data...')
     X_train = get_binarized_mnist_dataset(binarized_dataset_path + 'binarized_mnist_train.amat', 'TRAIN')

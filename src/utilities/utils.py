@@ -4,8 +4,7 @@ import numpy as np
 #####
 
 
-def reduce_data(X, num_examples, reduced_num_examples, y=None, t=None):
-    num_classes = 10
+def reduce_data(X, num_examples, reduced_num_examples, y=None, t=None, num_classes=10):
     starting_index = int(num_examples / num_classes)
     offset = int(reduced_num_examples / num_classes)
 
