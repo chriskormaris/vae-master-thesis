@@ -73,7 +73,6 @@ def mnist(K=10, structured_or_random='structured', digits_or_fashion='digits'):
     print()
 
     start_time = time.time()
-    # X_test_predicted = kNNMatrixCompletion(X_train_missing, X_test_missing, K, missing_value, binarize=True)
     X_test_predicted = kNNMatrixCompletion(X_train_missing, X_test_missing, K, missing_value)
     elapsed_time = time.time() - start_time
 

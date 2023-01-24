@@ -30,6 +30,26 @@ def orl_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
 
     #####
 
+    for i in range(0, 40, 10):
+        fig = plot_orl_faces(
+            X,
+            y,
+            categories=list(range(i, i + 10)),
+            title='Original Faces',
+            show_plot=False
+        )
+        fig.savefig(f'{output_images_path}/original_faces_{i + 1}-{i + 10}.png')
+        plt.close()
+
+    #####
+
+    category = np.random.randint(40)
+    print(f'category: {category}')
+    X = X[np.where(y == category)[0], :]
+    y = y[np.where(y == category)[0]]
+
+    #####
+
     N = X.shape[0]
     input_dim = 10304  # D
     # M1: number of neurons in the encoder
@@ -44,19 +64,6 @@ def orl_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
 
     #####
 
-    for i in range(0, 40, 10):
-        fig = plot_orl_faces(
-            X,
-            y,
-            categories=list(range(i, i + 10)),
-            title='Original Faces',
-            show_plot=False
-        )
-        fig.savefig(f'{output_images_path}/original_faces_{i + 1}-{i + 10}.png')
-        plt.close()
-
-    #####
-
     x, loss_summ, apply_updates, summary_op, saver, elbo, x_recon_samples = vae(
         batch_size,
         input_dim,
@@ -66,8 +73,8 @@ def orl_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
         lr=learning_rate
     )
 
-    batch_labels = None
     cur_samples = None
+    batch_labels = None
     cur_elbo = None
     X_recon = np.zeros((N, input_dim))
 
@@ -109,7 +116,8 @@ def orl_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
                 fig = plot_orl_faces(
                     cur_samples,
                     batch_labels,
-                    categories=list(range(10)),
+                    categories=[category],
+                    n=100,
                     title=f'Epoch {str(epoch).zfill(3)}',
                     show_plot=False
                 )

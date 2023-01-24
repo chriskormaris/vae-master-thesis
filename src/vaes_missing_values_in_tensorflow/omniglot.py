@@ -88,8 +88,8 @@ def omniglot(
 
     start_index = None
     end_index = None
-    batch_labels = None
     cur_samples = None
+    batch_labels = None
     cur_elbo = None
     masked_batch_data = None
 

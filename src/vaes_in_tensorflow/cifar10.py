@@ -37,14 +37,18 @@ def cifar10(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, rgb
     # and we will flatten the 32x32 images into vectors of size 3072.
 
     X_train = X_train[np.where(y_train == category)[0], :]
+    y_train = y_train[np.where(y_train == category)[0]]
     X_test = X_test[np.where(y_test == category)[0], :]
+    y_test = y_test[np.where(y_test == category)[0]]
 
     # merge train and test data together to increase the train dataset size
     X_train = np.concatenate((X_train, X_test), axis=0)  # X_train: N x 3072
+    y_train = np.concatenate((y_train, y_test), axis=0)  # y_train: N
 
     # randomize data
     s = np.random.permutation(X_train.shape[0])
     X_train = X_train[s, :]
+    y_train = y_train[s]
 
     if rgb_or_grayscale.lower() == 'grayscale':
         # convert colored images from 3072 dimensions to 1024 grayscale images
@@ -86,6 +90,7 @@ def cifar10(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, rgb
     start_index = None
     end_index = None
     cur_samples = None
+    batch_labels = None
     cur_elbo = None
     X_recon = np.zeros((N, input_dim))
 
@@ -108,6 +113,7 @@ def cifar10(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, rgb
                 end_index = i * batch_size
 
                 batch_data = X_train[start_index:end_index, :]
+                batch_labels = y_train[start_index:end_index]
 
                 feed_dict = {x: batch_data}
                 loss_str, _, summary_str, cur_elbo, cur_samples = sess.run(
@@ -123,19 +129,24 @@ def cifar10(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, rgb
             print(f'Epoch {epoch} | Loss (ELBO): {cur_elbo}')
 
             if epoch == 1:
-                if input_dim == 1024:
-                    fig = plot_cifar10_data(X=X_train[start_index:end_index, :], grayscale=True)
-                elif input_dim == 3072:
-                    fig = plot_cifar10_data(X=X_train[start_index:end_index, :], grayscale=False)
+                fig = plot_cifar10_data(
+                    X=X_train[start_index:end_index, :],
+                    y=batch_labels,
+                    categories=[category],
+                    n=100,
+                    grayscale=True if input_dim == 1024 else False
+                )
                 fig.savefig(f'{output_images_path}/original_data.png', bbox_inches='tight')
                 plt.close()
 
             if epoch % 10 == 0 or epoch == 1:
-
-                if input_dim == 1024:
-                    fig = plot_cifar10_data(X=cur_samples, title=f'Epoch {str(epoch).zfill(3)}', grayscale=True)
-                elif input_dim == 3072:
-                    fig = plot_cifar10_data(X=cur_samples, title=f'Epoch {str(epoch).zfill(3)}', grayscale=False)
+                fig = plot_cifar10_data(
+                    X=cur_samples,
+                    y=batch_labels,
+                    categories=[category],
+                    n=100,
+                    grayscale=True if input_dim == 1024 else False
+                )
                 fig.savefig(f'{output_images_path}/epoch_{str(epoch).zfill(3)}.png', bbox_inches='tight')
                 plt.close()
 

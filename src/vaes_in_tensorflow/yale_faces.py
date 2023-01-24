@@ -29,20 +29,6 @@ def yale_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
 
     #####
 
-    N = X.shape[0]
-    input_dim = 32256  # D
-    # M1: number of neurons in the encoder
-    # M2: number of neurons in the decoder
-    hidden_encoder_dim = 400  # M1
-    hidden_decoder_dim = hidden_encoder_dim  # M2
-    # latent_dim = Z_dim
-    if batch_size == 'N':
-        batch_size = N
-    else:
-        batch_size = int(batch_size)
-
-    #####
-
     for i in range(0, 38, 10):
         if i <= 20:
             fig = plot_yale_faces(
@@ -67,6 +53,27 @@ def yale_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
 
     #####
 
+    category = np.random.randint(38)
+    print(f'category: {category}')
+    X = X[np.where(y == category)[0], :]
+    y = y[np.where(y == category)[0]]
+
+    #####
+
+    N = X.shape[0]
+    input_dim = 32256  # D
+    # M1: number of neurons in the encoder
+    # M2: number of neurons in the decoder
+    hidden_encoder_dim = 400  # M1
+    hidden_decoder_dim = hidden_encoder_dim  # M2
+    # latent_dim = Z_dim
+    if batch_size == 'N':
+        batch_size = N
+    else:
+        batch_size = int(batch_size)
+
+    #####
+
     x, loss_summ, apply_updates, summary_op, saver, elbo, x_recon_samples = vae(
         batch_size,
         input_dim,
@@ -76,8 +83,8 @@ def yale_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
         lr=learning_rate
     )
 
-    batch_labels = None
     cur_samples = None
+    batch_labels = None
     cur_elbo = None
     X_recon = np.zeros((N, input_dim))
 
@@ -117,7 +124,8 @@ def yale_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
                 fig = plot_yale_faces(
                     cur_samples,
                     batch_labels,
-                    categories=list(range(10)),
+                    categories=[category],
+                    n=100,
                     title=f'Epoch {str(epoch).zfill(3)}'
                 )
                 fig.savefig(f'{output_images_path}/epoch_{str(epoch).zfill(3)}_faces.png')

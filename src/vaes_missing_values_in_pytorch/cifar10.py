@@ -8,7 +8,7 @@ from keras.datasets import cifar10 as cifar10_dataset
 
 from src.utilities.constants import *
 from src.utilities.plot_dataset_samples import plot_cifar10_data
-from src.utilities.utils import reduce_data, construct_missing_data, get_non_zero_percentage, rmse, mae
+from src.utilities.utils import construct_missing_data, get_non_zero_percentage, rmse, mae
 from src.utilities.vae_in_pytorch import initialize_weights, train
 
 
@@ -35,18 +35,18 @@ def cifar10(
     (X_train, y_train), (X_test, y_test) = cifar10_dataset.load_data()
 
     X_train = X_train[np.where(y_train == category)[0], :]
+    y_train = y_train[np.where(y_train == category)[0]]
     X_test = X_test[np.where(y_test == category)[0], :]
+    y_test = y_test[np.where(y_test == category)[0]]
 
     # merge train and test data together to increase the train dataset size
     X_train = np.concatenate((X_train, X_test), axis=0)  # X_train: N x 3072
+    y_train = np.concatenate((y_train, y_test), axis=0)  # y_train: N
 
     # randomize data
     s = np.random.permutation(X_train.shape[0])
     X_train = X_train[s, :]
-
-    # Reduce data to avoid memory error.
-    X_train, _, _ = reduce_data(X_train, X_train.shape[0], 15000)
-    X_test, _, _ = reduce_data(X_test, X_test.shape[0], 15000)
+    y_train = y_train[s]
 
     if rgb_or_grayscale.lower() == 'grayscale':
         # convert colored images from 3072 dimensions to 1024 grayscale images
@@ -62,7 +62,11 @@ def cifar10(
     #####
 
     # construct data with missing values
-    X_train_missing, X_train, _ = construct_missing_data(X=X_train, structured_or_random=structured_or_random)
+    X_train_missing, X_train, y_train = construct_missing_data(
+        X=X_train,
+        y=y_train,
+        structured_or_random=structured_or_random
+    )
 
     #####
 
@@ -86,6 +90,7 @@ def cifar10(
     start_index = None
     end_index = None
     cur_samples = None
+    batch_labels = None
     cur_elbo = None
 
     # X_train_masked: array with 0s where the pixels are missing
@@ -109,6 +114,7 @@ def cifar10(
             end_index = i * batch_size
 
             batch_data = X_filled[start_index:end_index, :]
+            batch_labels = y_train[start_index:end_index]
 
             cur_samples, cur_elbo = train(batch_data, batch_size, latent_dim, params, solver)
 
@@ -119,28 +125,37 @@ def cifar10(
         print(f'Epoch {epoch} | Loss (ELBO): {cur_elbo}')
 
         if epoch == 1:
-            if input_dim == 1024:
-                fig = plot_cifar10_data(X=X_train[start_index:end_index, :], grayscale=True)
-            elif input_dim == 3072:
-                fig = plot_cifar10_data(X=X_train[start_index:end_index, :], grayscale=False)
+            fig = plot_cifar10_data(
+                X=X_train[start_index:end_index, :],
+                y=batch_labels,
+                categories=[category],
+                n=100,
+                grayscale=True if input_dim == 1024 else False
+            )
             fig.savefig(f'{output_images_path}/original_data.png', bbox_inches='tight')
             plt.close()
 
-            if input_dim == 1024:
-                fig = plot_cifar10_data(X_train_missing[start_index:end_index, :], grayscale=True)
-            elif input_dim == 3072:
-                fig = plot_cifar10_data(X_train_missing[start_index:end_index, :], grayscale=False)
+            fig = plot_cifar10_data(
+                X=X_train_missing[start_index:end_index, :],
+                y=batch_labels,
+                categories=[category],
+                n=100,
+                grayscale=True if input_dim == 1024 else False
+            )
             fig.savefig(f'{output_images_path}/missing_data.png', bbox_inches='tight')
             plt.close()
 
         if epoch % 10 == 0 or epoch == 1:
-
-            if input_dim == 1024:
-                fig = plot_cifar10_data(X=cur_samples, title=f'Epoch {str(epoch).zfill(3)}', grayscale=True)
-            elif input_dim == 3072:
-                fig = plot_cifar10_data(X=cur_samples, title=f'Epoch {str(epoch).zfill(3)}', grayscale=False)
+            fig = plot_cifar10_data(
+                X=cur_samples,
+                y=batch_labels,
+                categories=[category],
+                n=100,
+                grayscale=True if input_dim == 1024 else False
+            )
             fig.savefig(f'{output_images_path}/epoch_{str(epoch).zfill(3)}.png', bbox_inches='tight')
             plt.close()
+
     elapsed_time = time.time() - start_time
 
     print(f'training time: {elapsed_time} secs')
