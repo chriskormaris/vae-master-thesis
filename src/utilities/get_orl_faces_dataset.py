@@ -44,8 +44,8 @@ def get_orl_faces_dataset(db_of_faces_path, one_hot=False, print_progress=False)
                     y = np.concatenate((y, i * np.ones((k,), dtype=np.int8)), axis=0)
             i = i + 1
 
-    # We will normalize all values between 0 and 1,.
-    X = X.astype('float32') / 255.
+    # We will normalize all values between 0 and 1.
+    X = X / 255.
 
     if one_hot:
         t = np.zeros((y.size, K))
