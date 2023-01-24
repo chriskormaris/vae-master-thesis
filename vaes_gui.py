@@ -91,88 +91,88 @@ def run(
 
     if algorithm == 'knn_missing_values':
         if dataset == 'binarized_mnist':
-            src.knn_missing_values.binarized_mnist.binarized_mnist(*arguments)
+            src.knn_missing_values.binarized_mnist(*arguments)
         elif dataset == 'cifar10':
-            src.knn_missing_values.cifar10.cifar10(*arguments)
+            src.knn_missing_values.cifar10(*arguments)
         elif dataset == 'mnist':
-            src.knn_missing_values.mnist.mnist(*arguments)
+            src.knn_missing_values.mnist(*arguments)
         elif dataset == 'movielens':
-            src.knn_missing_values.movielens.movielens(*arguments)
+            src.knn_missing_values.movielens(*arguments)
         elif dataset == 'omniglot':
-            src.knn_missing_values.omniglot.omniglot(*arguments)
+            src.knn_missing_values.omniglot(*arguments)
         elif dataset == 'orl_faces':
-            src.knn_missing_values.orl_faces.orl_faces(*arguments)
+            src.knn_missing_values.orl_faces(*arguments)
         elif dataset == 'yale_faces':
-            src.knn_missing_values.yale_faces.yale_faces(*arguments)
+            src.knn_missing_values.yale_faces(*arguments)
     elif algorithm == 'vaes_in_keras':
         if dataset == 'binarized_mnist':
-            src.vaes_in_keras.binarized_mnist.binarized_mnist(*arguments)
+            src.vaes_in_keras.binarized_mnist(*arguments)
         elif dataset == 'cifar10':
-            src.vaes_in_keras.cifar10.cifar10(*arguments)
+            src.vaes_in_keras.cifar10(*arguments)
         elif dataset == 'mnist':
-            src.vaes_in_keras.mnist.mnist(*arguments)
+            src.vaes_in_keras.mnist(*arguments)
         elif dataset == 'omniglot':
-            src.vaes_in_keras.omniglot.omniglot(*arguments)
+            src.vaes_in_keras.omniglot(*arguments)
         elif dataset == 'orl_faces':
-            src.vaes_in_keras.orl_faces.orl_faces(*arguments)
+            src.vaes_in_keras.orl_faces(*arguments)
         elif dataset == 'yale_faces':
-            src.vaes_in_keras.yale_faces.yale_faces(*arguments)
+            src.vaes_in_keras.yale_faces(*arguments)
     elif algorithm == 'vaes_in_pytorch':
         if dataset == 'binarized_mnist':
-            src.vaes_in_pytorch.binarized_mnist.binarized_mnist(*arguments)
+            src.vaes_in_pytorch.binarized_mnist(*arguments)
         elif dataset == 'cifar10':
-            src.vaes_in_pytorch.cifar10.cifar10(*arguments)
+            src.vaes_in_pytorch.cifar10(*arguments)
         elif dataset == 'mnist':
-            src.vaes_in_pytorch.mnist.mnist(*arguments)
+            src.vaes_in_pytorch.mnist(*arguments)
         elif dataset == 'omniglot':
-            src.vaes_in_pytorch.omniglot.omniglot(*arguments)
+            src.vaes_in_pytorch.omniglot(*arguments)
         elif dataset == 'orl_faces':
-            src.vaes_in_pytorch.orl_faces.orl_faces(*arguments)
+            src.vaes_in_pytorch.orl_faces(*arguments)
         elif dataset == 'yale_faces':
-            src.vaes_in_pytorch.yale_faces.yale_faces(*arguments)
+            src.vaes_in_pytorch.yale_faces(*arguments)
     elif algorithm == 'vaes_in_tensorflow':
         if dataset == 'binarized_mnist':
-            src.vaes_in_tensorflow.binarized_mnist.binarized_mnist(*arguments)
+            src.vaes_in_tensorflow.binarized_mnist(*arguments)
         elif dataset == 'cifar10':
-            src.vaes_in_tensorflow.cifar10.cifar10(*arguments)
+            src.vaes_in_tensorflow.cifar10(*arguments)
         elif dataset == 'mnist':
-            src.vaes_in_tensorflow.mnist.mnist(*arguments)
+            src.vaes_in_tensorflow.mnist(*arguments)
         elif dataset == 'omniglot':
-            src.vaes_in_tensorflow.omniglot.omniglot(*arguments)
+            src.vaes_in_tensorflow.omniglot(*arguments)
         elif dataset == 'orl_faces':
-            src.vaes_in_tensorflow.orl_faces.orl_faces(*arguments)
+            src.vaes_in_tensorflow.orl_faces(*arguments)
         elif dataset == 'yale_faces':
-            src.vaes_in_tensorflow.yale_faces.yale_faces(*arguments)
+            src.vaes_in_tensorflow.yale_faces(*arguments)
     elif algorithm == 'vaes_missing_values_in_pytorch':
         if dataset == 'binarized_mnist':
-            src.vaes_missing_values_in_pytorch.binarized_mnist.binarized_mnist(*arguments)
+            src.vaes_missing_values_in_pytorch.binarized_mnist(*arguments)
         elif dataset == 'cifar10':
-            src.vaes_missing_values_in_pytorch.cifar10.cifar10(*arguments)
+            src.vaes_missing_values_in_pytorch.cifar10(*arguments)
         elif dataset == 'mnist':
-            src.vaes_missing_values_in_pytorch.mnist.mnist(*arguments)
+            src.vaes_missing_values_in_pytorch.mnist(*arguments)
         elif dataset == 'movielens':
-            src.vaes_missing_values_in_pytorch.movielens.movielens(*arguments)
+            src.vaes_missing_values_in_pytorch.movielens(*arguments)
         elif dataset == 'omniglot':
-            src.vaes_missing_values_in_pytorch.omniglot.omniglot(*arguments)
+            src.vaes_missing_values_in_pytorch.omniglot(*arguments)
         elif dataset == 'orl_faces':
-            src.vaes_missing_values_in_pytorch.orl_faces.orl_faces(*arguments)
+            src.vaes_missing_values_in_pytorch.orl_faces(*arguments)
         elif dataset == 'yale_faces':
-            src.vaes_missing_values_in_pytorch.yale_faces.yale_faces(*arguments)
+            src.vaes_missing_values_in_pytorch.yale_faces(*arguments)
     elif algorithm == 'vaes_missing_values_in_tensorflow':
         if dataset == 'binarized_mnist':
-            src.vaes_missing_values_in_tensorflow.binarized_mnist.binarized_mnist(*arguments)
+            src.vaes_missing_values_in_tensorflow.binarized_mnist(*arguments)
         elif dataset == 'cifar10':
-            src.vaes_missing_values_in_tensorflow.cifar10.cifar10(*arguments)
+            src.vaes_missing_values_in_tensorflow.cifar10(*arguments)
         elif dataset == 'mnist':
-            src.vaes_missing_values_in_tensorflow.mnist.mnist(*arguments)
+            src.vaes_missing_values_in_tensorflow.mnist(*arguments)
         elif dataset == 'movielens':
-            src.vaes_missing_values_in_tensorflow.movielens.movielens(*arguments)
+            src.vaes_missing_values_in_tensorflow.movielens(*arguments)
         elif dataset == 'omniglot':
-            src.vaes_missing_values_in_tensorflow.omniglot.omniglot(*arguments)
+            src.vaes_missing_values_in_tensorflow.omniglot(*arguments)
         elif dataset == 'orl_faces':
-            src.vaes_missing_values_in_tensorflow.orl_faces.orl_faces(*arguments)
+            src.vaes_missing_values_in_tensorflow.orl_faces(*arguments)
         elif dataset == 'yale_faces':
-            src.vaes_missing_values_in_tensorflow.yale_faces.yale_faces(*arguments)
+            src.vaes_missing_values_in_tensorflow.yale_faces(*arguments)
 
 
 def hide_extra_options():
