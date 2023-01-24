@@ -7,7 +7,7 @@ from keras.datasets import cifar10 as cifar10_dataset
 
 from src.utilities.constants import *
 from src.utilities.knn_matrix_completion import kNNMatrixCompletion
-from src.utilities.plot_dataset_samples import plot_cifar10_data
+from src.utilities.plot_dataset_samples import plot_images
 from src.utilities.utils import reduce_data, construct_missing_data, get_non_zero_percentage, rmse, mae
 
 
@@ -59,7 +59,7 @@ def cifar10(K=10, structured_or_random='structured', rgb_or_grayscale='grayscale
     )
 
     # plot test data
-    fig = plot_cifar10_data(
+    fig = plot_images(
         X=X_test,
         y=y_test,
         categories=[category],
@@ -70,7 +70,7 @@ def cifar10(K=10, structured_or_random='structured', rgb_or_grayscale='grayscale
     plt.close()
 
     # plot original data with missing values
-    fig = plot_cifar10_data(
+    fig = plot_images(
         X=X_test_missing,
         y=y_test,
         categories=[category],
@@ -106,7 +106,7 @@ def cifar10(K=10, structured_or_random='structured', rgb_or_grayscale='grayscale
     print()
 
     # plot predicted test data
-    fig = plot_cifar10_data(
+    fig = plot_images(
         X=X_test_predicted,
         y=y_test,
         categories=[category],

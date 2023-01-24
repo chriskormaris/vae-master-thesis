@@ -7,7 +7,7 @@ import tensorflow as tf
 
 from src.utilities.constants import *
 from src.utilities.get_omniglot_dataset import get_omniglot_dataset
-from src.utilities.plot_dataset_samples import plot_mnist_or_omniglot_data
+from src.utilities.plot_dataset_samples import plot_images
 from src.utilities.utils import construct_missing_data, get_non_zero_percentage, rmse, mae
 from src.utilities.vae_in_tensorflow import vae
 
@@ -142,7 +142,7 @@ def omniglot(
             print(f'Epoch {epoch} | Loss (ELBO): {cur_elbo}')
 
             if epoch == 1:
-                fig = plot_mnist_or_omniglot_data(
+                fig = plot_images(
                     X_merged[start_index:end_index, :],
                     y_merged[start_index:end_index],
                     categories=list(range(1, 11)),
@@ -150,7 +150,7 @@ def omniglot(
                 )
                 fig.savefig(f'{output_images_path}/original_data_characters_1-10.png', bbox_inches='tight')
                 plt.close()
-                fig = plot_mnist_or_omniglot_data(
+                fig = plot_images(
                     X_merged[start_index:end_index, :],
                     y_merged[start_index:end_index],
                     categories=list(range(11, 21)),
@@ -159,7 +159,7 @@ def omniglot(
                 fig.savefig(f'{output_images_path}/original_data_characters_11-20.png', bbox_inches='tight')
                 plt.close()
                 if language.lower() == 'greek':
-                    fig = plot_mnist_or_omniglot_data(
+                    fig = plot_images(
                         X_merged[start_index:end_index, :],
                         y_merged[start_index:end_index],
                         categories=list(range(21, 25)),
@@ -167,7 +167,7 @@ def omniglot(
                     )
                     fig.savefig(f'{output_images_path}/original_data_characters_21-24.png', bbox_inches='tight')
                 else:
-                    fig = plot_mnist_or_omniglot_data(
+                    fig = plot_images(
                         X_merged[start_index:end_index, :],
                         y_merged[start_index:end_index],
                         categories=list(range(21, 27)),
@@ -176,7 +176,7 @@ def omniglot(
                     fig.savefig(f'{output_images_path}/original_data_characters_21-26.png', bbox_inches='tight')
                 plt.close()
 
-                fig = plot_mnist_or_omniglot_data(
+                fig = plot_images(
                     X_merged_missing[start_index:end_index, :],
                     y_merged[start_index:end_index],
                     categories=list(range(1, 11)),
@@ -184,7 +184,7 @@ def omniglot(
                 )
                 fig.savefig(f'{output_images_path}/missing_data_characters_1-10.png', bbox_inches='tight')
                 plt.close()
-                fig = plot_mnist_or_omniglot_data(
+                fig = plot_images(
                     X_merged_missing[start_index:end_index, :],
                     y_merged[start_index:end_index],
                     categories=list(range(11, 21)),
@@ -193,7 +193,7 @@ def omniglot(
                 fig.savefig(f'{output_images_path}/missing_data_characters_11-20.png', bbox_inches='tight')
                 plt.close()
                 if language.lower() == 'greek':
-                    fig = plot_mnist_or_omniglot_data(
+                    fig = plot_images(
                         X_merged_missing[start_index:end_index, :],
                         y_merged[start_index:end_index],
                         categories=list(range(21, 25)),
@@ -201,7 +201,7 @@ def omniglot(
                     )
                     fig.savefig(f'{output_images_path}/missing_data_characters_21-24.png', bbox_inches='tight')
                 else:
-                    fig = plot_mnist_or_omniglot_data(
+                    fig = plot_images(
                         X_merged_missing[start_index:end_index, :],
                         y_merged[start_index:end_index],
                         categories=list(range(21, 27)),
@@ -210,7 +210,7 @@ def omniglot(
                     fig.savefig(f'{output_images_path}/missing_data_characters_21-26.png', bbox_inches='tight')
                 plt.close()
 
-                fig = plot_mnist_or_omniglot_data(
+                fig = plot_images(
                     masked_batch_data,
                     batch_labels,
                     categories=list(range(1, 11)),
@@ -218,7 +218,7 @@ def omniglot(
                 )
                 fig.savefig(f'{output_images_path}/masked_data_characters_1-10.png', bbox_inches='tight')
                 plt.close()
-                fig = plot_mnist_or_omniglot_data(
+                fig = plot_images(
                     masked_batch_data,
                     batch_labels,
                     categories=list(range(1, 11)),
@@ -230,7 +230,7 @@ def omniglot(
                 )
                 plt.close()
                 if language.lower() == 'greek':
-                    fig = plot_mnist_or_omniglot_data(
+                    fig = plot_images(
                         masked_batch_data,
                         batch_labels,
                         categories=list(range(1, 11)),
@@ -238,7 +238,7 @@ def omniglot(
                     )
                     fig.savefig(f'{output_images_path}/masked_data_characters_21-24.png', bbox_inches='tight')
                 else:
-                    fig = plot_mnist_or_omniglot_data(
+                    fig = plot_images(
                         masked_batch_data,
                         batch_labels,
                         categories=list(range(1, 11)),
@@ -248,7 +248,7 @@ def omniglot(
                 plt.close()
 
             if epoch % 10 == 0 or epoch == 1:
-                fig = plot_mnist_or_omniglot_data(
+                fig = plot_images(
                     cur_samples,
                     batch_labels,
                     categories=list(range(1, 11)),
@@ -259,7 +259,7 @@ def omniglot(
                     bbox_inches='tight'
                 )
                 plt.close()
-                fig = plot_mnist_or_omniglot_data(
+                fig = plot_images(
                     cur_samples,
                     batch_labels,
                     categories=list(range(11, 21)),
@@ -271,7 +271,7 @@ def omniglot(
                 )
                 plt.close()
                 if language.lower() == 'greek':
-                    fig = plot_mnist_or_omniglot_data(
+                    fig = plot_images(
                         cur_samples,
                         batch_labels,
                         categories=list(range(21, 25)),
@@ -282,7 +282,7 @@ def omniglot(
                         bbox_inches='tight'
                     )
                 else:
-                    fig = plot_mnist_or_omniglot_data(
+                    fig = plot_images(
                         cur_samples,
                         batch_labels,
                         categories=list(range(21, 27)),

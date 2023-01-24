@@ -7,7 +7,7 @@ import numpy as np
 from keras.datasets import cifar10 as cifar10_dataset
 
 from src.utilities.constants import *
-from src.utilities.plot_dataset_samples import plot_cifar10_data
+from src.utilities.plot_dataset_samples import plot_images
 from src.utilities.utils import construct_missing_data, get_non_zero_percentage, rmse, mae
 from src.utilities.vae_in_pytorch import initialize_weights, train
 
@@ -125,7 +125,7 @@ def cifar10(
         print(f'Epoch {epoch} | Loss (ELBO): {cur_elbo}')
 
         if epoch == 1:
-            fig = plot_cifar10_data(
+            fig = plot_images(
                 X=X_train[start_index:end_index, :],
                 y=batch_labels,
                 categories=[category],
@@ -135,7 +135,7 @@ def cifar10(
             fig.savefig(f'{output_images_path}/original_data.png', bbox_inches='tight')
             plt.close()
 
-            fig = plot_cifar10_data(
+            fig = plot_images(
                 X=X_train_missing[start_index:end_index, :],
                 y=batch_labels,
                 categories=[category],
@@ -146,7 +146,7 @@ def cifar10(
             plt.close()
 
         if epoch % 10 == 0 or epoch == 1:
-            fig = plot_cifar10_data(
+            fig = plot_images(
                 X=cur_samples,
                 y=batch_labels,
                 categories=[category],

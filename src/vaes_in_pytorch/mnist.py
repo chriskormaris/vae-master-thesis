@@ -7,7 +7,7 @@ from keras.datasets import fashion_mnist as fashion_mnist_dataset
 from keras.datasets import mnist as mnist_dataset
 
 from src.utilities.constants import *
-from src.utilities.plot_dataset_samples import plot_mnist_or_omniglot_data
+from src.utilities.plot_dataset_samples import plot_images
 from src.utilities.utils import rmse, mae
 from src.utilities.vae_in_pytorch import initialize_weights, train
 
@@ -46,7 +46,7 @@ def mnist(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, digit
 
     #####
 
-    fig = plot_mnist_or_omniglot_data(X_train, y_train, title='Original Data')
+    fig = plot_images(X_train, y_train, title='Original Data')
     fig.savefig(f'{output_images_path}/original_data.png', bbox_inches='tight')
     plt.close()
 
@@ -78,7 +78,7 @@ def mnist(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, digit
         print(f'Epoch {epoch} | Loss (ELBO): {cur_elbo}')
 
         if epoch % 10 == 0 or epoch == 1:
-            fig = plot_mnist_or_omniglot_data(cur_samples, batch_labels, title=f'Epoch {str(epoch).zfill(3)}')
+            fig = plot_images(cur_samples, batch_labels, title=f'Epoch {str(epoch).zfill(3)}')
             fig.savefig(f'{output_images_path}/epoch_{str(epoch).zfill(3)}.png', bbox_inches='tight')
             plt.close()
     elapsed_time = time.time() - start_time

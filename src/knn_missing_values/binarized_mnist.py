@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from src.utilities.constants import *
 from src.utilities.get_binarized_mnist_dataset import get_binarized_mnist_dataset, get_binarized_mnist_labels, obtain
 from src.utilities.knn_matrix_completion import kNNMatrixCompletion
-from src.utilities.plot_dataset_samples import plot_mnist_or_omniglot_data
+from src.utilities.plot_dataset_samples import plot_images
 from src.utilities.utils import reduce_data, construct_missing_data, get_non_zero_percentage, rmse, mae
 
 
@@ -43,12 +43,12 @@ def binarized_mnist(K=10, structured_or_random='structured'):
     X_test_missing, X_test, y_test = construct_missing_data(X_test, y_test)
 
     # plot original data X_test
-    fig = plot_mnist_or_omniglot_data(X_test, y_test, show_plot=False)
+    fig = plot_images(X_test, y_test, show_plot=False)
     fig.savefig(f'{output_images_path}/Original Binarized Test Data.png', bbox_inches='tight')
     plt.close()
 
     # plot original data with missing values
-    fig = plot_mnist_or_omniglot_data(X_test_missing, y_test, show_plot=False)
+    fig = plot_images(X_test_missing, y_test, show_plot=False)
     fig.savefig(f'{output_images_path}/Test Data with Mixed Missing Values K={K}', bbox_inches='tight')
     plt.close()
 
@@ -70,7 +70,7 @@ def binarized_mnist(K=10, structured_or_random='structured'):
     print(f'k-nn predictions calculations time: {elapsed_time}')
     print()
 
-    fig = plot_mnist_or_omniglot_data(X_test_predicted, y_test, show_plot=False)
+    fig = plot_images(X_test_predicted, y_test, show_plot=False)
     fig.savefig(f'{output_images_path}/Predicted Test Data K={K}', bbox_inches='tight')
     plt.close()
 

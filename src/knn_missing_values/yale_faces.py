@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from src.utilities.constants import *
 from src.utilities.get_yale_faces_dataset import get_yale_faces_dataset
 from src.utilities.knn_matrix_completion import kNNMatrixCompletion
-from src.utilities.plot_dataset_samples import plot_yale_faces
+from src.utilities.plot_dataset_samples import plot_images
 from src.utilities.utils import construct_missing_data, get_non_zero_percentage, rmse, mae
 
 
@@ -26,7 +26,7 @@ def yale_faces(K=10, structured_or_random='structured'):
     X_missing, X, y = construct_missing_data(X, y, structured_or_random=structured_or_random)
 
     # plot original data X
-    fig = plot_yale_faces(X, y, categories=list(range(10)), show_plot=False)
+    fig = plot_images(X, y, categories=list(range(10)), show_plot=False)
     fig.savefig(
         f'{output_images_path}/Original Faces 1-10 K={K}.png',
         bbox_inches='tight'
@@ -34,7 +34,7 @@ def yale_faces(K=10, structured_or_random='structured'):
     plt.close()
 
     # plot data with missing values
-    fig = plot_yale_faces(X_missing, y, categories=list(range(10)), show_plot=False)
+    fig = plot_images(X_missing, y, categories=list(range(10)), show_plot=False)
     fig.savefig(f'{output_images_path}/Faces 1-10 with Mixed Missing Values K={K}.png', bbox_inches='tight')
     plt.close()
 
@@ -57,7 +57,7 @@ def yale_faces(K=10, structured_or_random='structured'):
     print()
 
     # plot predicted data
-    fig = plot_yale_faces(X_predicted, y, categories=list(range(10)), show_plot=False)
+    fig = plot_images(X_predicted, y, categories=list(range(10)), show_plot=False)
     fig.savefig(f'{output_images_path}/Predicted Faces 1-10 K={K}.png', bbox_inches='tight')
     plt.close()
 

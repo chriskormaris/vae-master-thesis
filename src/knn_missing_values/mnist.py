@@ -8,7 +8,7 @@ from keras.datasets import mnist as mnist_dataset
 
 from src.utilities.constants import *
 from src.utilities.knn_matrix_completion import kNNMatrixCompletion
-from src.utilities.plot_dataset_samples import plot_mnist_or_omniglot_data
+from src.utilities.plot_dataset_samples import plot_images
 from src.utilities.utils import reduce_data, construct_missing_data, get_non_zero_percentage, rmse, mae
 
 
@@ -51,12 +51,12 @@ def mnist(K=10, structured_or_random='structured', digits_or_fashion='digits'):
     X_test_missing, X_test, y_test = construct_missing_data(X_test, y_test, structured_or_random=structured_or_random)
 
     # plot X_test data
-    fig = plot_mnist_or_omniglot_data(X_test, y_test, show_plot=False)
+    fig = plot_images(X_test, y_test, show_plot=False)
     fig.savefig(f'{output_images_path}/Test Data.png', bbox_inches='tight')
     plt.close()
 
     # plot test data with missing values
-    fig = plot_mnist_or_omniglot_data(X_test_missing, y_test, show_plot=False)
+    fig = plot_images(X_test_missing, y_test, show_plot=False)
     fig.savefig(f'{output_images_path}/Test Data with Mixed Missing Values K={K}.png', bbox_inches='tight')
     plt.close()
 
@@ -79,7 +79,7 @@ def mnist(K=10, structured_or_random='structured', digits_or_fashion='digits'):
     print(f'k-nn predictions calculations time: {elapsed_time}')
     print()
 
-    fig = plot_mnist_or_omniglot_data(X_test_predicted, y_test, show_plot=False)
+    fig = plot_images(X_test_predicted, y_test, show_plot=False)
     fig.savefig(f'{output_images_path}/Predicted Test Data K={K}.png', bbox_inches='tight')
     plt.close()
 

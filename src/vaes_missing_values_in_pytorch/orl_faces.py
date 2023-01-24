@@ -9,7 +9,7 @@ import numpy as np
 
 from src.utilities.constants import *
 from src.utilities.get_orl_faces_dataset import get_orl_faces_dataset
-from src.utilities.plot_dataset_samples import plot_orl_faces
+from src.utilities.plot_dataset_samples import plot_images
 from src.utilities.utils import reduce_data, construct_missing_data, get_non_zero_percentage, rmse, mae
 from src.utilities.vae_in_pytorch import initialize_weights, train
 
@@ -89,7 +89,7 @@ def orl_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, s
 
         if epoch == 1:
             for i in range(0, 40, 10):
-                fig = plot_orl_faces(
+                fig = plot_images(
                     X[start_index:end_index, :],
                     y[start_index:end_index],
                     categories=list(range(i, i + 10)),
@@ -100,7 +100,7 @@ def orl_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, s
                 plt.close()
 
             for i in range(0, 40, 10):
-                fig = plot_orl_faces(
+                fig = plot_images(
                     X_missing[start_index:end_index, :],
                     y[start_index:end_index],
                     categories=list(range(i, i + 10)),
@@ -111,7 +111,7 @@ def orl_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, s
                 plt.close()
 
             for i in range(0, 40, 10):
-                fig = plot_orl_faces(
+                fig = plot_images(
                     X_missing[start_index:end_index, :],
                     y[start_index:end_index],
                     categories=list(range(i, i + 10)),
@@ -124,15 +124,16 @@ def orl_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, s
         if epoch % 10 == 0 or epoch == 1:
 
             for i in range(0, 40, 10):
-                fig = plot_orl_faces(
-                    cur_samples,
-                    batch_labels,
-                    categories=list(range(i, i + 10)),
-                    title=f'Epoch {str(epoch).zfill(3)}',
-                    show_plot=False
-                )
-                fig.savefig(f'{output_images_path}/epoch_{str(epoch).zfill(3)}_faces_{i + 1}-{i + 10}.png')
-                plt.close()
+                if cur_samples is not None:
+                    fig = plot_images(
+                        cur_samples,
+                        batch_labels,
+                        categories=list(range(i, i + 10)),
+                        title=f'Epoch {str(epoch).zfill(3)}',
+                        show_plot=False
+                    )
+                    fig.savefig(f'{output_images_path}/epoch_{str(epoch).zfill(3)}_faces_{i + 1}-{i + 10}.png')
+                    plt.close()
     elapsed_time = time.time() - start_time
 
     print(f'training time: {elapsed_time} secs')

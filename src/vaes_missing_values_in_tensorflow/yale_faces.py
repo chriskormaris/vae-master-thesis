@@ -10,7 +10,7 @@ import tensorflow as tf
 
 from src.utilities.constants import *
 from src.utilities.get_yale_faces_dataset import get_yale_faces_dataset
-from src.utilities.plot_dataset_samples import plot_yale_faces
+from src.utilities.plot_dataset_samples import plot_images
 from src.utilities.utils import reduce_data, construct_missing_data, get_non_zero_percentage, rmse, mae
 from src.utilities.vae_in_tensorflow import vae
 
@@ -119,7 +119,7 @@ def yale_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, 
             print(f'Epoch {epoch} | Loss (ELBO): {cur_elbo}')
 
             if epoch == 1:
-                fig = plot_yale_faces(
+                fig = plot_images(
                     X[start_index:end_index, :],
                     y[start_index:end_index],
                     categories=list(range(10)),
@@ -129,7 +129,7 @@ def yale_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, 
                 fig.savefig(f'{output_images_path}/original_faces_1-10.png')
                 plt.close()
 
-                fig = plot_yale_faces(
+                fig = plot_images(
                     X_missing[start_index:end_index, :],
                     y[start_index:end_index],
                     title='Missing Faces',
@@ -138,7 +138,7 @@ def yale_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, 
                 fig.savefig(f'{output_images_path}/missing_faces_1-10.png')
                 plt.close()
 
-                fig = plot_yale_faces(
+                fig = plot_images(
                     X_missing[start_index:end_index, :],
                     y[start_index:end_index],
                     categories=list(range(10)),
@@ -149,15 +149,16 @@ def yale_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, 
                 plt.close()
 
             if epoch % 10 == 0 or epoch == 1:
-                fig = plot_yale_faces(
-                    cur_samples,
-                    batch_labels,
-                    categories=list(range(10)),
-                    title=f'Epoch {str(epoch).zfill(3)}',
-                    show_plot=False
-                )
-                fig.savefig(f'{output_images_path}/epoch_{str(epoch).zfill(3)}_faces_1-10.png')
-                plt.close()
+                if cur_samples is not None:
+                    fig = plot_images(
+                        cur_samples,
+                        batch_labels,
+                        categories=list(range(10)),
+                        title=f'Epoch {str(epoch).zfill(3)}',
+                        show_plot=False
+                    )
+                    fig.savefig(f'{output_images_path}/epoch_{str(epoch).zfill(3)}_faces_1-10.png')
+                    plt.close()
 
             if epoch % 2 == 0:
                 saver.save(sess, save_path + '/model.ckpt')
