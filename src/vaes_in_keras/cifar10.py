@@ -11,7 +11,7 @@ from src.utilities.utils import rmse, mae
 from src.utilities.vae_in_keras import vae
 
 
-def cifar10(latent_dim=64, epochs=100, batch_size='250', rgb_or_grayscale='rgb'):
+def cifar10(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.001, rgb_or_grayscale='rgb'):
     if rgb_or_grayscale.lower() == 'rgb':
         input_dim = 3072
     else:
@@ -22,7 +22,7 @@ def cifar10(latent_dim=64, epochs=100, batch_size='250', rgb_or_grayscale='rgb')
     if not os.path.exists(output_images_path):
         os.makedirs(output_images_path)
 
-    encoder, decoder, autoencoder = vae(input_dim, latent_dim)
+    encoder, decoder, autoencoder = vae(input_dim, latent_dim, learning_rate)
 
     # Let's prepare our input data.
     # We're using CIFAR-10 images, and we're discarding the labels

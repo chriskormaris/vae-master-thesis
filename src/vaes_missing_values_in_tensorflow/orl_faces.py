@@ -60,7 +60,7 @@ def orl_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, s
         hidden_encoder_dim,
         hidden_decoder_dim,
         latent_dim,
-        lr=learning_rate
+        learning_rate=learning_rate
     )
 
     start_index = None

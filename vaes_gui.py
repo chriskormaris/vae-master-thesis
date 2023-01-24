@@ -70,9 +70,7 @@ def run(
         missing_values_construction
 ):
     if 'knn' not in algorithm.lower():
-        arguments = [latent_dim, epochs, batch_size]
-        if 'keras' not in algorithm.lower():
-            arguments.extend([learning_rate])
+        arguments = [latent_dim, epochs, batch_size, learning_rate]
         if 'missing' in algorithm.lower() and dataset is not None and 'movielens' not in dataset.lower():
             arguments.extend([missing_values_construction])
     else:
@@ -194,12 +192,7 @@ def check_algorithm_and_show_vae_frame():
     vaeFrame.pack()
     global isAlgorithmSelected
     isAlgorithmSelected = True
-    if 'keras' in algorithm_var.get().lower():
-        vae_empty_line_label.pack_forget()
-        learning_rate_label.pack_forget()
-        learning_rate_frame.pack_forget()
-        learning_rate_text.pack_forget()
-    else:
+    if 'keras' not in algorithm_var.get().lower():
         vae_empty_line_label.pack_forget()
         learning_rate_label.pack()
         learning_rate_frame.pack()

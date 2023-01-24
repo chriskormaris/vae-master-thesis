@@ -1,5 +1,6 @@
 import os
 
+import tensorflow as tf
 from keras.layers import Input, Dense
 from keras.models import Model
 
@@ -7,7 +8,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # hide TensorFlow warnings
 
 
 # VARIATIONAL AUTOENCODER IMPLEMENTATION IN KERAS #
-def vae(input_dim, latent_dim):
+def vae(input_dim, latent_dim, learning_rate=0.001):
     # latent_dim: this is the size of our encoded representations
     # latent_dim = 32  # 32 floats -> compression of factor 24.5, assuming the input is 784 floats
     # latent_dim = 64  # 64 floats -> compression of factor 12.25, assuming the input is 784 floats
@@ -47,13 +48,15 @@ def vae(input_dim, latent_dim):
     # First, we'll configure our model to use a per-pixel binary crossentropy loss,
     # and the Adadelta optimizer.
 
-    autoencoder.compile(optimizer='adadelta', loss='binary_crossentropy')  # Works best!
-    # autoencoder.compile(optimizer='adagrad', loss='binary_crossentropy')
-    # autoencoder.compile(optimizer='adam', loss='binary_crossentropy')
-    # autoencoder.compile(optimizer='adamax', loss='binary_crossentropy')
-    # autoencoder.compile(optimizer='nadam', loss='binary_crossentropy')
-    # autoencoder.compile(optimizer='rmsprop', loss='binary_crossentropy')
-    # autoencoder.compile(optimizer='sgd', loss='binary_crossentropy')
-    # autoencoder.compile(optimizer='tfoptimizer', loss='binary_crossentropy')
+    optimizer = tf.keras.optimizers.Adadelta(learning_rate=learning_rate)  # Works best!
+    # optimizer = tf.keras.optimizers.Adagrad(learning_rate=learning_rate)
+    # optimizer = tf.keras.optimizers.Adam(learning_rate=learning_rate)
+    # optimizer = tf.keras.optimizers.Adamax(learning_rate=learning_rate)
+    # optimizer = tf.keras.optimizers.Nadam(learning_rate=learning_rate)
+    # optimizer = tf.keras.optimizers.RMSprop(learning_rate=learning_rate)
+    # optimizer = tf.keras.optimizers.SGD(learning_rate=learning_rate)
+    # optimizer = tf.keras.optimizers.Optimizer(learning_rate=learning_rate)
+
+    autoencoder.compile(optimizer=optimizer, loss='binary_crossentropy')
 
     return encoder, decoder, autoencoder

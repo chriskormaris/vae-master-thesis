@@ -83,7 +83,7 @@ def mnist(
         hidden_encoder_dim,
         hidden_decoder_dim,
         latent_dim,
-        lr=learning_rate
+        learning_rate=learning_rate
     )
 
     start_index = None
