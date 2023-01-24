@@ -8,7 +8,7 @@ import tensorflow as tf
 from keras.datasets import cifar10 as cifar10_dataset
 
 from src.utilities.constants import *
-from src.utilities.plot_dataset_samples import plot_images
+from src.utilities.plot_utils import plot_images
 from src.utilities.utils import construct_missing_data, get_non_zero_percentage, rmse, mae
 from src.utilities.vae_in_tensorflow import vae
 

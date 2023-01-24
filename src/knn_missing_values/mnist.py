@@ -8,7 +8,7 @@ from keras.datasets import mnist as mnist_dataset
 
 from src.utilities.constants import *
 from src.utilities.knn_matrix_completion import kNNMatrixCompletion
-from src.utilities.plot_dataset_samples import plot_images
+from src.utilities.plot_utils import plot_images
 from src.utilities.utils import reduce_data, construct_missing_data, get_non_zero_percentage, rmse, mae
 
 

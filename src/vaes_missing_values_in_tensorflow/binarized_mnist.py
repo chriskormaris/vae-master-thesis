@@ -7,7 +7,7 @@ import tensorflow as tf
 
 from src.utilities.constants import *
 from src.utilities.get_binarized_mnist_dataset import get_binarized_mnist_dataset, get_binarized_mnist_labels, obtain
-from src.utilities.plot_dataset_samples import plot_images
+from src.utilities.plot_utils import plot_images
 from src.utilities.utils import construct_missing_data, get_non_zero_percentage, rmse, mae
 from src.utilities.vae_in_tensorflow import vae
 

@@ -7,7 +7,7 @@ import numpy as np
 from src.utilities.constants import *
 from src.utilities.get_omniglot_dataset import get_omniglot_dataset
 from src.utilities.knn_matrix_completion import kNNMatrixCompletion
-from src.utilities.plot_dataset_samples import plot_images
+from src.utilities.plot_utils import plot_images
 from src.utilities.utils import construct_missing_data, get_non_zero_percentage, rmse, mae
 
 
