@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from src.utilities.constants import *
 from src.utilities.get_binarized_mnist_dataset import get_binarized_mnist_dataset, get_binarized_mnist_labels, obtain
 from src.utilities.knn_matrix_completion import kNNMatrixCompletion
-from src.utilities.plot_dataset_samples import plot_images
+from src.utilities.plot_utils import plot_images
 from src.utilities.utils import reduce_data, construct_missing_data, get_non_zero_percentage, rmse, mae
 
 
