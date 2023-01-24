@@ -8,7 +8,7 @@ from keras.datasets import cifar10 as cifar10_dataset
 from src.utilities.constants import *
 from src.utilities.knn_matrix_completion import kNNMatrixCompletion
 from src.utilities.plot_dataset_samples import plot_cifar10_data
-from src.utilities.utils import construct_missing_data, get_non_zero_percentage, rmse, mae
+from src.utilities.utils import reduce_data, construct_missing_data, get_non_zero_percentage, rmse, mae
 
 
 def cifar10(K=10, structured_or_random='structured', rgb_or_grayscale='grayscale', category=3):
@@ -46,6 +46,9 @@ def cifar10(K=10, structured_or_random='structured', rgb_or_grayscale='grayscale
 
     # merge train and test data together to increase the train dataset size
     X_train = np.concatenate((X_train, X_test), axis=0)  # X_train: N x 3072
+
+    # reduce the number of test examples to 100
+    X_test, _, _ = reduce_data(X_test, X_test.shape[0], 100)
 
     # construct data with missing values
     X_train_missing, _, _ = construct_missing_data(X=X_train, structured_or_random=structured_or_random)
