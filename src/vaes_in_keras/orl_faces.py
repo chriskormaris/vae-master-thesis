@@ -1,16 +1,21 @@
+import os
 import time
 
-import matplotlib.pyplot as plt
 from keras.callbacks import TensorBoard
 
 from src.utilities.constants import *
 from src.utilities.get_orl_faces_dataset import get_orl_faces_dataset
+from src.utilities.plot_utils import plot_original_vs_reconstructed_data
 from src.utilities.utils import rmse, mae
 from src.utilities.vae_in_keras import vae
 
 
-def orl_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
+def orl_faces(latent_dim=64, epochs=100, batch_size='250'):
     input_dim = 10304
+    output_images_path = output_img_base_path + 'vaes_in_keras'
+
+    if not os.path.exists(output_images_path):
+        os.makedirs(output_images_path)
 
     encoder, decoder, autoencoder = vae(input_dim, latent_dim)
 
@@ -45,29 +50,14 @@ def orl_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
     # We will use Matplotlib.
 
     # encode and decode some faces
-    # note that we take them from the *test* set
+    # note that we take them from the "test" set
     encoded_imgs = encoder.predict(X)
     decoded_imgs = decoder.predict(encoded_imgs)
 
     print(f'encoded_imgs mean: {encoded_imgs.mean()}')
 
-    n = 10  # how many faces we will display
-    plt.figure(figsize=(20, 4))
-    for i in range(n):
-        # display original
-        ax = plt.subplot(2, n, i + 1)
-        plt.imshow(X[i].reshape(92, 112))
-        plt.gray()
-        ax.get_xaxis().set_visible(False)
-        ax.get_yaxis().set_visible(False)
-
-        # display reconstruction
-        ax = plt.subplot(2, n, i + 1 + n)
-        plt.imshow(decoded_imgs[i].reshape(92, 112))
-        plt.gray()
-        ax.get_xaxis().set_visible(False)
-        ax.get_yaxis().set_visible(False)
-    plt.show()
+    fig = plot_original_vs_reconstructed_data(X, decoded_imgs, grayscale=True)
+    fig.savefig(f'{output_images_path}/orl_faces.png')
 
     print()
 

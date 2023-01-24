@@ -1,18 +1,22 @@
 import os
 import time
 
-import matplotlib.pyplot as plt
 import numpy as np
 from keras.callbacks import TensorBoard
 
 from src.utilities.constants import *
 from src.utilities.get_binarized_mnist_dataset import get_binarized_mnist_dataset, obtain
+from src.utilities.plot_utils import plot_original_vs_reconstructed_data
 from src.utilities.utils import rmse, mae
 from src.utilities.vae_in_keras import vae
 
 
 def binarized_mnist(latent_dim=64, epochs=100, batch_size='N'):
     input_dim = 784
+    output_images_path = output_img_base_path + 'vaes_in_keras'
+
+    if not os.path.exists(output_images_path):
+        os.makedirs(output_images_path)
 
     encoder, decoder, autoencoder = vae(input_dim, latent_dim)
 
@@ -58,29 +62,14 @@ def binarized_mnist(latent_dim=64, epochs=100, batch_size='N'):
     # We will use Matplotlib.
 
     # encode and decode some digits
-    # note that we take them from the *test* set
+    # note that we take them from the "test" set
     encoded_imgs = encoder.predict(X_test)
     decoded_imgs = decoder.predict(encoded_imgs)
 
     print(f'encoded_imgs mean: {encoded_imgs.mean()}')
 
-    n = 10  # how many digits we will display
-    plt.figure(figsize=(20, 4))
-    for i in range(n):
-        # display original
-        ax = plt.subplot(2, n, i + 1)
-        plt.imshow(X_test[i].reshape(28, 28))
-        plt.gray()
-        ax.get_xaxis().set_visible(False)
-        ax.get_yaxis().set_visible(False)
-
-        # display reconstruction
-        ax = plt.subplot(2, n, i + 1 + n)
-        plt.imshow(decoded_imgs[i].reshape(28, 28))
-        plt.gray()
-        ax.get_xaxis().set_visible(False)
-        ax.get_yaxis().set_visible(False)
-    plt.show()
+    fig = plot_original_vs_reconstructed_data(X_test, decoded_imgs, grayscale=True)
+    fig.savefig(f'{output_images_path}/binarized_mnist.png')
 
     print()
 

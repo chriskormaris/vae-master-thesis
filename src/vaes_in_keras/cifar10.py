@@ -1,10 +1,12 @@
+import os
 import time
 
-import matplotlib.pyplot as plt
 import numpy as np
 from keras.callbacks import TensorBoard
 from keras.datasets import cifar10 as cifar10_dataset
 
+from src.utilities.constants import *
+from src.utilities.plot_utils import plot_original_vs_reconstructed_data
 from src.utilities.utils import rmse, mae
 from src.utilities.vae_in_keras import vae
 
@@ -14,6 +16,11 @@ def cifar10(latent_dim=64, epochs=100, batch_size='250', rgb_or_grayscale='rgb')
         input_dim = 3072
     else:
         input_dim = 1024
+
+    output_images_path = output_img_base_path + 'vaes_in_keras'
+
+    if not os.path.exists(output_images_path):
+        os.makedirs(output_images_path)
 
     encoder, decoder, autoencoder = vae(input_dim, latent_dim)
 
@@ -68,35 +75,18 @@ def cifar10(latent_dim=64, epochs=100, batch_size='250', rgb_or_grayscale='rgb')
     # We will use Matplotlib.
 
     # encode and decode some digits
-    # note that we take them from the *test* set
+    # note that we take them from the "test" set
     encoded_imgs = encoder.predict(X_test)
     decoded_imgs = decoder.predict(encoded_imgs)
 
     print(f'encoded_imgs mean: {encoded_imgs.mean()}')
 
-    n = 10  # how many images we will display
-    plt.figure(figsize=(20, 4))
-    for i in range(n):
-        # display original
-        ax = plt.subplot(2, n, i + 1)
-        if rgb_or_grayscale.lower() == 'rgb':
-            plt.imshow(X_test[i].reshape(32, 32, 3))
-        else:
-            plt.imshow(X_test[i].reshape(32, 32))
-            plt.gray()
-        ax.get_xaxis().set_visible(False)
-        ax.get_yaxis().set_visible(False)
-
-        # display reconstruction
-        ax = plt.subplot(2, n, i + 1 + n)
-        if rgb_or_grayscale.lower() == 'rgb':
-            plt.imshow(decoded_imgs[i].reshape(32, 32, 3))
-        else:
-            plt.imshow(decoded_imgs[i].reshape(32, 32))
-            plt.gray()
-        ax.get_xaxis().set_visible(False)
-        ax.get_yaxis().set_visible(False)
-    plt.show()
+    fig = plot_original_vs_reconstructed_data(
+        X_test,
+        decoded_imgs,
+        grayscale=True if rgb_or_grayscale.lower() == 'grayscale' else False
+    )
+    fig.savefig(f'{output_images_path}/cifar10.png')
 
     print()
 
