@@ -6,7 +6,7 @@ import numpy as np
 
 from src.utilities.constants import *
 from src.utilities.get_yale_faces_dataset import get_yale_faces_dataset
-from src.utilities.plot_dataset_samples import plot_yale_faces
+from src.utilities.plot_dataset_samples import plot_images
 from src.utilities.utils import rmse, mae
 from src.utilities.vae_in_pytorch import initialize_weights, train
 
@@ -25,20 +25,13 @@ def yale_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
 
     for i in range(0, 38, 10):
         if i <= 20:
-            fig = plot_yale_faces(X, y, categories=list(range(i, i + 10)), title='Original Faces', show_plot=False)
+            fig = plot_images(X, y, categories=list(range(i, i + 10)), title='Original Faces', show_plot=False)
             fig.savefig(f'{output_images_path}/original_faces_{i + 1}-{i + 10}.png')
             plt.close()
         else:
-            fig = plot_yale_faces(X, y, categories=list(range(30, 38)), title='Original Faces', show_plot=False)
+            fig = plot_images(X, y, categories=list(range(30, 38)), title='Original Faces', show_plot=False)
             fig.savefig(f'{output_images_path}/original_faces_31-38.png')
             plt.close()
-
-    #####
-
-    category = np.random.randint(38)
-    print(f'category: {category}')
-    X = X[np.where(y == category)[0], :]
-    y = y[np.where(y == category)[0]]
 
     #####
 
@@ -82,15 +75,15 @@ def yale_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
         print(f'Epoch {epoch} | Loss (ELBO): {cur_elbo}')
 
         if epoch % 10 == 0 or epoch == 1:
-            fig = plot_yale_faces(
-                cur_samples,
-                batch_labels,
-                categories=[category],
-                n=100,
-                title=f'Epoch {str(epoch).zfill(3)}'
-            )
-            fig.savefig(f'{output_images_path}/epoch_{str(epoch).zfill(3)}_faces.png')
-            plt.close()
+            if cur_samples is not None:
+                fig = plot_images(
+                    cur_samples,
+                    batch_labels,
+                    categories=list(range(10)),
+                    title=f'Epoch {str(epoch).zfill(3)}'
+                )
+                fig.savefig(f'{output_images_path}/epoch_{str(epoch).zfill(3)}_faces_1-10.png')
+                plt.close()
 
     elapsed_time = time.time() - start_time
 

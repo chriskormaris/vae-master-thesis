@@ -7,7 +7,7 @@ import numpy as np
 from src.utilities.constants import *
 from src.utilities.get_binarized_mnist_dataset import get_binarized_mnist_dataset, get_binarized_mnist_labels
 from src.utilities.get_binarized_mnist_dataset import obtain
-from src.utilities.plot_dataset_samples import plot_mnist_or_omniglot_data
+from src.utilities.plot_dataset_samples import plot_images
 from src.utilities.utils import rmse, mae
 from src.utilities.vae_in_pytorch import initialize_weights, train
 
@@ -49,7 +49,7 @@ def binarized_mnist(latent_dim=64, epochs=100, batch_size='250', learning_rate=0
 
     #####
 
-    fig = plot_mnist_or_omniglot_data(X_test, y_test, title='Original Data')
+    fig = plot_images(X_test, y_test, title='Original Data')
     fig.savefig(f'{output_images_path}/original_data.png', bbox_inches='tight')
     plt.close()
 
@@ -79,7 +79,7 @@ def binarized_mnist(latent_dim=64, epochs=100, batch_size='250', learning_rate=0
         print(f'Epoch {epoch} | Loss (ELBO): {cur_elbo}')
 
         if epoch % 10 == 0 or epoch == 1:
-            fig = plot_mnist_or_omniglot_data(cur_samples, batch_labels, title=f'Epoch {str(epoch).zfill(3)}')
+            fig = plot_images(cur_samples, batch_labels, title=f'Epoch {str(epoch).zfill(3)}')
             fig.savefig(f'{output_images_path}/epoch_{str(epoch).zfill(3)}.png', bbox_inches='tight')
             plt.close()
     elapsed_time = time.time() - start_time

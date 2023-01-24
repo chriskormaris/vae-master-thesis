@@ -9,7 +9,7 @@ import tensorflow as tf
 from keras.datasets import cifar10 as cifar10_dataset
 
 from src.utilities.constants import *
-from src.utilities.plot_dataset_samples import plot_cifar10_data
+from src.utilities.plot_dataset_samples import plot_images
 from src.utilities.utils import mae, rmse
 from src.utilities.vae_in_tensorflow import vae
 
@@ -129,7 +129,7 @@ def cifar10(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, rgb
             print(f'Epoch {epoch} | Loss (ELBO): {cur_elbo}')
 
             if epoch == 1:
-                fig = plot_cifar10_data(
+                fig = plot_images(
                     X=X_train[start_index:end_index, :],
                     y=batch_labels,
                     categories=[category],
@@ -140,7 +140,7 @@ def cifar10(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, rgb
                 plt.close()
 
             if epoch % 10 == 0 or epoch == 1:
-                fig = plot_cifar10_data(
+                fig = plot_images(
                     X=cur_samples,
                     y=batch_labels,
                     categories=[category],

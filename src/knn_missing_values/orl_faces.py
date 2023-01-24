@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from src.utilities.constants import *
 from src.utilities.get_orl_faces_dataset import get_orl_faces_dataset
 from src.utilities.knn_matrix_completion import kNNMatrixCompletion
-from src.utilities.plot_dataset_samples import plot_orl_faces
+from src.utilities.plot_dataset_samples import plot_images
 from src.utilities.utils import construct_missing_data, get_non_zero_percentage, rmse, mae
 
 
@@ -26,13 +26,13 @@ def orl_faces(K=10, structured_or_random='structured'):
 
     # plot original data X
     for i in range(0, 40, 10):
-        fig = plot_orl_faces(X, y, categories=list(range(i, i + 10)), show_plot=False)
+        fig = plot_images(X, y, categories=list(range(i, i + 10)), show_plot=False)
         fig.savefig(f'{output_images_path}/Original Faces {i + 1}-{i + 10} K={K}.png', bbox_inches='tight')
         plt.close()
 
     # plot data with missing values
     for i in range(0, 40, 10):
-        fig = plot_orl_faces(X_missing, y, categories=list(range(i, i + 10)), show_plot=False)
+        fig = plot_images(X_missing, y, categories=list(range(i, i + 10)), show_plot=False)
         fig.savefig(
             f'{output_images_path}/Faces {i + 1}-{i + 10} with Mixed Missing Values K={K}.png',
             bbox_inches='tight'
@@ -59,7 +59,7 @@ def orl_faces(K=10, structured_or_random='structured'):
 
     # plot predicted data
     for i in range(0, 40, 10):
-        fig = plot_orl_faces(X_predicted, y, categories=list(range(i, i + 10)), show_plot=False)
+        fig = plot_images(X_predicted, y, categories=list(range(i, i + 10)), show_plot=False)
         fig.savefig(f'{output_images_path}/Predicted Faces {i + 1}-{i + 10} K={K}.png', bbox_inches='tight')
         plt.close()
 

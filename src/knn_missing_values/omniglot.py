@@ -7,7 +7,7 @@ import numpy as np
 from src.utilities.constants import *
 from src.utilities.get_omniglot_dataset import get_omniglot_dataset
 from src.utilities.knn_matrix_completion import kNNMatrixCompletion
-from src.utilities.plot_dataset_samples import plot_mnist_or_omniglot_data
+from src.utilities.plot_dataset_samples import plot_images
 from src.utilities.utils import construct_missing_data, get_non_zero_percentage, rmse, mae
 
 
@@ -51,7 +51,7 @@ def omniglot(K=10, structured_or_random='structured', language='English'):
     )
 
     # plot original data X_merged
-    fig = plot_mnist_or_omniglot_data(
+    fig = plot_images(
         X_merged,
         y_merged,
         categories=list(range(1, 11)),
@@ -60,7 +60,7 @@ def omniglot(K=10, structured_or_random='structured', language='English'):
     )
     fig.savefig(f'{output_images_path}/Binarized Merged Data Characters 1-10.png', bbox_inches='tight')
     plt.close()
-    fig = plot_mnist_or_omniglot_data(
+    fig = plot_images(
         X_merged,
         y_merged,
         categories=list(range(11, 21)),
@@ -70,7 +70,7 @@ def omniglot(K=10, structured_or_random='structured', language='English'):
     fig.savefig(f'{output_images_path}/Binarized Merged Data Characters 11-20.png', bbox_inches='tight')
     plt.close()
     if language.lower() == 'greek':
-        fig = plot_mnist_or_omniglot_data(
+        fig = plot_images(
             X_merged,
             y_merged,
             categories=list(range(21, 25)),
@@ -79,7 +79,7 @@ def omniglot(K=10, structured_or_random='structured', language='English'):
         )
         fig.savefig(f'{output_images_path}/Binarized Merged Data Characters 21-24.png', bbox_inches='tight')
     else:
-        fig = plot_mnist_or_omniglot_data(
+        fig = plot_images(
             X_merged,
             y_merged,
             categories=list(range(21, 27)),
@@ -90,7 +90,7 @@ def omniglot(K=10, structured_or_random='structured', language='English'):
     plt.close()
 
     # plot original data with missing values
-    fig = plot_mnist_or_omniglot_data(
+    fig = plot_images(
         X_merged_missing,
         y_merged,
         categories=list(range(1, 11)),
@@ -102,7 +102,7 @@ def omniglot(K=10, structured_or_random='structured', language='English'):
         bbox_inches='tight'
     )
     plt.close()
-    fig = plot_mnist_or_omniglot_data(
+    fig = plot_images(
         X_merged_missing,
         y_merged,
         categories=list(range(11, 21)),
@@ -115,7 +115,7 @@ def omniglot(K=10, structured_or_random='structured', language='English'):
     )
     plt.close()
     if language.lower() == 'greek':
-        fig = plot_mnist_or_omniglot_data(
+        fig = plot_images(
             X_merged_missing,
             y_merged,
             categories=list(range(21, 25)),
@@ -127,7 +127,7 @@ def omniglot(K=10, structured_or_random='structured', language='English'):
             bbox_inches='tight'
         )
     else:
-        fig = plot_mnist_or_omniglot_data(
+        fig = plot_images(
             X_merged_missing,
             y_merged,
             categories=list(range(21, 27)),
@@ -158,7 +158,7 @@ def omniglot(K=10, structured_or_random='structured', language='English'):
     print(f'k-nn predictions calculations time: {elapsed_time}')
     print()
 
-    fig = plot_mnist_or_omniglot_data(
+    fig = plot_images(
         X_merged_predicted,
         y_merged,
         categories=list(range(1, 11)),
@@ -170,7 +170,7 @@ def omniglot(K=10, structured_or_random='structured', language='English'):
         bbox_inches='tight'
     )
     plt.close()
-    fig = plot_mnist_or_omniglot_data(
+    fig = plot_images(
         X_merged_predicted,
         y_merged,
         categories=list(range(11, 21)),
@@ -181,7 +181,7 @@ def omniglot(K=10, structured_or_random='structured', language='English'):
                 bbox_inches='tight')
     plt.close()
     if language.lower() == 'greek':
-        fig = plot_mnist_or_omniglot_data(
+        fig = plot_images(
             X_merged_predicted,
             y_merged,
             categories=list(range(21, 25)),
@@ -193,7 +193,7 @@ def omniglot(K=10, structured_or_random='structured', language='English'):
             bbox_inches='tight'
         )
     else:
-        fig = plot_mnist_or_omniglot_data(
+        fig = plot_images(
             X_merged_predicted,
             y_merged,
             categories=list(range(21, 27)),

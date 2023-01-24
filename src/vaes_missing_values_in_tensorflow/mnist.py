@@ -8,7 +8,7 @@ from keras.datasets import fashion_mnist as fashion_mnist_dataset
 from keras.datasets import mnist as mnist_dataset
 
 from src.utilities.constants import *
-from src.utilities.plot_dataset_samples import plot_mnist_or_omniglot_data
+from src.utilities.plot_dataset_samples import plot_images
 from src.utilities.utils import reduce_data, construct_missing_data, get_non_zero_percentage, rmse, mae
 from src.utilities.vae_in_tensorflow import vae
 
@@ -142,7 +142,7 @@ def mnist(
             print(f'Epoch {epoch} | Loss (ELBO): {cur_elbo}')
 
             if epoch == 1:
-                fig = plot_mnist_or_omniglot_data(
+                fig = plot_images(
                     X_train[start_index:end_index, :],
                     batch_labels,
                     title='Original Data'
@@ -150,7 +150,7 @@ def mnist(
                 fig.savefig(f'{output_images_path}/original_data.png', bbox_inches='tight')
                 plt.close()
 
-                fig = plot_mnist_or_omniglot_data(
+                fig = plot_images(
                     X_train_missing[start_index:end_index, :],
                     batch_labels,
                     title='Original Data'
@@ -158,7 +158,7 @@ def mnist(
                 fig.savefig(f'{output_images_path}/missing_data.png', bbox_inches='tight')
                 plt.close()
 
-                fig = plot_mnist_or_omniglot_data(
+                fig = plot_images(
                     masked_batch_data,
                     batch_labels,
                     title='Masked Data'
@@ -167,7 +167,7 @@ def mnist(
                 plt.close()
 
             if epoch % 10 == 0 or epoch == 1:
-                fig = plot_mnist_or_omniglot_data(
+                fig = plot_images(
                     cur_samples,
                     batch_labels,
                     title=f'Epoch {str(epoch).zfill(3)}'
