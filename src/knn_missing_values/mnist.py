@@ -36,8 +36,6 @@ def mnist(K=10, structured_or_random='structured', digits_or_fashion='digits'):
 
     print()
 
-    # num_classes = 10
-
     # build train data
     print('Building TRAIN data...')
     # reduce the number of train examples from 55000 to 10000

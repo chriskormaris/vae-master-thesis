@@ -24,8 +24,6 @@ def omniglot(K=10, structured_or_random='structured', language='English'):
     if not os.path.exists(output_images_path):
         os.makedirs(output_images_path)
 
-    # num_classes = 10
-
     # LOAD OMNIGLOT DATASET #
     X_train, y_train = get_omniglot_dataset(
         omniglot_dataset_path + '/chardata.mat',

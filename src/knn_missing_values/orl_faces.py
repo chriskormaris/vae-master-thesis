@@ -18,8 +18,6 @@ def orl_faces(K=10, structured_or_random='structured'):
     if not os.path.exists(output_images_path):
         os.makedirs(output_images_path)
 
-    # num_classes = 10
-
     # LOAD ORL FACES DATASET #
     X, y = get_orl_faces_dataset(orl_faces_dataset_path)
 
@@ -29,10 +27,7 @@ def orl_faces(K=10, structured_or_random='structured'):
     # plot original data X
     for i in range(0, 40, 10):
         fig = plot_orl_faces(X, y, categories=list(range(i, i + 10)), show_plot=False)
-        fig.savefig(
-            f'{output_images_path}/Original Faces {i + 1}-{i + 10} K={K}.png',
-            bbox_inches='tight'
-        )
+        fig.savefig(f'{output_images_path}/Original Faces {i + 1}-{i + 10} K={K}.png', bbox_inches='tight')
         plt.close()
 
     # plot data with missing values
@@ -65,10 +60,7 @@ def orl_faces(K=10, structured_or_random='structured'):
     # plot predicted data
     for i in range(0, 40, 10):
         fig = plot_orl_faces(X_predicted, y, categories=list(range(i, i + 10)), show_plot=False)
-        fig.savefig(
-            f'{output_images_path}/Predicted Faces {i + 1}-{i + 10} K={K}.png',
-            bbox_inches='tight'
-        )
+        fig.savefig(f'{output_images_path}/Predicted Faces {i + 1}-{i + 10} K={K}.png', bbox_inches='tight')
         plt.close()
 
     error1 = rmse(X, X_predicted)

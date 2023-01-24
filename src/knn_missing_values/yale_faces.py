@@ -18,8 +18,6 @@ def yale_faces(K=10, structured_or_random='structured'):
     if not os.path.exists(output_images_path):
         os.makedirs(output_images_path)
 
-    num_classes = 10
-
     # LOAD YALE FACES DATASET #
     print('Getting YALE faces dataset...')
     X, y = get_yale_faces_dataset(yale_faces_dataset_path)
@@ -37,10 +35,7 @@ def yale_faces(K=10, structured_or_random='structured'):
 
     # plot data with missing values
     fig = plot_yale_faces(X_missing, y, categories=list(range(10)), show_plot=False)
-    fig.savefig(
-        f'{output_images_path}/Faces 1-10 with Mixed Missing Values K={K}.png',
-        bbox_inches='tight'
-    )
+    fig.savefig(f'{output_images_path}/Faces 1-10 with Mixed Missing Values K={K}.png', bbox_inches='tight')
     plt.close()
 
     # Compute how sparse is the matrix X_train.
