@@ -20,7 +20,7 @@ def initialize_bias_variable(shape, name=''):
 
 
 # VARIATIONAL AUTOENCODER IMPLEMENTATION IN TENSORFLOW #
-def vae(batch_size, input_dim, hidden_encoder_dim, hidden_decoder_dim, latent_dim, lr=0.01):
+def vae(batch_size, input_dim, hidden_encoder_dim, hidden_decoder_dim, latent_dim, learning_rate=0.01):
     # Reset the default graph
     # IMPORTANT: WE NEED THIS to rerun the TensorFlow operation
     tf.compat.v1.reset_default_graph()
@@ -179,11 +179,11 @@ def vae(batch_size, input_dim, hidden_encoder_dim, hidden_decoder_dim, latent_di
         var_list = phis + thetas
 
         # Adam Optimizer (WORKS BEST!) #
-        grads_and_vars = tf.compat.v1.train.AdamOptimizer(learning_rate=lr).compute_gradients(
+        grads_and_vars = tf.compat.v1.train.AdamOptimizer(learning_rate=learning_rate).compute_gradients(
             loss=elbo,
             var_list=var_list
         )
-        apply_updates = tf.compat.v1.train.AdamOptimizer(learning_rate=lr).apply_gradients(
+        apply_updates = tf.compat.v1.train.AdamOptimizer(learning_rate=learning_rate).apply_gradients(
             grads_and_vars=grads_and_vars)
 
         # Gradient Descent Optimizer #

@@ -67,7 +67,7 @@ def movielens(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
         hidden_encoder_dim,
         hidden_decoder_dim,
         latent_dim,
-        lr=learning_rate
+        learning_rate=learning_rate
     )
 
     cur_elbo = None

@@ -93,7 +93,6 @@ def plot_patches(samples, grayscale=True):
 
 def get_reshaped_image(im):
     input_dim = np.prod(im.shape[:])
-    print(f'input_dim: {input_dim}')
 
     if input_dim == 784:
         return im.reshape(28, 28)

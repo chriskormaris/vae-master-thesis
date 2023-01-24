@@ -100,7 +100,7 @@ def cifar10(
         hidden_encoder_dim,
         hidden_decoder_dim,
         latent_dim,
-        lr=learning_rate
+        learning_rate=learning_rate
     )
 
     fig = None

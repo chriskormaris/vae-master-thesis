@@ -12,7 +12,7 @@ from src.utilities.utils import rmse, mae
 from src.utilities.vae_in_keras import vae
 
 
-def mnist(latent_dim=64, epochs=100, batch_size='250', digits_or_fashion='digits'):
+def mnist(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.001, digits_or_fashion='digits'):
     input_dim = 784
     output_images_path = output_img_base_path + 'vaes_in_keras'
 
@@ -24,7 +24,7 @@ def mnist(latent_dim=64, epochs=100, batch_size='250', digits_or_fashion='digits
     else:
         mnist_data = fashion_mnist_dataset.load_data()
 
-    encoder, decoder, autoencoder = vae(input_dim, latent_dim)
+    encoder, decoder, autoencoder = vae(input_dim, latent_dim, learning_rate)
 
     # Let's prepare our input data.
     # We're using MNIST images, and we're discarding the labels
