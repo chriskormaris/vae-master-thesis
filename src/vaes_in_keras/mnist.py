@@ -6,9 +6,9 @@ from keras.callbacks import TensorBoard
 from keras.datasets import fashion_mnist as fashion_mnist_dataset
 from keras.datasets import mnist as mnist_dataset
 
-from src.utilities.constants import *
+from src import *
+from src.utilities import rmse, mae
 from src.utilities.plot_utils import plot_original_vs_reconstructed_data
-from src.utilities.utils import rmse, mae
 from src.utilities.vae_in_keras import vae
 
 

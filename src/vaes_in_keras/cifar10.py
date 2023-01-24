@@ -5,9 +5,9 @@ import numpy as np
 from keras.callbacks import TensorBoard
 from keras.datasets import cifar10 as cifar10_dataset
 
-from src.utilities.constants import *
+from src import *
+from src.utilities import rmse, mae
 from src.utilities.plot_utils import plot_original_vs_reconstructed_data
-from src.utilities.utils import rmse, mae
 from src.utilities.vae_in_keras import vae
 
 

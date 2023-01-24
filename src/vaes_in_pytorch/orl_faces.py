@@ -6,10 +6,10 @@ import time
 import matplotlib.pyplot as plt
 import numpy as np
 
-from src.utilities.constants import *
+from src import *
+from src.utilities import rmse, mae
 from src.utilities.get_orl_faces_dataset import get_orl_faces_dataset
 from src.utilities.plot_utils import plot_images
-from src.utilities.utils import rmse, mae
 from src.utilities.vae_in_pytorch import initialize_weights, train
 
 

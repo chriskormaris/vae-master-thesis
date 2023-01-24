@@ -4,10 +4,10 @@ import time
 import numpy as np
 from keras.callbacks import TensorBoard
 
-from src.utilities.constants import *
+from src import *
+from src.utilities import rmse, mae
 from src.utilities.get_binarized_mnist_dataset import get_binarized_mnist_dataset, obtain
 from src.utilities.plot_utils import plot_original_vs_reconstructed_data
-from src.utilities.utils import rmse, mae
 from src.utilities.vae_in_keras import vae
 
 

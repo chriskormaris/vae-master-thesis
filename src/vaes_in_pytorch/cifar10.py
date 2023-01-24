@@ -7,9 +7,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 from keras.datasets import cifar10 as cifar10_dataset
 
-from src.utilities.constants import *
+from src import *
+from src.utilities import rmse, mae
 from src.utilities.plot_utils import plot_images
-from src.utilities.utils import rmse, mae
 from src.utilities.vae_in_pytorch import initialize_weights, train
 
 

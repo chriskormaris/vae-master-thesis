@@ -7,10 +7,10 @@ import time
 import matplotlib.pyplot as plt
 import numpy as np
 
-from src.utilities.constants import *
+from src import *
+from src.utilities import reduce_data, construct_missing_data, get_non_zero_percentage, rmse, mae
 from src.utilities.get_yale_faces_dataset import get_yale_faces_dataset
 from src.utilities.plot_utils import plot_images
-from src.utilities.utils import reduce_data, construct_missing_data, get_non_zero_percentage, rmse, mae
 from src.utilities.vae_in_pytorch import initialize_weights, train
 
 

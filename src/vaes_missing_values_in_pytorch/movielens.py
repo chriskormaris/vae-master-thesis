@@ -5,10 +5,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-from src.utilities.constants import *
+from src import *
+from src.utilities import get_non_zero_percentage, rmse, mae
 from src.utilities.get_movielens_dataset import get_movielens_dataset
 from src.utilities.plot_utils import plot_movielens_data
-from src.utilities.utils import get_non_zero_percentage, rmse, mae
 from src.utilities.vae_in_pytorch import initialize_weights, train
 
 

@@ -5,10 +5,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 from keras.datasets import cifar10 as cifar10_dataset
 
-from src.utilities.constants import *
+from src import *
+from src.utilities import reduce_data, construct_missing_data, get_non_zero_percentage, rmse, mae
 from src.utilities.knn_matrix_completion import kNNMatrixCompletion
 from src.utilities.plot_utils import plot_images
-from src.utilities.utils import reduce_data, construct_missing_data, get_non_zero_percentage, rmse, mae
 
 
 def cifar10(K=10, structured_or_random='structured', rgb_or_grayscale='grayscale', category=3):
