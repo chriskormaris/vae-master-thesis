@@ -525,6 +525,22 @@ if __name__ == '__main__':
 
     runFrame = tk.Frame(root)
 
+    # tkinter variables #
+    algorithm_var = tk.StringVar(root)
+    dataset_var = tk.StringVar(root)
+
+    latent_dim_var = tk.IntVar(root, 64)
+    epochs_var = tk.IntVar(root, 100)
+    learning_rate_var = tk.DoubleVar(root, 0.01)
+    batch_size_var = tk.StringVar(root, '250')
+    K_var = tk.IntVar(root, 10)
+
+    mnist_digits_or_fashion_var = tk.StringVar(root, 'digits')
+    cifar10_rgb_or_grayscale_var = tk.StringVar(root, 'grayscale')
+    cifar10_category_var = tk.StringVar(root, 'cat')
+    omniglot_language_var = tk.StringVar(root, 'english')
+    missing_values_construction_var = tk.StringVar(root, 'structured')
+
     # Widgets #
 
     # 1. welcomeFrame Widgets #
@@ -547,22 +563,6 @@ if __name__ == '__main__':
     welcomeFrame.pack()
 
     # 2. vaeFrame Widgets #
-    # tkinter variables
-    algorithm_var = tk.StringVar(root)
-    dataset_var = tk.StringVar(root)
-
-    latent_dim_var = tk.IntVar(root, 64)
-    epochs_var = tk.IntVar(root, 100)
-    learning_rate_var = tk.DoubleVar(root, 0.01)
-    batch_size_var = tk.StringVar(root, '250')
-    K_var = tk.IntVar(root, 10)
-
-    mnist_digits_or_fashion_var = tk.StringVar(root, 'digits')
-    cifar10_rgb_or_grayscale_var = tk.StringVar(root, 'grayscale')
-    cifar10_category_var = tk.StringVar(root, 'cat')
-    omniglot_language_var = tk.StringVar(root, 'english')
-    missing_values_construction_var = tk.StringVar(root, 'structured')
-
     latent_dim_label = tk.Label(vaeFrame, text='latent dimension:')
     latent_dim_label.pack()
     for i in [32, 64, 128]:
