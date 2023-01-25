@@ -793,8 +793,8 @@ if __name__ == '__main__':
 
     helpMenu = tk.Menu(menu, tearoff=False)
     menu.add_cascade(label='Help', menu=helpMenu)  # adds drop-down menu
-    helpMenu.add_command(label='About', command=about_window)
     helpMenu.add_command(label='Datasets Details', command=datasets_details_window)
+    helpMenu.add_command(label='About', command=about_window)
     helpMenu.add_command(label='Exit', command=root.quit)
 
     runButton = tk.Button(
