@@ -46,12 +46,6 @@ from src import *
 
 ssl._create_default_https_context = ssl._create_stdlib_context
 
-# global variables #
-isAlgorithmSelected = False
-isDatasetSelected = False
-
-
-#####
 
 # functions #
 
@@ -183,6 +177,9 @@ def hide_extra_options():
 
 
 def check_algorithm_and_show_vae_frame():
+    global isAlgorithmSelected
+    isAlgorithmSelected = True
+
     welcomeFrame.pack_forget()
 
     hide_extra_options()
@@ -190,8 +187,7 @@ def check_algorithm_and_show_vae_frame():
     kNNFrame.pack_forget()
     runFrame.pack_forget()
     vaeFrame.pack()
-    global isAlgorithmSelected
-    isAlgorithmSelected = True
+
     if 'keras' not in algorithm_var.get().lower():
         vae_empty_line_label.pack_forget()
         learning_rate_label.pack()
@@ -217,6 +213,9 @@ def check_algorithm_and_show_vae_frame():
 
 
 def check_algorithm_and_show_knn_frame():
+    global isAlgorithmSelected
+    isAlgorithmSelected = True
+
     welcomeFrame.pack_forget()
 
     hide_extra_options()
@@ -224,8 +223,7 @@ def check_algorithm_and_show_knn_frame():
     vaeFrame.pack_forget()
     runFrame.pack_forget()
     kNNFrame.pack()
-    global isAlgorithmSelected
-    isAlgorithmSelected = True
+
     if 'missing' in algorithm_var.get().lower():
         datasetsMenu.entryconfig(6, state='normal')  # enable 'MovieLens' dataset
     else:
@@ -246,10 +244,9 @@ def check_algorithm_and_show_knn_frame():
 
 def check_dataset():
     global isDatasetSelected
+    isDatasetSelected = True
 
     hide_extra_options()
-
-    isDatasetSelected = True
 
     if 'missing' in algorithm_var.get().lower() and \
             not dataset_var.get() == 'movielens' and not dataset_var.get() == '':
@@ -501,6 +498,10 @@ def download_all_datasets_command(event):
 
 
 if __name__ == '__main__':
+    # global variables #
+    isAlgorithmSelected = False
+    isDatasetSelected = False
+
     # create window and set title
     root = tk.Tk()
     root.title('vaes')
