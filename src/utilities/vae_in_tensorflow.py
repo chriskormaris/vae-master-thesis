@@ -21,11 +21,12 @@ def initialize_bias_variable(shape, name=''):
 
 # VARIATIONAL AUTOENCODER IMPLEMENTATION IN TENSORFLOW #
 def vae(batch_size, input_dim, hidden_encoder_dim, hidden_decoder_dim, latent_dim, learning_rate=0.01):
-    # Reset the default graph
-    # IMPORTANT: WE NEED THIS to rerun the TensorFlow operation
+    # IMPORTANT: Reset the default graph. We need this to rerun the TensorFlow operation.
     tf.compat.v1.reset_default_graph()
 
+    # IMPORTANT: We must add this command if using TensorFlow v1.
     tf.compat.v1.disable_eager_execution()
+
     # Input placeholder
     with tf.name_scope('input_data'):
         x = tf.compat.v1.placeholder('float', [batch_size, input_dim], name='X')
