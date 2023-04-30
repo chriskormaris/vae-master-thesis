@@ -55,23 +55,41 @@ python vaes_gui.py
 
 ![vaes_001](/screenshots/vaes_gui/vaes_001.png)
 
+### Datasets
 
-### MNIST Dataset ###
+#### MNIST Dataset ####
 
 Extract the compressed file `MNIST_dataset.zip`.
 A folder named `MNIST_dataset` should appear, which contains the files of the MNIST dataset, along with their labels.
 
-### Binarized MNIST Dataset ###
+##### VAE in TensorFlow output images
+|                                Original data                                |                               Epoch 1                               |                                  Epoch 10                                   |                              Epoch 20                               |
+|:---------------------------------------------------------------------------:|:-------------------------------------------------------------------:|:---------------------------------------------------------------------------:|:-------------------------------------------------------------------:|
+| ![original_data](/output_images/vaes_in_tensorflow/mnist/original_data.png) | ![epoch_001](/output_images/vaes_in_tensorflow/mnist/epoch_001.png) |     ![epoch_10](/output_images/vaes_in_tensorflow/mnist/epoch_010.png)      | ![epoch_020](/output_images/vaes_in_tensorflow/mnist/epoch_020.png) |
+
+##### VAE in Keras output images
+![mnist.png](output_images%2Fvaes_in_keras%2Fmnist.png)
+
+#### Binarized MNIST Dataset ####
 
 Extract the compressed file `Binarized_MNIST_dataset.zip`.
 A folder named `Binarized_MNIST_dataset` should appear, which contains the TRAIN, TEST and VALIDATION files of the Binarized MNIST dataset, along with labels only for the TEST data.
 
-### CIFAR-10 Dataset ###
+##### VAE in Keras output images
+![binarized_mnist.png](output_images%2Fvaes_in_keras%2Fbinarized_mnist.png)
+
+#### CIFAR-10 Dataset ####
 
 Extract the compressed file `CIFAR_daset.zip`.
 A folder named `CIFAR_dataset` should appear, which contains the TRAIN and TEST files of the CIFAR-10 and CIFAR-100 dataset, along with their labels. The CIFAR-10 dataset contains data from 10 classes, while the CIFAR-100 dataset contains data from 100 classes.
 
-### OMNIGLOT Dataset ###
+##### VAE in Keras Grayscale output images
+![cifar10_grayscale.png](output_images%2Fvaes_in_keras%2Fcifar10_grayscale.png)
+
+##### VAE in Keras RGB output images
+![cifar10_rgb.png](output_images%2Fvaes_in_keras%2Fcifar10_rgb.png)
+
+#### OMNIGLOT Dataset ####
 
 Extract the compressed file `OMNIGLOT_daset.zip`.
 A folder named `OMNIGLOT_dataset` should appear, which contains the TRAIN and TEST files of the OMNIGLOT dataset, from 50 different alphabets, along with their labels.
@@ -80,8 +98,13 @@ The Greek alphabet has 24 characters, which means 24 are the classes.
 The Greek alphabet has 26 characters, which means 26 are the classes.
 The classes are not important for the algorithm, but they are used for plotting purposes.
 
+##### VAE in Keras English output images
+![omniglot_english.png](output_images%2Fvaes_in_keras%2Fomniglot_english.png)
 
-# K-NN Missing Values algorithm #
+##### VAE in Keras Greek output images
+![omniglot_greek.png](output_images%2Fvaes_in_keras%2Fomniglot_greek.png)
+
+# K-NN Missing Values completion algorithm #
 
 These are implementations of K-NN Missing Values algorithms on various datasets with missing values.
 The datasets included are: MNIST, Binarized MNIST, CIFAR-10 and OMNIGLOT.
@@ -91,9 +114,19 @@ I've implemented an algorithm that uses K-NN for regression, i.e. it predicts th
 
 The results of the algorithm will be new images of digits, with their missing halves predicted.
 
+#### Output images
+|                                    Original Data                                     |                                                          Test Data with Mixed Missing Values K=10                                                          |                                               Predicted Test Data K=10                                               |
+|:------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------------------------------:|
+| ![Test Data.png](output_images%2Fknn_missing_values%2Fmnist%2FTest%20Data.png)       | ![Test Data with Mixed Missing Values K=10.png](output_images%2Fknn_missing_values%2Fmnist%2FTest%20Data%20with%20Mixed%20Missing%20Values%20K%3D10.png)   | ![Predicted Test Data K=10.png](output_images%2Fknn_missing_values%2Fmnist%2FPredicted%20Test%20Data%20K%3D10.png)   |
+
 ### Binarized MNIST Dataset ###
 
 The results of the algorithm will be new images of binarized digits, with their missing halves predicted.
+
+#### Output images
+|                                                           Original Data                                                            |                                                            Test Data with Mixed Missing Values K=10                                                                |                                                   Predicted Test Data K=10                                                   |
+|:----------------------------------------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------:|
+| ![Original Binarized Test Data.png](output_images%2Fknn_missing_values%2Fbinarized_mnist%2FOriginal%20Binarized%20Test%20Data.png) | ![Test Data with Mixed Missing Values K=10.png](output_images%2Fknn_missing_values%2Fbinarized_mnist%2FTest%20Data%20with%20Mixed%20Missing%20Values%20K%3D10.png) | ![Predicted Test Data K=10.png](output_images%2Fknn_missing_values%2Fbinarized_mnist%2FPredicted%20Test%20Data%20K%3D10.png) |
 
 ### CIFAR-10 Dataset ###
 
@@ -113,7 +146,7 @@ In the dataset, there are 400 face images in total, from 40 different persons an
 The results of the algorithm will be new images of the faces, with their missing halves predicted.
 
 
-# VAE Missing Values algorithm #
+# VAE Missing Values completion algorithm #
 
 There are also two different implementations of the Variational Autoencoder Missing Values algorithm of the VAEs included.
 
@@ -124,6 +157,21 @@ The datasets included are: MNIST, Binarized MNIST, CIFAR-10, OMNIGLOT, ORL Face 
 The algorithm uses a Variational Autoencoder to predict only the missing pixel values, based on the training data.
 
 **Note:** In some datasets, e.g. in the CIFAR-10 dataset, the results are good only if the images are grayscaled!
+
+#### VAE Missing Values completion algorithm in PyTorch MNIST Dataset
+|                                          Original data                                           |                                         Epoch 1                                          |                                            Epoch 100                                             |                                        Epoch 200                                         |
+|:------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------:|
+| ![original_data.png](output_images%2Fvaes_missing_values_in_pytorch%2Fmnist%2Foriginal_data.png) | ![epoch_001.png](output_images%2Fvaes_missing_values_in_pytorch%2Fmnist%2Fepoch_001.png) |     ![epoch_100.png](output_images%2Fvaes_missing_values_in_pytorch%2Fmnist%2Fepoch_100.png)     | ![epoch_200.png](output_images%2Fvaes_missing_values_in_pytorch%2Fmnist%2Fepoch_200.png) |
+
+#### VAE Missing Values completion algorithm in PyTorch OMNIGLOT English Dataset
+|                                                                Original data                                                                |                                                               Epoch 1                                                               |                                                                  Epoch 50                                                                   |                                                              Epoch 100                                                              |
+|:-------------------------------------------------------------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------:|
+| ![original_data_characters_1-10.png](output_images%2Fvaes_missing_values_in_pytorch%2Fomniglot_english%2Foriginal_data_characters_1-10.png) | ![epoch_001_characters_1-10.png](output_images%2Fvaes_missing_values_in_pytorch%2Fomniglot_english%2Fepoch_001_characters_1-10.png) |     ![epoch_050_characters_1-10.png](output_images%2Fvaes_missing_values_in_pytorch%2Fomniglot_english%2Fepoch_050_characters_1-10.png)     | ![epoch_100_characters_1-10.png](output_images%2Fvaes_missing_values_in_pytorch%2Fomniglot_english%2Fepoch_100_characters_1-10.png) |
+
+#### VAE Missing Values completion algorithm in PyTorch OMNIGLOT Greek Dataset
+|                                                               Original data                                                               |                                                              Epoch 1                                                              |                                                                 Epoch 50                                                                  |                                                             Epoch 100                                                             |
+|:-----------------------------------------------------------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------------------------------------------:|
+| ![original_data_characters_1-10.png](output_images%2Fvaes_missing_values_in_pytorch%2Fomniglot_greek%2Foriginal_data_characters_1-10.png) | ![epoch_001_characters_1-10.png](output_images%2Fvaes_missing_values_in_pytorch%2Fomniglot_greek%2Fepoch_001_characters_1-10.png) |     ![epoch_050_characters_1-10.png](output_images%2Fvaes_missing_values_in_pytorch%2Fomniglot_greek%2Fepoch_050_characters_1-10.png)     | ![epoch_100_characters_1-10.png](output_images%2Fvaes_missing_values_in_pytorch%2Fomniglot_greek%2Fepoch_100_characters_1-10.png) |
 
 ### Tensorboard ###
 
