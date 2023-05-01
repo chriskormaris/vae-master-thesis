@@ -35,7 +35,7 @@ def yale_faces(K=10, structured_or_random='structured'):
 
     # plot data with missing values
     fig = plot_images(X_missing, y, categories=list(range(10)), show_plot=False)
-    fig.savefig(f'{output_images_path}/Faces 1-10 with Mixed Missing Values K={K}.png', bbox_inches='tight')
+    fig.savefig(f'{output_images_path}/Faces 1-10 with Missing Values K={K}.png', bbox_inches='tight')
     plt.close()
 
     # Compute how sparse is the matrix X_train.

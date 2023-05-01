@@ -34,7 +34,7 @@ def orl_faces(K=10, structured_or_random='structured'):
     for i in range(0, 40, 10):
         fig = plot_images(X_missing, y, categories=list(range(i, i + 10)), show_plot=False)
         fig.savefig(
-            f'{output_images_path}/Faces {i + 1}-{i + 10} with Mixed Missing Values K={K}.png',
+            f'{output_images_path}/Faces {i + 1}-{i + 10} with Missing Values K={K}.png',
             bbox_inches='tight'
         )
         plt.close()
