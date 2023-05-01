@@ -51,9 +51,19 @@ python vaes_gui.py
 ```
 
 
-### Screenshot
+### GUI Screenshots
 
+#### Welcome screen
 ![vaes_001](/screenshots/vaes_gui/vaes_001.png)
+
+#### Algorithm parameters selection screen
+![vaes_001](/screenshots/vaes_gui/vaes_002.png)
+
+#### About screen
+![About_001.png](screenshots%2Fvaes_gui%2FAbout_001.png)
+
+#### Datasets screen
+![About_002.png](screenshots%2Fvaes_gui%2FAbout_002.png)
 
 ### Datasets
 

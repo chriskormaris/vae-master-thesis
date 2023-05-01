@@ -304,16 +304,22 @@ def about_window():
     # change icon
     window.iconbitmap(icons_path + 'info.ico')
 
+    empty_line_label = tk.Label(window, text='')
+    empty_line_label.pack(side=tk.BOTTOM)
+
     okButton = tk.Button(
         window,
-        text='Ok',
-        fg='#340DFD',
+        text='OK',
+        fg='black',
         bg='#5BFFAC',
         height=2,
         width=6,
         command=window.destroy
     )
     okButton.pack(side=tk.BOTTOM)
+
+    empty_line_label = tk.Label(window, text='')
+    empty_line_label.pack(side=tk.BOTTOM)
 
     # make the child window transient to the root
     window.transient(root)
@@ -800,7 +806,7 @@ if __name__ == '__main__':
     runButton = tk.Button(
         runFrame,
         text='Run',
-        fg='#340DFD',
+        fg='black',
         bg='#5BFFAC',
         height=2,
         width=6,
