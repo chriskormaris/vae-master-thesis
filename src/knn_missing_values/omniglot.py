@@ -98,7 +98,7 @@ def omniglot(K=10, structured_or_random='structured', language='English'):
         show_plot=False
     )
     fig.savefig(
-        f'{output_images_path}/Merged Data with Mixed Missing Values K={K} Characters 1-10.png',
+        f'{output_images_path}/Merged Data with Missing Values K={K} Characters 1-10.png',
         bbox_inches='tight'
     )
     plt.close()
@@ -110,7 +110,7 @@ def omniglot(K=10, structured_or_random='structured', language='English'):
         show_plot=False
     )
     fig.savefig(
-        f'{output_images_path}/Merged Data with Mixed Missing Values K={K} Characters 11-20.png',
+        f'{output_images_path}/Merged Data with Missing Values K={K} Characters 11-20.png',
         bbox_inches='tight'
     )
     plt.close()
@@ -123,7 +123,7 @@ def omniglot(K=10, structured_or_random='structured', language='English'):
             show_plot=False
         )
         fig.savefig(
-            f'{output_images_path}/Merged Data with Mixed Missing Values K={K} Characters 21-24.png',
+            f'{output_images_path}/Merged Data with Missing Values K={K} Characters 21-24.png',
             bbox_inches='tight'
         )
     else:
@@ -135,7 +135,7 @@ def omniglot(K=10, structured_or_random='structured', language='English'):
             show_plot=False
         )
         fig.savefig(
-            f'{output_images_path}/Merged Data with Mixed Missing Values K={K} Characters 21-26.png',
+            f'{output_images_path}/Merged Data with Missing Values K={K} Characters 21-26.png',
             bbox_inches='tight'
         )
     plt.close()

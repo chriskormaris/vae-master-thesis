@@ -77,7 +77,7 @@ def cifar10(K=10, structured_or_random='structured', rgb_or_grayscale='grayscale
         n=100,
         grayscale=True if rgb_or_grayscale.lower() == 'grayscale' else False
     )
-    fig.savefig(f'{output_images_path}/Test Data with Mixed Missing Values K={K}', bbox_inches='tight')
+    fig.savefig(f'{output_images_path}/Test Data with Missing Values K={K}', bbox_inches='tight')
     plt.close()
 
     # Compute how sparse is the matrix X_test_missing.

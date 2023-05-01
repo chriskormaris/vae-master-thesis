@@ -57,7 +57,7 @@ def mnist(K=10, structured_or_random='structured', digits_or_fashion='digits'):
 
     # plot test data with missing values
     fig = plot_images(X_test_missing, y_test, show_plot=False)
-    fig.savefig(f'{output_images_path}/Test Data with Mixed Missing Values K={K}.png', bbox_inches='tight')
+    fig.savefig(f'{output_images_path}/Test Data with Missing Values K={K}.png', bbox_inches='tight')
     plt.close()
 
     # Compute how sparse is the matrix X_train.
