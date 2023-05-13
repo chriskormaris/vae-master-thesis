@@ -18,14 +18,36 @@ You can find the `.pdf` files of my master thesis on the site of ResearchGate in
 * Greek translation: https://www.researchgate.net/publication/349465619
 
 
-## Description ##
+## Abstract ##
 
-The variational autoencoder is a process that creates new artificial data, which are in many cases images, from the original data.
-This repository contains implementations of variational autoencoders, on various datasets.
-The datasets included are: MNIST, Binarized MNIST, CIFAR-10 and OMNIGLOT, ORL Face Database & Yale Faces.
-On the `ORL Face Database` & `Yale Faces` datasets, the data are very few and the variational autoencoder implementations do not have good results.
+A variational autoencoder is a method that can produce artificial data which will resemble a given dataset of real data.
+For instance, if we want to produce new artificial images of cats, we can use a variational autoencoder algorithm to do so,
+after training on a large dataset of images of cats.
+The input dataset is unlabeled on the grounds that we are not interested in classifying the data to a specific class,
+but we would rather be able to learn the most important features or similarities among the data.
+Since the data are not labeled, the variational autoencoder is described as an unsupervised learning algorithm,
+and it belongs in the area known as Reinforcement Learning.
+As far as the example of cat images is concerned,
+the algorithm can learn to detect that a cat should have two ears, a nose, whiskers, four legs, a tail and a diversity of colors.
+The algorithm uses two neural networks, an encoder and a decoder, which are trained simultaneously.
+A variational autoencoder should have good applications in cases where we would like to produce a bigger dataset,
+for better training on various neural networks. Also, it runs dimensionality reduction on the initial data,
+by compressing them into latent variables.
+We run implementations of variational autoencoders on various datasets,
+MNIST, Binarized MNIST, CIFAR-10, OMNIGLOT, YALE Faces, The Database of Faces, MovieLens,
+written in Python 3 with three different libraries, TensorFlow, PyTorch and Keras and we present the results.
+We introduce a simple missing values completion algorithm using K-NN collaborative filtering for making predictions (e.g. on missing pixels).
+Finally, we make use of the variational autoencoders to run missing values completion algorithms and predict missing values on various datasets.
+The K-NN algorithm did surprisingly well on the predictions, while the variational autoencoder completion system brought very satisfactory results.
+A graphical user interface has also been implemented as well.
 
-You can download all the datasets here:
+### Variational Autoencoder structure
+<img src="images/autoencoder_structure.png" width="75%" height="75%">
+
+**NOTE:**
+
+You can download all the datasets from here:
+
 [https://www.dropbox.com/sh/ucvad0dkcbxuyho/AAAjjrRPYiGLLPc_VKru4-Uva?dl=0](https://www.dropbox.com/sh/ucvad0dkcbxuyho/AAAjjrRPYiGLLPc_VKru4-Uva?dl=0)
 
 
