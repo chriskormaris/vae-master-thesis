@@ -1,10 +1,10 @@
 # Variational Autoencoders & Applications Master Thesis #
 
+© Created by: Christos Kormaris, Athens, April-May 2018
+
 Programming Language: Python 3
 
 GUI toolkit: tkinter
-
-Made by Christos Kormaris, April-May 2018
 
 Supervisor Professor: Michalis Titsias
 
@@ -41,7 +41,7 @@ Finally, we make use of the variational autoencoders to run missing values compl
 The K-NN algorithm did surprisingly well on the predictions, while the variational autoencoder completion system brought very satisfactory results.
 A graphical user interface has also been implemented as well.
 
-### Variational Autoencoder structure
+## Variational Autoencoder structure ##
 <img src="images/autoencoder_structure.png" width="75%" height="75%">
 
 **NOTE:**
@@ -51,13 +51,13 @@ You can download all the datasets from here:
 [https://www.dropbox.com/sh/ucvad0dkcbxuyho/AAAjjrRPYiGLLPc_VKru4-Uva?dl=0](https://www.dropbox.com/sh/ucvad0dkcbxuyho/AAAjjrRPYiGLLPc_VKru4-Uva?dl=0)
 
 
-## Extract datasets
+## Extract datasets ##
 
 Go one level up from the project directory and create the directory `DATASETS`.
 Then, download all the datasets from the URL in the file `datasets_urls.md`, extract them and move them to the `DATASETS` folder.
 
 
-## How to run the VAEs GUI
+## How to run the VAEs GUI ##
 
 A graphical user interface (GUI) has been implemented for the project of this thesis, using Python 3 and the tkinter library.
 
@@ -73,55 +73,55 @@ python vaes_gui.py
 ```
 
 
-### GUI Screenshots
+## GUI Screenshots ##
 
-#### Welcome screen
+### Welcome screen
 ![vaes_001](/screenshots/vaes_gui/vaes_001.png)
 
-#### Algorithm parameters selection screen
+### Algorithm parameters selection screen
 ![vaes_001](/screenshots/vaes_gui/vaes_002.png)
 
-#### About screen
+### About screen
 ![About_001.png](screenshots%2Fvaes_gui%2FAbout_001.png)
 
-#### Datasets screen
+### Datasets screen
 ![About_002.png](screenshots%2Fvaes_gui%2FAbout_002.png)
 
-### Datasets
+## Datasets ##
 
-#### MNIST Dataset ####
+### MNIST Dataset ###
 
 Extract the compressed file `MNIST_dataset.zip`.
 A folder named `MNIST_dataset` should appear, which contains the files of the MNIST dataset, along with their labels.
 
-##### VAE in TensorFlow output images
+#### VAE in TensorFlow output images ####
 |                                Original data                                |                               Epoch 1                               |                              Epoch 20                               |
 |:---------------------------------------------------------------------------:|:-------------------------------------------------------------------:|:-------------------------------------------------------------------:|
 | ![original_data](/output_images/vaes_in_tensorflow/mnist/original_data.png) | ![epoch_001](/output_images/vaes_in_tensorflow/mnist/epoch_001.png) | ![epoch_020](/output_images/vaes_in_tensorflow/mnist/epoch_020.png) |
 
-##### VAE in Keras output images
+#### VAE in Keras output images ####
 ![mnist.png](output_images%2Fvaes_in_keras%2Fmnist.png)
 
-#### Binarized MNIST Dataset ####
+### Binarized MNIST Dataset ###
 
 Extract the compressed file `Binarized_MNIST_dataset.zip`.
 A folder named `Binarized_MNIST_dataset` should appear, which contains the TRAIN, TEST and VALIDATION files of the Binarized MNIST dataset, along with labels only for the TEST data.
 
-##### VAE in Keras output images
+#### VAE in Keras output images ####
 ![binarized_mnist.png](output_images%2Fvaes_in_keras%2Fbinarized_mnist.png)
 
-#### CIFAR-10 Dataset ####
+### CIFAR-10 Dataset ###
 
 Extract the compressed file `CIFAR_daset.zip`.
 A folder named `CIFAR_dataset` should appear, which contains the TRAIN and TEST files of the CIFAR-10 and CIFAR-100 dataset, along with their labels. The CIFAR-10 dataset contains data from 10 classes, while the CIFAR-100 dataset contains data from 100 classes.
 
-##### VAE in Keras Grayscale output images
+#### VAE in Keras Grayscale output images ####
 ![cifar10_grayscale.png](output_images%2Fvaes_in_keras%2Fcifar10_grayscale.png)
 
-##### VAE in Keras RGB output images
+#### VAE in Keras RGB output images ####
 ![cifar10_rgb.png](output_images%2Fvaes_in_keras%2Fcifar10_rgb.png)
 
-#### OMNIGLOT Dataset ####
+### OMNIGLOT Dataset ###
 
 Extract the compressed file `OMNIGLOT_daset.zip`.
 A folder named `OMNIGLOT_dataset` should appear, which contains the TRAIN and TEST files of the OMNIGLOT dataset, from 50 different alphabets, along with their labels.
@@ -130,11 +130,13 @@ The Greek alphabet has 24 characters, which means 24 are the classes.
 The Greek alphabet has 26 characters, which means 26 are the classes.
 The classes are not important for the algorithm, but they are used for plotting purposes.
 
-##### VAE in Keras English output images
+#### VAE in Keras English output images ####
 ![omniglot_english.png](output_images%2Fvaes_in_keras%2Fomniglot_english.png)
 
-##### VAE in Keras Greek output images
+#### VAE in Keras Greek output images ####
 ![omniglot_greek.png](output_images%2Fvaes_in_keras%2Fomniglot_greek.png)
+
+---
 
 # K-NN Missing Values completion algorithm #
 
@@ -142,11 +144,13 @@ These are implementations of K-NN Missing Values algorithms on various datasets 
 The datasets included are: MNIST, Binarized MNIST, CIFAR-10 and OMNIGLOT.
 I've implemented an algorithm that uses K-NN for regression, i.e. it predicts the missing pixel values, based on the corresponding pixels of the top K nearest neighbors.
 
+## Datasets ##
+
 ### MNIST Dataset ###
 
 The results of the algorithm will be new images of digits, with their missing halves predicted.
 
-#### Output images
+#### Output images ####
 |                                    Original Data                                     |                                                         Data with Structured Missing Values K=10                                                         |                                               Predicted Test Data K=10                                               |
 |:------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------------------------------:|
 | ![Test Data.png](output_images%2Fknn_missing_values%2Fmnist%2FTest%20Data.png)       |        ![Test Data with Missing Values K=10.png](output_images%2Fknn_missing_values%2Fmnist%2FTest%20Data%20with%20Missing%20Values%20K%3D10.png)        | ![Predicted Test Data K=10.png](output_images%2Fknn_missing_values%2Fmnist%2FPredicted%20Test%20Data%20K%3D10.png)   |
@@ -155,7 +159,7 @@ The results of the algorithm will be new images of digits, with their missing ha
 
 The results of the algorithm will be new images of binarized digits, with their missing halves predicted.
 
-#### Output images
+#### Output images ####
 |                                                           Original Data                                                            |                                                       Data with Structured Missing Values K=10                                                       |                                                   Predicted Test Data K=10                                                   |
 |:----------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------:|
 | ![Original Binarized Test Data.png](output_images%2Fknn_missing_values%2Fbinarized_mnist%2FOriginal%20Binarized%20Test%20Data.png) | ![Test Data with Missing Values K=10.png](output_images%2Fknn_missing_values%2Fbinarized_mnist%2FTest%20Data%20with%20Missing%20Values%20K%3D10.png) | ![Predicted Test Data K=10.png](output_images%2Fknn_missing_values%2Fbinarized_mnist%2FPredicted%20Test%20Data%20K%3D10.png) |
@@ -171,12 +175,13 @@ The results of the algorithm will be new images of alphabet characters, with the
 
 ### ORL Face Database Dataset ###
 
-### How to set up and run the K-NN Missing Values algorithm on the ORL Face Database dataset ###
+#### How to set up and run the K-NN Missing Values algorithm on the ORL Face Database dataset ####
 Extract the compressed file `ORL_Face_Dataset.zip`.
 Create a folder named `ORL_Face_Dataset` and unzip there the contents of the zip file.
 In the dataset, there are 400 face images in total, from 40 different persons and 10 images from each person, 40 * 10 = 400.
 The results of the algorithm will be new images of the faces, with their missing halves predicted.
 
+---
 
 # VAE Missing Values completion algorithm #
 
@@ -190,20 +195,24 @@ The algorithm uses a Variational Autoencoder to predict only the missing pixel v
 
 **Note:** In some datasets, e.g. in the CIFAR-10 dataset, the results are good only if the images are grayscaled!
 
-#### VAE Missing Values completion algorithm in PyTorch MNIST Dataset
+## Output images examples ##
+
+### VAE Missing Values completion algorithm in PyTorch MNIST Dataset Output images ###
 |                                          Original data                                           |                              Data with Structured Missing Values                               |                                        Epoch 200                                         |
 |:------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------:|
 | ![original_data.png](output_images%2Fvaes_missing_values_in_pytorch%2Fmnist%2Foriginal_data.png) | ![missing_data.png](output_images%2Fvaes_missing_values_in_pytorch%2Fmnist%2Fmissing_data.png) | ![epoch_200.png](output_images%2Fvaes_missing_values_in_pytorch%2Fmnist%2Fepoch_200.png) |
 
-#### VAE Missing Values completion algorithm in PyTorch OMNIGLOT English Dataset
+### VAE Missing Values completion algorithm in PyTorch OMNIGLOT English Dataset Output images ###
 |                                                                Original data                                                                |                                                      Data with Random Missing Values                                                      |                                                              Epoch 100                                                              |
 |:-------------------------------------------------------------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------:|
 | ![original_data_characters_1-10.png](output_images%2Fvaes_missing_values_in_pytorch%2Fomniglot_english%2Foriginal_data_characters_1-10.png) | ![missing_data_characters_1-10.png](output_images%2Fvaes_missing_values_in_pytorch%2Fomniglot_english%2Fmissing_data_characters_1-10.png) | ![epoch_100_characters_1-10.png](output_images%2Fvaes_missing_values_in_pytorch%2Fomniglot_english%2Fepoch_100_characters_1-10.png) |
 
-#### VAE Missing Values completion algorithm in PyTorch OMNIGLOT Greek Dataset
+### VAE Missing Values completion algorithm in PyTorch OMNIGLOT Greek Dataset Output images ###
 |                                                               Original data                                                               |                                                     Data with Random Missing Values                                                      |                                                             Epoch 100                                                             |
 |:-----------------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------------------------------------------:|
 | ![original_data_characters_1-10.png](output_images%2Fvaes_missing_values_in_pytorch%2Fomniglot_greek%2Foriginal_data_characters_1-10.png) | ![missing_data_characters_1-10.png](output_images%2Fvaes_missing_values_in_pytorch%2Fomniglot_greek%2Fmissing_data_characters_1-10.png)  | ![epoch_100_characters_1-10.png](output_images%2Fvaes_missing_values_in_pytorch%2Fomniglot_greek%2Fepoch_100_characters_1-10.png) |
+
+---
 
 ### Tensorboard ###
 
@@ -247,8 +256,43 @@ Then, open your browser ang navigate to -> http://localhost:6006
 Similarly, you can open tensorboards for the implementation of VAE missing values algorithm in TensorFlow, by replacing the `_vae` postfix with `_vae_missing_values`.
 In addition, the Keras implementation of the VAEs has its own logs, located in the folder `keras_logs`.
 
-### Small Tensorboard screenshot
+### Small Tensorboard screenshot ###
 ![vae_tensorboard_graph_with_reconstructed_data](/screenshots/tensorboard/vae_tensorboard_graph_with_reconstructed_data.png)
 
-### Large Tensorboard screenshot
+### Large Tensorboard screenshot ###
 ![vae_tensorboard_graph_with_reconstructed_data_large](/screenshots/tensorboard/vae_tensorboard_graph_with_reconstructed_data_large.png)
+
+---
+
+## References ##
+
+### Papers ###
+- https://www.nowpublishers.com/article/Details/MAL-006
+- https://arxiv.org/abs/1606.05908
+- https://arxiv.org/abs/1312.6114
+
+### Books ###
+- [https://www.deeplearningbook.org](https://www.deeplearningbook.org)
+
+### Blogs ###
+- https://www.analyticsvidhya.com/blog/2016/10/an-introduction-to-implementing-neural-networks-using-tensorflow
+- https://agustinus.kristia.de/techblog/2016/12/03/autoencoders
+- http://christopher5106.github.io/big/data/2016/03/06/symbolic-computing-and-deep-learning-tutorial-on-theano-and-google-tensorflow.html
+- https://blog.fastforwardlabs.com/2016/08/12/introducing-variational-autoencoders-in-prose-and-code.html
+- https://blog.fastforwardlabs.com/2016/08/22/under-the-hood-of-the-variational-autoencoder-in-prose-and-code.html
+- https://jaan.io/what-is-variational-autoencoder-vae-tutorial
+- https://kvfrans.com/variational-autoencoders-explained
+- https://blog.otoro.net/2016/04/01/generating-large-images-from-latent-vectors
+- https://blog.keras.io/building-autoencoders-in-keras.html
+- https://xyang35.github.io/2017/04/14/variational-lower-bound
+
+### Videos ###
+- http://videolectures.net/deeplearning2016_mohamed_generative_models
+- http://videolectures.net/deeplearning2015_courville_autoencoder_extension
+- https://www.youtube.com/watch?v=9zKuYvjFFS8
+- https://www.youtube.com/watch?v=uh2Fh6df7Lg&t=1562s
+- https://www.youtube.com/watch?v=P78QYjWh5sM
+- https://www.youtube.com/watch?v=3-UDwk1U77s
+
+### GitHub ###
+- https://github.com/wiseodd/generative-models
