@@ -15,7 +15,7 @@ def get_yale_faces_dataset(yale_dataset_path, one_hot=False, print_progress=Fals
 
     i = 0
     for subdir in subdirectories:
-        subdir_path = yale_dataset_path + '/' + subdir
+        subdir_path = os.path.join(yale_dataset_path, subdir)
         if os.path.isdir(subdir_path):
             if print_progress:
                 print('Reading images from directory "' + subdir + '"...')
@@ -24,7 +24,7 @@ def get_yale_faces_dataset(yale_dataset_path, one_hot=False, print_progress=Fals
                 k = 0  # counter for the pictures in the subdir
                 try:
                     if filename.split('.')[1] == 'pgm':
-                        im = Image.open(subdir_path + '/' + filename)
+                        im = Image.open(os.path.join(subdir_path, filename))
                         image = np.array(im)
                         if image.size == D:
                             image = image.reshape((1, D))

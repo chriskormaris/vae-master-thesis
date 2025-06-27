@@ -12,7 +12,7 @@ from src.utilities.vae_in_pytorch import initialize_weights, train
 
 
 def yale_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
-    output_images_path = output_img_base_path + 'vaes_in_pytorch/orl_faces'
+    output_images_path = os.path.join(output_img_base_path, 'vaes_in_pytorch', 'orl_faces')
 
     if not os.path.exists(output_images_path):
         os.makedirs(output_images_path)
@@ -26,11 +26,11 @@ def yale_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
     for i in range(0, 38, 10):
         if i <= 20:
             fig = plot_images(X, y, categories=list(range(i, i + 10)), title='Original Faces', show_plot=False)
-            fig.savefig(f'{output_images_path}/original_faces_{i + 1}-{i + 10}.png')
+            fig.savefig(os.path.join(output_images_path, f'original_faces_{i + 1}-{i + 10}.png'))
             plt.close()
         else:
             fig = plot_images(X, y, categories=list(range(30, 38)), title='Original Faces', show_plot=False)
-            fig.savefig(f'{output_images_path}/original_faces_31-38.png')
+            fig.savefig(os.path.join(output_images_path, f'original_faces_31-38.png'))
             plt.close()
 
     #####
@@ -82,7 +82,7 @@ def yale_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
                     categories=list(range(10)),
                     title=f'Epoch {str(epoch).zfill(3)}'
                 )
-                fig.savefig(f'{output_images_path}/epoch_{str(epoch).zfill(3)}_faces_1-10.png')
+                fig.savefig(os.path.join(output_images_path, f'epoch_{str(epoch).zfill(3)}_faces_1-10.png'))
                 plt.close()
 
     elapsed_time = time.time() - start_time

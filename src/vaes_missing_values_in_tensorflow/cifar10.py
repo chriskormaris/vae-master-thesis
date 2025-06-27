@@ -25,13 +25,13 @@ def cifar10(
     missing_value = 0.5
 
     if rgb_or_grayscale.lower() == 'grayscale':
-        output_images_path = output_img_base_path + 'vaes_missing_values_in_tensorflow/cifar10_grayscale'
-        logdir = tensorflow_logs_path + 'cifar10_grayscale_vae_missing_values'
-        save_path = save_base_path + 'cifar10_grayscale_vae_missing_values'
+        output_images_path = os.path.join(output_img_base_path, 'vaes_missing_values_in_tensorflow', 'cifar10_grayscale')
+        logdir = os.path.join(tensorflow_logs_path, 'cifar10_grayscale_vae_missing_values')
+        save_path = os.path.join(save_base_path, 'cifar10_grayscale_vae_missing_values')
     else:
-        output_images_path = output_img_base_path + 'vaes_missing_values_in_tensorflow/cifar10_rgb'
-        logdir = tensorflow_logs_path + 'cifar10_rgb_vae_missing_values'
-        save_path = save_base_path + 'cifar10_rgb_vae_missing_values'
+        output_images_path = os.path.join(output_img_base_path, 'vaes_missing_values_in_tensorflow', 'cifar10_rgb')
+        logdir = os.path.join(tensorflow_logs_path, 'cifar10_rgb_vae_missing_values')
+        save_path = os.path.join(save_base_path, 'cifar10_rgb_vae_missing_values')
 
     if not os.path.exists(output_images_path):
         os.makedirs(output_images_path)
@@ -124,9 +124,9 @@ def cifar10(
     start_time = time.time()
     with tf.compat.v1.Session() as sess:
         summary_writer = tf.compat.v1.summary.FileWriter(logdir, graph=sess.graph)
-        if os.path.isfile(save_path + '/model.ckpt'):
+        if os.path.isfile(os.path.join(save_path, 'model.ckpt')):
             print('Restoring saved parameters')
-            saver.restore(sess, save_path + '/model.ckpt')
+            saver.restore(sess, os.path.join(save_path, 'model.ckpt'))
         else:
             print('Initializing parameters')
             sess.run(tf.compat.v1.global_variables_initializer())
@@ -166,7 +166,7 @@ def cifar10(
                     n=100,
                     grayscale=True if input_dim == 1024 else False
                 )
-                fig.savefig(f'{output_images_path}/original_data.png', bbox_inches='tight')
+                fig.savefig(os.path.join(output_images_path, 'original_data.png'), bbox_inches='tight')
                 plt.close()
 
                 fig = plot_images(
@@ -176,7 +176,7 @@ def cifar10(
                     n=100,
                     grayscale=True if input_dim == 1024 else False
                 )
-                fig.savefig(f'{output_images_path}/missing_data.png', bbox_inches='tight')
+                fig.savefig(os.path.join(output_images_path, 'missing_data.png'), bbox_inches='tight')
                 plt.close()
 
             if epoch % 10 == 0 or epoch == 1:
@@ -187,11 +187,11 @@ def cifar10(
                     n=100,
                     grayscale=True if input_dim == 1024 else False
                 )
-                fig.savefig(f'{output_images_path}/epoch_{str(epoch).zfill(3)}.png', bbox_inches='tight')
+                fig.savefig(os.path.join(output_images_path, f'epoch_{str(epoch).zfill(3)}.png'), bbox_inches='tight')
                 plt.close()
 
             if epoch % 2 == 0:
-                saver.save(sess, save_path + '/model.ckpt')
+                saver.save(sess, os.path.join(save_path, 'model.ckpt'))
     elapsed_time = time.time() - start_time
 
     print(f'training time: {elapsed_time} secs')

@@ -15,9 +15,9 @@ def cifar10(K=10, structured_or_random='structured', rgb_or_grayscale='grayscale
     missing_value = 0.5
 
     if rgb_or_grayscale.lower() == 'grayscale':
-        output_images_path = output_img_base_path + 'knn_missing_values/cifar10_grayscale'
+        output_images_path = os.path.join(output_img_base_path, 'knn_missing_values/cifar10_grayscale')
     else:
-        output_images_path = output_img_base_path + 'knn_missing_values/cifar10_rgb'
+        output_images_path = os.path.join(output_img_base_path, 'knn_missing_values/cifar10_rgb')
 
     if not os.path.exists(output_images_path):
         os.makedirs(output_images_path)
@@ -66,7 +66,7 @@ def cifar10(K=10, structured_or_random='structured', rgb_or_grayscale='grayscale
         n=100,
         grayscale=True if rgb_or_grayscale.lower() == 'grayscale' else False
     )
-    fig.savefig(f'{output_images_path}/Test Data.png', bbox_inches='tight')
+    fig.savefig(os.path.join(output_images_path, 'Test Data.png'), bbox_inches='tight')
     plt.close()
 
     # plot original data with missing values
@@ -77,7 +77,7 @@ def cifar10(K=10, structured_or_random='structured', rgb_or_grayscale='grayscale
         n=100,
         grayscale=True if rgb_or_grayscale.lower() == 'grayscale' else False
     )
-    fig.savefig(f'{output_images_path}/Test Data with Missing Values K={K}', bbox_inches='tight')
+    fig.savefig(os.path.join(output_images_path, f'Test Data with Missing Values K={K}'), bbox_inches='tight')
     plt.close()
 
     # Compute how sparse is the matrix X_test_missing.
@@ -113,7 +113,7 @@ def cifar10(K=10, structured_or_random='structured', rgb_or_grayscale='grayscale
         n=100,
         grayscale=True if rgb_or_grayscale.lower() == 'grayscale' else False
     )
-    fig.savefig(f'{output_images_path}/Predicted Test Data K={K}', bbox_inches='tight')
+    fig.savefig(os.path.join(output_images_path, f'Predicted Test Data K={K}.png'), bbox_inches='tight')
     plt.close()
 
     error1 = rmse(X_test, X_test_predicted)

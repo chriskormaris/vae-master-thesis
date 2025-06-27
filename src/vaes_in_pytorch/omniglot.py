@@ -15,10 +15,10 @@ from src.utilities.vae_in_pytorch import initialize_weights, train
 
 def omniglot(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, language='English'):
     if language.lower() == 'greek':
-        output_images_path = output_img_base_path + 'vaes_in_pytorch/omniglot_greek'
+        output_images_path = os.path.join(output_img_base_path, 'vaes_in_pytorch', 'omniglot_greek')
         alphabet = 20
     else:
-        output_images_path = output_img_base_path + 'vaes_in_pytorch/omniglot_english'
+        output_images_path = os.path.join(output_img_base_path, 'vaes_in_pytorch', 'omniglot_english')
         alphabet = 31
 
     if not os.path.exists(output_images_path):
@@ -26,13 +26,13 @@ def omniglot(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, la
 
     # LOAD OMNIGLOT DATASET #
     X_train, y_train = get_omniglot_dataset(
-        omniglot_dataset_path + '/chardata.mat',
+        os.path.join(omniglot_dataset_path, 'chardata.mat'),
         train_or_test='train',
         alphabet=alphabet,
         binarize=True
     )
     X_test, y_test = get_omniglot_dataset(
-        omniglot_dataset_path + '/chardata.mat',
+        os.path.join(omniglot_dataset_path, 'chardata.mat'),
         train_or_test='test',
         alphabet=alphabet,
         binarize=True
@@ -63,7 +63,7 @@ def omniglot(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, la
         categories=list(range(1, 11)),
         title='Original Data'
     )
-    fig.savefig(f'{output_images_path}/original_data_characters_1-10.png', bbox_inches='tight')
+    fig.savefig(os.path.join(output_images_path, 'original_data_characters_1-10.png'), bbox_inches='tight')
     plt.close()
     fig = plot_images(
         X_merged,
@@ -71,7 +71,7 @@ def omniglot(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, la
         categories=list(range(11, 21)),
         title='Original Data'
     )
-    fig.savefig(f'{output_images_path}/original_data_characters_11-20.png', bbox_inches='tight')
+    fig.savefig(os.path.join(output_images_path, 'original_data_characters_11-20.png'), bbox_inches='tight')
     plt.close()
     if language.lower() == 'greek':
         fig = plot_images(
@@ -80,7 +80,7 @@ def omniglot(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, la
             categories=list(range(21, 25)),
             title='Original Data'
         )
-        fig.savefig(f'{output_images_path}/original_data_characters_21-24.png', bbox_inches='tight')
+        fig.savefig(os.path.join(output_images_path, 'original_data_characters_21-24.png'), bbox_inches='tight')
     else:
         fig = plot_images(
             X_merged,
@@ -88,7 +88,7 @@ def omniglot(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, la
             categories=list(range(21, 27)),
             title='Original Data'
         )
-        fig.savefig(f'{output_images_path}/original_data_characters_21-26.png', bbox_inches='tight')
+        fig.savefig(os.path.join(output_images_path, 'original_data_characters_21-26.png'), bbox_inches='tight')
     plt.close()
 
     #####
@@ -125,7 +125,7 @@ def omniglot(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, la
                 title=f'Epoch {str(epoch).zfill(3)}'
             )
             fig.savefig(
-                f'{output_images_path}/epoch_{str(epoch).zfill(3)}_characters_1-10.png',
+                os.path.join(output_images_path, f'epoch_{str(epoch).zfill(3)}_characters_1-10.png'),
                 bbox_inches='tight'
             )
             plt.close()
@@ -136,7 +136,7 @@ def omniglot(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, la
                 title=f'Epoch {str(epoch).zfill(3)}'
             )
             fig.savefig(
-                f'{output_images_path}/epoch_{str(epoch).zfill(3)}_characters_11-20.png',
+                os.path.join(output_images_path, f'epoch_{str(epoch).zfill(3)}_characters_11-20.png'),
                 bbox_inches='tight'
             )
             plt.close()
@@ -148,7 +148,7 @@ def omniglot(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, la
                     title=f'Epoch {str(epoch).zfill(3)}'
                 )
                 fig.savefig(
-                    f'{output_images_path}/epoch_{str(epoch).zfill(3)}_characters_21-24.png',
+                    os.path.join(output_images_path, f'epoch_{str(epoch).zfill(3)}_characters_21-24.png'),
                     bbox_inches='tight'
                 )
             else:
@@ -159,7 +159,7 @@ def omniglot(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, la
                     title=f'Epoch {str(epoch).zfill(3)}'
                 )
                 fig.savefig(
-                    f'{output_images_path}/epoch_{str(epoch).zfill(3)}_characters_21-26.png',
+                    os.path.join(output_images_path, f'epoch_{str(epoch).zfill(3)}_characters_21-26.png'),
                     bbox_inches='tight'
                 )
             plt.close()

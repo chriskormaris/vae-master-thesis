@@ -302,7 +302,7 @@ def about_window():
     version_label.pack()
 
     # change icon
-    window.iconbitmap(icons_path + 'info.ico')
+    window.iconbitmap(os.path.join(icons_path, 'info.ico'))
 
     empty_line_label = tk.Label(window, text='')
     empty_line_label.pack(side=tk.BOTTOM)
@@ -458,7 +458,7 @@ def datasets_details_window():
     download_all_datasets_link.bind('<Button-1>', download_all_datasets_command)
 
     # change icon
-    window.iconbitmap(icons_path + 'help.ico')
+    window.iconbitmap(os.path.join(icons_path, 'help.ico'))
 
     # make the child window transient to the root
     window.transient(root)
@@ -517,7 +517,7 @@ if __name__ == '__main__':
     center(root)
 
     # change icon
-    root.iconbitmap(icons_path + 'vaes.ico')
+    root.iconbitmap(os.path.join(icons_path, 'vaes.ico'))
 
     # Frames #
     welcomeFrame = tk.Frame(root)
@@ -553,7 +553,7 @@ if __name__ == '__main__':
     empty_line_label = tk.Label(welcomeFrame, text='\n')
     empty_line_label.pack()
 
-    aueb_logo = tk.PhotoImage(file=icons_path + 'aueb_logo.png')
+    aueb_logo = tk.PhotoImage(file=os.path.join(icons_path, 'aueb_logo.png'))
     image_label = tk.Label(welcomeFrame, image=aueb_logo, anchor=tk.CENTER)
     image_label.pack()
 

@@ -16,12 +16,12 @@ from src.utilities.vae_in_tensorflow import vae
 
 def omniglot(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, language='English'):
     if language.lower() == 'greek':
-        output_images_path = output_img_base_path + 'vaes_in_tensorflow/omniglot_greek'
+        output_images_path = os.path.join(output_img_base_path, 'vaes_in_tensorflow', 'omniglot_greek')
         logdir = 'tensorflow_logs/omniglot_greek_vae'
         save_path = 'save/omniglot_greek_vae'
         alphabet = 20
     else:
-        output_images_path = output_img_base_path + 'vaes_in_tensorflow/omniglot_english'
+        output_images_path = os.path.join(output_img_base_path, 'vaes_in_tensorflow', 'omniglot_english')
         logdir = 'tensorflow_logs/omniglot_english_vae'
         save_path = 'save/omniglot_english_vae'
         alphabet = 31
@@ -34,13 +34,13 @@ def omniglot(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, la
 
     # LOAD OMNIGLOT DATASET #
     X_train, y_train = get_omniglot_dataset(
-        omniglot_dataset_path + '/chardata.mat',
+        os.path.join(omniglot_dataset_path, 'chardata.mat'),
         train_or_test='train',
         alphabet=alphabet,
         binarize=True
     )
     X_test, y_test = get_omniglot_dataset(
-        omniglot_dataset_path + '/chardata.mat',
+        os.path.join(omniglot_dataset_path, 'chardata.mat'),
         train_or_test='test',
         alphabet=alphabet,
         binarize=True
@@ -66,17 +66,17 @@ def omniglot(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, la
     #####
 
     fig = plot_images(X_merged, y_merged, categories=list(range(1, 11)), title='Original Data')
-    fig.savefig(f'{output_images_path}/original_data_characters_1-10.png', bbox_inches='tight')
+    fig.savefig(os.path.join(output_images_path, 'original_data_characters_1-10.png'), bbox_inches='tight')
     plt.close()
     fig = plot_images(X_merged, y_merged, categories=list(range(11, 21)), title='Original Data')
-    fig.savefig(f'{output_images_path}/original_data_characters_11-20.png', bbox_inches='tight')
+    fig.savefig(os.path.join(output_images_path, 'original_data_characters_11-20.png'), bbox_inches='tight')
     plt.close()
     if language.lower() == 'greek':
         fig = plot_images(X_merged, y_merged, categories=list(range(21, 25)), title='Original Data')
-        fig.savefig(f'{output_images_path}/original_data_characters_21-24.png', bbox_inches='tight')
+        fig.savefig(os.path.join(output_images_path, 'original_data_characters_21-24.png'), bbox_inches='tight')
     else:
         fig = plot_images(X_merged, y_merged, categories=list(range(21, 27)), title='Original Data')
-        fig.savefig(f'{output_images_path}/original_data_characters_21-26.png', bbox_inches='tight')
+        fig.savefig(os.path.join(output_images_path, 'original_data_characters_21-26.png'), bbox_inches='tight')
     plt.close()
 
     #####
@@ -98,9 +98,9 @@ def omniglot(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, la
     start_time = time.time()
     with tf.compat.v1.Session() as sess:
         summary_writer = tf.compat.v1.summary.FileWriter(logdir, graph=sess.graph)
-        if os.path.isfile(save_path + '/model.ckpt'):
+        if os.path.isfile(os.path.join(save_path, 'model.ckpt')):
             print('Restoring saved parameters')
-            saver.restore(sess, save_path + '/model.ckpt')
+            saver.restore(sess, os.path.join(save_path, 'model.ckpt'))
         else:
             print('Initializing parameters')
             sess.run(tf.compat.v1.global_variables_initializer())
@@ -136,7 +136,7 @@ def omniglot(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, la
                     categories=list(range(1, 11)), title=f'Epoch {str(epoch).zfill(3)}'
                 )
                 fig.savefig(
-                    f'{output_images_path}/epoch_{str(epoch).zfill(3)}_characters_1-10.png',
+                    os.path.join(output_images_path, f'epoch_{str(epoch).zfill(3)}_characters_1-10.png'),
                     bbox_inches='tight'
                 )
                 plt.close()
@@ -146,7 +146,7 @@ def omniglot(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, la
                     categories=list(range(11, 21)), title=f'Epoch {str(epoch).zfill(3)}'
                 )
                 fig.savefig(
-                    f'{output_images_path}/epoch_{str(epoch).zfill(3)}_characters_11-20.png',
+                    os.path.join(output_images_path, f'epoch_{str(epoch).zfill(3)}_characters_11-20.png'),
                     bbox_inches='tight'
                 )
                 plt.close()
@@ -157,7 +157,7 @@ def omniglot(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, la
                         categories=list(range(21, 25)), title=f'Epoch {str(epoch).zfill(3)}'
                     )
                     fig.savefig(
-                        f'{output_images_path}/epoch_{str(epoch).zfill(3)}_characters_21-24.png',
+                        os.path.join(output_images_path, f'epoch_{str(epoch).zfill(3)}_characters_21-24.png'),
                         bbox_inches='tight'
                     )
                 else:
@@ -168,13 +168,13 @@ def omniglot(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, la
                         title=f'Epoch {str(epoch).zfill(3)}'
                     )
                     fig.savefig(
-                        f'{output_images_path}/epoch_{str(epoch).zfill(3)}_characters_21-26.png',
+                        os.path.join(output_images_path, f'epoch_{str(epoch).zfill(3)}_characters_21-26.png'),
                         bbox_inches='tight'
                     )
                 plt.close()
 
             if epoch % 2 == 0:
-                saver.save(sess, save_path + '/model.ckpt')
+                saver.save(sess, os.path.join(save_path, 'model.ckpt'))
     elapsed_time = time.time() - start_time
 
     print(f'training time: {elapsed_time} secs')

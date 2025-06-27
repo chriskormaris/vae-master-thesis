@@ -14,10 +14,10 @@ from src.utilities.vae_in_pytorch import initialize_weights, train
 
 def mnist(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, digits_or_fashion='digits'):
     if digits_or_fashion == 'digits':
-        output_images_path = output_img_base_path + 'vaes_in_pytorch/mnist'
+        output_images_path = os.path.join(output_img_base_path, 'vaes_in_pytorch', 'mnist')
         mnist_data = mnist_dataset.load_data()
     else:
-        output_images_path = output_img_base_path + 'vaes_in_pytorch/fashion_mnist'
+        output_images_path = os.path.join(output_img_base_path, 'vaes_in_pytorch', 'fashion_mnist')
         mnist_data = fashion_mnist_dataset.load_data()
 
     if not os.path.exists(output_images_path):
@@ -47,7 +47,7 @@ def mnist(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, digit
     #####
 
     fig = plot_images(X_train, y_train, title='Original Data')
-    fig.savefig(f'{output_images_path}/original_data.png', bbox_inches='tight')
+    fig.savefig(os.path.join(output_images_path, 'original_data.png'), bbox_inches='tight')
     plt.close()
 
     #####
@@ -79,7 +79,7 @@ def mnist(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, digit
 
         if epoch % 10 == 0 or epoch == 1:
             fig = plot_images(cur_samples, batch_labels, title=f'Epoch {str(epoch).zfill(3)}')
-            fig.savefig(f'{output_images_path}/epoch_{str(epoch).zfill(3)}.png', bbox_inches='tight')
+            fig.savefig(os.path.join(output_images_path, f'epoch_{str(epoch).zfill(3)}.png'), bbox_inches='tight')
             plt.close()
     elapsed_time = time.time() - start_time
 

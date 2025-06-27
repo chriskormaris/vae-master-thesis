@@ -17,7 +17,7 @@ def cifar10(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.001, rg
     else:
         input_dim = 1024
 
-    output_images_path = output_img_base_path + 'vaes_in_keras'
+    output_images_path = os.path.join(output_img_base_path, 'vaes_in_keras')
 
     if not os.path.exists(output_images_path):
         os.makedirs(output_images_path)
@@ -86,7 +86,7 @@ def cifar10(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.001, rg
         decoded_imgs,
         grayscale=True if rgb_or_grayscale.lower() == 'grayscale' else False
     )
-    fig.savefig(f'{output_images_path}/cifar10.png')
+    fig.savefig(os.path.join(output_images_path, 'cifar10.png'))
 
     print()
 

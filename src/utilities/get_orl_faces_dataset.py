@@ -18,7 +18,7 @@ def get_orl_faces_dataset(db_of_faces_path, one_hot=False, print_progress=False)
 
     i = 0
     for subdir in subdirectories:
-        subdir_path = db_of_faces_path + '/' + subdir
+        subdir_path = os.path.join(db_of_faces_path, subdir)
         if os.path.isdir(subdir_path):
             if print_progress:
                 print('Reading images from directory "' + subdir + '"...')
@@ -27,7 +27,7 @@ def get_orl_faces_dataset(db_of_faces_path, one_hot=False, print_progress=False)
                 k = 0  # counter for the pictures in the subdir
                 try:
                     if filename.split('.')[1] == 'pgm':
-                        im = Image.open(subdir_path + '/' + filename)
+                        im = Image.open(os.path.join(subdir_path, filename))
                         image = np.array(im)
                         if image.size == D:
                             image = image.reshape((1, D))

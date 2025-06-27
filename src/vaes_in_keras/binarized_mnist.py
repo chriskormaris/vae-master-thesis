@@ -13,7 +13,7 @@ from src.utilities.vae_in_keras import vae
 
 def binarized_mnist(latent_dim=64, epochs=100, batch_size='N', learning_rate=0.001):
     input_dim = 784
-    output_images_path = output_img_base_path + 'vaes_in_keras'
+    output_images_path = os.path.join(output_img_base_path, 'vaes_in_keras')
 
     if not os.path.exists(output_images_path):
         os.makedirs(output_images_path)
@@ -28,8 +28,8 @@ def binarized_mnist(latent_dim=64, epochs=100, batch_size='N', learning_rate=0.0
         os.makedirs(binarized_dataset_path)
         obtain(binarized_dataset_path)
 
-    X_train = get_binarized_mnist_dataset(binarized_dataset_path + 'binarized_mnist_train.amat', 'TRAIN')
-    X_test = get_binarized_mnist_dataset(binarized_dataset_path + 'binarized_mnist_test.amat', 'TEST')
+    X_train = get_binarized_mnist_dataset(os.path.join(binarized_dataset_path, 'binarized_mnist_train.amat'), 'TRAIN')
+    X_test = get_binarized_mnist_dataset(os.path.join(binarized_dataset_path, 'binarized_mnist_test.amat'), 'TEST')
 
     # randomize data
     s = np.random.permutation(X_train.shape[0])
@@ -69,7 +69,7 @@ def binarized_mnist(latent_dim=64, epochs=100, batch_size='N', learning_rate=0.0
     print(f'encoded_imgs mean: {encoded_imgs.mean()}')
 
     fig = plot_original_vs_reconstructed_data(X_test, decoded_imgs, grayscale=True)
-    fig.savefig(f'{output_images_path}/binarized_mnist.png')
+    fig.savefig(os.path.join(output_images_path, 'binarized_mnist.png'))
 
     print()
 

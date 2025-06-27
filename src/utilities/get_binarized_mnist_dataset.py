@@ -36,23 +36,23 @@ def obtain(dir_path):
     binarized_mnist_test_filename = 'binarized_mnist_test.amat'
     binarized_mnist_valid_filename = 'binarized_mnist_valid.amat'
 
-    if not os.path.exists(dir_path + binarized_mnist_train_filename):
+    if not os.path.exists(os.path.join(dir_path, binarized_mnist_train_filename)):
         print('Downloading Binarized MNIST train images file...')
         r = requests.get(binarized_mnist_base_url + binarized_mnist_train_filename)
-        with open(dir_path + binarized_mnist_train_filename, 'wb') as f:
+        with open(os.path.join(dir_path, binarized_mnist_train_filename), 'wb') as f:
             f.write(r.content)
         print('[DONE]')
 
-    if not os.path.exists(dir_path + binarized_mnist_test_filename):
+    if not os.path.exists(os.path.join(dir_path, binarized_mnist_test_filename)):
         print('Downloading Binarized MNIST test images file...')
         r = requests.get(binarized_mnist_base_url + binarized_mnist_test_filename)
-        with open(dir_path + binarized_mnist_test_filename, 'wb') as f:
+        with open(os.path.join(dir_path, binarized_mnist_test_filename), 'wb') as f:
             f.write(r.content)
         print('[DONE]')
 
-    if not os.path.exists(dir_path + binarized_mnist_valid_filename):
+    if not os.path.exists(os.path.join(dir_path, binarized_mnist_valid_filename)):
         print('Downloading Binarized MNIST validation images file...')
         r = requests.get(binarized_mnist_base_url + binarized_mnist_valid_filename)
-        with open(dir_path + binarized_mnist_valid_filename, 'wb') as f:
+        with open(os.path.join(dir_path, binarized_mnist_valid_filename), 'wb') as f:
             f.write(r.content)
         print('[DONE]')

@@ -16,13 +16,13 @@ from src.utilities.vae_in_tensorflow import vae
 
 def cifar10(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, rgb_or_grayscale='grayscale', category=3):
     if rgb_or_grayscale.lower() == 'grayscale':
-        output_images_path = output_img_base_path + 'vaes_in_tensorflow/cifar10_grayscale'
-        logdir = tensorflow_logs_path + 'cifar10_grayscale_vae'
-        save_path = save_base_path + 'cifar10_grayscale_vae'
+        output_images_path = os.path.join(output_img_base_path, 'vaes_in_tensorflow/cifar10_grayscale')
+        logdir = os.path.join(tensorflow_logs_path, 'cifar10_grayscale_vae')
+        save_path = os.path.join(save_base_path, 'cifar10_grayscale_vae')
     else:
-        output_images_path = output_img_base_path + 'vaes_in_tensorflow/cifar10_rgb'
-        logdir = tensorflow_logs_path + 'cifar10_rgb_vae'
-        save_path = save_base_path + 'cifar10_rgb_vae'
+        output_images_path = os.path.join(output_img_base_path, 'vaes_in_tensorflow/cifar10_rgb')
+        logdir = os.path.join(tensorflow_logs_path, 'cifar10_rgb_vae')
+        save_path = os.path.join(save_base_path, 'cifar10_rgb_vae')
 
     if not os.path.exists(output_images_path):
         os.makedirs(output_images_path)
@@ -97,9 +97,9 @@ def cifar10(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, rgb
     start_time = time.time()
     with tf.compat.v1.Session() as sess:
         summary_writer = tf.compat.v1.summary.FileWriter(logdir, graph=sess.graph)
-        if os.path.isfile(save_path + '/model.ckpt'):
+        if os.path.isfile(os.path.join(save_path, 'model.ckpt')):
             print('Restoring saved parameters')
-            saver.restore(sess, save_path + '/model.ckpt')
+            saver.restore(sess, os.path.join(save_path, 'model.ckpt'))
         else:
             print('Initializing parameters')
             sess.run(tf.compat.v1.global_variables_initializer())
@@ -136,7 +136,7 @@ def cifar10(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, rgb
                     n=100,
                     grayscale=True if input_dim == 1024 else False
                 )
-                fig.savefig(f'{output_images_path}/original_data.png', bbox_inches='tight')
+                fig.savefig(os.path.join(output_images_path, 'original_data.png'), bbox_inches='tight')
                 plt.close()
 
             if epoch % 10 == 0 or epoch == 1:
@@ -147,11 +147,11 @@ def cifar10(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, rgb
                     n=100,
                     grayscale=True if input_dim == 1024 else False
                 )
-                fig.savefig(f'{output_images_path}/epoch_{str(epoch).zfill(3)}.png', bbox_inches='tight')
+                fig.savefig(os.path.join(output_images_path, f'epoch_{str(epoch).zfill(3)}.png'), bbox_inches='tight')
                 plt.close()
 
             if epoch % 2 == 0:
-                saver.save(sess, save_path + '/model.ckpt')
+                saver.save(sess, os.path.join(save_path, 'model.ckpt'))
     elapsed_time = time.time() - start_time
 
     print(f'training time: {elapsed_time} secs')

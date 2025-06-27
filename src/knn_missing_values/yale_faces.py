@@ -13,7 +13,7 @@ from src.utilities.plot_utils import plot_images
 def yale_faces(K=10, structured_or_random='structured'):
     missing_value = 0.5
 
-    output_images_path = output_img_base_path + 'knn_missing_values/yale_faces'
+    output_images_path = os.path.join(output_img_base_path, 'knn_missing_values', 'yale_faces')
 
     if not os.path.exists(output_images_path):
         os.makedirs(output_images_path)
@@ -28,14 +28,14 @@ def yale_faces(K=10, structured_or_random='structured'):
     # plot original data X
     fig = plot_images(X, y, categories=list(range(10)), show_plot=False)
     fig.savefig(
-        f'{output_images_path}/Original Faces 1-10 K={K}.png',
+        os.path.join(output_images_path, f'Original Faces 1-10 K={K}.png'),
         bbox_inches='tight'
     )
     plt.close()
 
     # plot data with missing values
     fig = plot_images(X_missing, y, categories=list(range(10)), show_plot=False)
-    fig.savefig(f'{output_images_path}/Faces 1-10 with Missing Values K={K}.png', bbox_inches='tight')
+    fig.savefig(os.path.join(output_images_path, f'Faces 1-10 with Missing Values K={K}.png'), bbox_inches='tight')
     plt.close()
 
     # Compute how sparse is the matrix X_train.
@@ -58,7 +58,7 @@ def yale_faces(K=10, structured_or_random='structured'):
 
     # plot predicted data
     fig = plot_images(X_predicted, y, categories=list(range(10)), show_plot=False)
-    fig.savefig(f'{output_images_path}/Predicted Faces 1-10 K={K}.png', bbox_inches='tight')
+    fig.savefig(os.path.join(output_images_path, f'Predicted Faces 1-10 K={K}.png'), bbox_inches='tight')
     plt.close()
 
     error1 = rmse(X, X_predicted)

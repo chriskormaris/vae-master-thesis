@@ -17,7 +17,7 @@ from src.utilities.vae_in_pytorch import initialize_weights, train
 def orl_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, structured_or_random='structured'):
     missing_value = 0.5
 
-    output_images_path = output_img_base_path + 'vaes_missing_values_in_pytorch/orl_faces'
+    output_images_path = os.path.join(output_img_base_path, 'vaes_missing_values_in_pytorch', 'orl_faces')
 
     if not os.path.exists(output_images_path):
         os.makedirs(output_images_path)
@@ -96,7 +96,7 @@ def orl_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, s
                     title='Original Faces',
                     show_plot=False
                 )
-                fig.savefig(f'{output_images_path}/original_faces_{i + 1}-{i + 10}.png')
+                fig.savefig(os.path.join(output_images_path, f'original_faces_{i + 1}-{i + 10}.png'))
                 plt.close()
 
             for i in range(0, 40, 10):
@@ -107,7 +107,7 @@ def orl_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, s
                     title='Missing Faces',
                     show_plot=False
                 )
-                fig.savefig(f'{output_images_path}/missing_faces_{i + 1}-{i + 10}.png')
+                fig.savefig(os.path.join(output_images_path, f'missing_faces_{i + 1}-{i + 10}.png'))
                 plt.close()
 
             for i in range(0, 40, 10):
@@ -118,7 +118,7 @@ def orl_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, s
                     title='Masked Faces',
                     show_plot=False
                 )
-                fig.savefig(f'{output_images_path}/masked_faces_{i + 1}-{i + 10}.png')
+                fig.savefig(os.path.join(output_images_path, f'masked_faces_{i + 1}-{i + 10}.png'))
                 plt.close()
 
         if epoch % 10 == 0 or epoch == 1:
@@ -132,7 +132,7 @@ def orl_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, s
                         title=f'Epoch {str(epoch).zfill(3)}',
                         show_plot=False
                     )
-                    fig.savefig(f'{output_images_path}/epoch_{str(epoch).zfill(3)}_faces_{i + 1}-{i + 10}.png')
+                    fig.savefig(os.path.join(output_images_path, f'epoch_{str(epoch).zfill(3)}_faces_{i + 1}-{i + 10}.png'))
                     plt.close()
     elapsed_time = time.time() - start_time
 

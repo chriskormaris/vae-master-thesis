@@ -24,9 +24,9 @@ def cifar10(
     missing_value = 0.5
 
     if rgb_or_grayscale.lower() == 'grayscale':
-        output_images_path = output_img_base_path + 'vaes_missing_values_in_pytorch/cifar10_grayscale'
+        output_images_path = os.path.join(output_img_base_path, 'vaes_missing_values_in_pytorch/cifar10_grayscale')
     else:
-        output_images_path = output_img_base_path + 'vaes_missing_values_in_pytorch/cifar10_rgb'
+        output_images_path = os.path.join(output_img_base_path, 'vaes_missing_values_in_pytorch/cifar10_rgb')
 
     if not os.path.exists(output_images_path):
         os.makedirs(output_images_path)
@@ -132,7 +132,7 @@ def cifar10(
                 n=100,
                 grayscale=True if input_dim == 1024 else False
             )
-            fig.savefig(f'{output_images_path}/original_data.png', bbox_inches='tight')
+            fig.savefig(os.path.join(output_images_path, 'original_data.png'), bbox_inches='tight')
             plt.close()
 
             fig = plot_images(
@@ -142,7 +142,7 @@ def cifar10(
                 n=100,
                 grayscale=True if input_dim == 1024 else False
             )
-            fig.savefig(f'{output_images_path}/missing_data.png', bbox_inches='tight')
+            fig.savefig(os.path.join(output_images_path, 'missing_data.png'), bbox_inches='tight')
             plt.close()
 
         if epoch % 10 == 0 or epoch == 1:
@@ -153,7 +153,7 @@ def cifar10(
                 n=100,
                 grayscale=True if input_dim == 1024 else False
             )
-            fig.savefig(f'{output_images_path}/epoch_{str(epoch).zfill(3)}.png', bbox_inches='tight')
+            fig.savefig(os.path.join(output_images_path, f'epoch_{str(epoch).zfill(3)}.png'), bbox_inches='tight')
             plt.close()
 
     elapsed_time = time.time() - start_time

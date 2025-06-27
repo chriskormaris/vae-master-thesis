@@ -16,10 +16,10 @@ def mnist(K=10, structured_or_random='structured', digits_or_fashion='digits'):
     missing_value = 0.5
 
     if digits_or_fashion == 'digits':
-        output_images_path = output_img_base_path + 'knn_missing_values/mnist'
+        output_images_path = os.path.join(output_img_base_path, 'knn_missing_values', 'mnist')
         mnist_data = mnist_dataset.load_data()
     else:
-        output_images_path = output_img_base_path + 'knn_missing_values/fashion_mnist'
+        output_images_path = os.path.join(output_img_base_path, 'knn_missing_values', 'fashion_mnist')
         mnist_data = fashion_mnist_dataset.load_data()
 
     (X_train, y_train), (X_test, y_test) = mnist_data
@@ -52,12 +52,12 @@ def mnist(K=10, structured_or_random='structured', digits_or_fashion='digits'):
 
     # plot X_test data
     fig = plot_images(X_test, y_test, show_plot=False)
-    fig.savefig(f'{output_images_path}/Test Data.png', bbox_inches='tight')
+    fig.savefig(os.path.join(output_images_path, 'Test Data.png'), bbox_inches='tight')
     plt.close()
 
     # plot test data with missing values
     fig = plot_images(X_test_missing, y_test, show_plot=False)
-    fig.savefig(f'{output_images_path}/Test Data with Missing Values K={K}.png', bbox_inches='tight')
+    fig.savefig(os.path.join(output_images_path, f'Test Data with Missing Values K={K}.png'), bbox_inches='tight')
     plt.close()
 
     # Compute how sparse is the matrix X_train.
@@ -80,7 +80,7 @@ def mnist(K=10, structured_or_random='structured', digits_or_fashion='digits'):
     print()
 
     fig = plot_images(X_test_predicted, y_test, show_plot=False)
-    fig.savefig(f'{output_images_path}/Predicted Test Data K={K}.png', bbox_inches='tight')
+    fig.savefig(os.path.join(output_images_path, f'Predicted Test Data K={K}.png'), bbox_inches='tight')
     plt.close()
 
     error1 = rmse(X_test, X_test_predicted)

@@ -15,9 +15,9 @@ from src.utilities.vae_in_tensorflow import vae
 
 
 def orl_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
-    output_images_path = output_img_base_path + 'vaes_in_tensorflow/orl_faces'
-    logdir = tensorflow_logs_path + 'orl_faces_vae'
-    save_path = save_base_path + 'orl_faces_vae'
+    output_images_path = os.path.join(output_img_base_path, 'vaes_in_tensorflow', 'orl_faces')
+    logdir = os.path.join(tensorflow_logs_path, 'orl_faces_vae')
+    save_path = os.path.join(save_base_path, 'orl_faces_vae')
 
     if not os.path.exists(output_images_path):
         os.makedirs(output_images_path)
@@ -38,7 +38,7 @@ def orl_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
             title='Original Faces',
             show_plot=False
         )
-        fig.savefig(f'{output_images_path}/original_faces_{i + 1}-{i + 10}.png')
+        fig.savefig(os.path.join(output_images_path, f'original_faces_{i + 1}-{i + 10}.png'))
         plt.close()
 
     #####
@@ -74,9 +74,9 @@ def orl_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
     start_time = time.time()
     with tf.compat.v1.Session() as sess:
         summary_writer = tf.compat.v1.summary.FileWriter(logdir, graph=sess.graph)
-        if os.path.isfile(save_path + '/model.ckpt'):
+        if os.path.isfile(os.path.join(save_path, 'model.ckpt')):
             print('Restoring saved parameters')
-            saver.restore(sess, save_path + '/model.ckpt')
+            saver.restore(sess, os.path.join(save_path, 'model.ckpt'))
         else:
             print('Initializing parameters')
             sess.run(tf.compat.v1.global_variables_initializer())
@@ -114,11 +114,11 @@ def orl_faces(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
                         title=f'Epoch {str(epoch).zfill(3)}',
                         show_plot=False
                     )
-                    fig.savefig(f'{output_images_path}/epoch_{str(epoch).zfill(3)}_faces_1-10.png')
+                    fig.savefig(os.path.join(output_images_path, f'epoch_{str(epoch).zfill(3)}_faces_1-10.png'))
                     plt.close()
 
             if epoch % 2 == 0:
-                saver.save(sess, save_path + '/model.ckpt')
+                saver.save(sess, os.path.join(save_path, 'model.ckpt'))
     elapsed_time = time.time() - start_time
 
     print(f'training time: {elapsed_time} secs')

@@ -15,7 +15,7 @@ from src.utilities.vae_in_pytorch import initialize_weights, train
 def movielens(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
     missing_value = 0
 
-    output_data_path = movielens_output_data_base_path + 'vaes_missing_values_in_pytorch/'
+    output_data_path = os.path.join(movielens_output_data_base_path, 'vaes_missing_values_in_pytorch')
 
     if not os.path.exists(output_data_path):
         os.mkdir(output_data_path)
@@ -31,7 +31,7 @@ def movielens(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
     X_df = pd.DataFrame(X_merged)
     X_df = X_df.replace(to_replace=0.0, value='---')
     X_df.to_csv(
-        path_or_buf=output_data_path + '/users_movies_ratings_missing_values.csv',
+        path_or_buf=os.path.join(output_data_path, 'users_movies_ratings_missing_values.csv'),
         sep='\t',
         index=False,
         header=False
@@ -111,14 +111,14 @@ def movielens(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
     X_filled_df = X_filled_df.round(1)
     # X_filled_df = X_filled_df.replace(to_replace=0.0, value='---')
     X_filled_df.to_csv(
-        path_or_buf=output_data_path + '/users_movies_ratings_predicted_values.csv',
+        path_or_buf=os.path.join(output_data_path, 'users_movies_ratings_predicted_values.csv'),
         sep='\t',
         index=False,
         header=False
     )
 
     fig = plot_movielens_data(X_filled)
-    fig.savefig(output_data_path + '/average_movies_ratings.png', bbox_inches='tight')
+    fig.savefig(os.path.join(output_data_path, 'average_movies_ratings.png'), bbox_inches='tight')
     plt.close()
 
 

@@ -15,14 +15,14 @@ from src.utilities.vae_in_tensorflow import vae
 
 def mnist(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, digits_or_fashion='digits'):
     if digits_or_fashion == 'digits':
-        output_images_path = output_img_base_path + 'vaes_in_tensorflow/mnist'
-        logdir = tensorflow_logs_path + 'mnist_vae'
-        save_path = save_base_path + 'mnist_vae'
+        output_images_path = os.path.join(output_img_base_path, 'vaes_in_tensorflow', 'mnist')
+        logdir = os.path.join(tensorflow_logs_path, 'mnist_vae')
+        save_path = os.path.join(save_base_path, 'mnist_vae')
         mnist_data = mnist_dataset.load_data()
     else:
-        output_images_path = output_img_base_path + 'vaes_in_tensorflow/fashion_mnist'
-        logdir = tensorflow_logs_path + 'fashion_mnist_vae'
-        save_path = save_base_path + 'fashion_mnist_vae'
+        output_images_path = os.path.join(output_img_base_path, 'vaes_in_tensorflow', 'fashion_mnist')
+        logdir = os.path.join(tensorflow_logs_path, 'fashion_mnist_vae')
+        save_path = os.path.join(save_base_path, 'fashion_mnist_vae')
         mnist_data = fashion_mnist_dataset.load_data()
 
     if not os.path.exists(output_images_path):
@@ -57,7 +57,7 @@ def mnist(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, digit
     #####
 
     fig = plot_images(X_train, y_train, title='Original Data')
-    fig.savefig(f'{output_images_path}/original_data.png', bbox_inches='tight')
+    fig.savefig(os.path.join(output_images_path, 'original_data.png'), bbox_inches='tight')
     plt.close()
 
     #####
@@ -79,9 +79,9 @@ def mnist(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, digit
     start_time = time.time()
     with tf.compat.v1.Session() as sess:
         summary_writer = tf.compat.v1.summary.FileWriter(logdir, graph=sess.graph)
-        if os.path.isfile(save_path + '/model.ckpt'):
+        if os.path.isfile(os.path.join(save_path, 'model.ckpt')):
             print('Restoring saved parameters')
-            saver.restore(sess, save_path + '/model.ckpt')
+            saver.restore(sess, os.path.join(save_path, 'model.ckpt'))
         else:
             print('Initializing parameters')
             sess.run(tf.compat.v1.global_variables_initializer())
@@ -118,11 +118,11 @@ def mnist(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01, digit
                     batch_labels,
                     title=f'Epoch {str(epoch).zfill(3)}'
                 )
-                fig.savefig(f'{output_images_path}/epoch_{str(epoch).zfill(3)}.png', bbox_inches='tight')
+                fig.savefig(os.path.join(output_images_path, f'epoch_{str(epoch).zfill(3)}.png'), bbox_inches='tight')
                 plt.close()
 
             if epoch % 2 == 0:
-                saver.save(sess, save_path + '/model.ckpt')
+                saver.save(sess, os.path.join(save_path, 'model.ckpt'))
     elapsed_time = time.time() - start_time
 
     print(f'training time: {elapsed_time} secs')

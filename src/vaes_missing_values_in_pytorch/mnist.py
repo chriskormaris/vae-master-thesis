@@ -23,10 +23,10 @@ def mnist(
     missing_value = 0.5
 
     if digits_or_fashion == 'digits':
-        output_images_path = output_img_base_path + 'vaes_missing_values_in_pytorch/mnist'
+        output_images_path = os.path.join(output_img_base_path, 'vaes_missing_values_in_pytorch', 'mnist')
         mnist_data = mnist_dataset.load_data()
     else:
-        output_images_path = output_img_base_path + 'vaes_missing_values_in_pytorch/fashion_mnist'
+        output_images_path = os.path.join(output_img_base_path, 'vaes_missing_values_in_pytorch', 'fashion_mnist')
         mnist_data = fashion_mnist_dataset.load_data()
 
     if not os.path.exists(output_images_path):
@@ -121,7 +121,7 @@ def mnist(
                 batch_labels,
                 title='Original Data'
             )
-            fig.savefig(f'{output_images_path}/original_data.png', bbox_inches='tight')
+            fig.savefig(os.path.join(output_images_path, 'original_data.png'), bbox_inches='tight')
             plt.close()
 
             fig = plot_images(
@@ -129,11 +129,11 @@ def mnist(
                 batch_labels,
                 title='Original Data'
             )
-            fig.savefig(f'{output_images_path}/missing_data.png', bbox_inches='tight')
+            fig.savefig(os.path.join(output_images_path, 'missing_data.png'), bbox_inches='tight')
             plt.close()
 
             fig = plot_images(masked_batch_data, batch_labels, title='Masked Data')
-            fig.savefig(f'{output_images_path}/masked_data.png', bbox_inches='tight')
+            fig.savefig(os.path.join(output_images_path, 'masked_data.png'), bbox_inches='tight')
             plt.close()
 
         if epoch % 10 == 0 or epoch == 1:
@@ -142,7 +142,7 @@ def mnist(
                 batch_labels,
                 title=f'Epoch {str(epoch).zfill(3)}'
             )
-            fig.savefig(f'{output_images_path}/epoch_{str(epoch).zfill(3)}.png', bbox_inches='tight')
+            fig.savefig(os.path.join(output_images_path, f'epoch_{str(epoch).zfill(3)}.png'), bbox_inches='tight')
             plt.close()
     elapsed_time = time.time() - start_time
 

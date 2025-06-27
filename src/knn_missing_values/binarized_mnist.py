@@ -13,7 +13,7 @@ from src.utilities.plot_utils import plot_images
 def binarized_mnist(K=10, structured_or_random='structured'):
     missing_value = 0.5
 
-    output_images_path = output_img_base_path + 'knn_missing_values/binarized_mnist'
+    output_images_path = os.path.join(output_img_base_path, 'knn_missing_values', 'binarized_mnist')
 
     if not os.path.exists(output_images_path):
         os.makedirs(output_images_path)
@@ -26,15 +26,15 @@ def binarized_mnist(K=10, structured_or_random='structured'):
 
     # build train data
     # print('Building TRAIN data...')
-    X_train = get_binarized_mnist_dataset(binarized_dataset_path + 'binarized_mnist_train.amat', 'TRAIN')
+    X_train = get_binarized_mnist_dataset(os.path.join(binarized_dataset_path, 'binarized_mnist_train.amat'), 'TRAIN')
     # print(X_train.shape[0])
     # reduce the number of train examples from 50000 to 10000
     X_train, _, _ = reduce_data(X_train, X_train.shape[0], 10000)
 
     # build test data
     # print('Building TEST data...')
-    X_test = get_binarized_mnist_dataset(binarized_dataset_path + 'binarized_mnist_test.amat', 'TEST')
-    y_test = get_binarized_mnist_labels(binarized_dataset_path + 'binarized_mnist_test_labels.txt', 'TEST')
+    X_test = get_binarized_mnist_dataset(os.path.join(binarized_dataset_path, 'binarized_mnist_test.amat'), 'TEST')
+    y_test = get_binarized_mnist_labels(os.path.join(binarized_dataset_path, 'binarized_mnist_test_labels.txt'), 'TEST')
     # reduce the number of test examples from 10000 to 500
     X_test, y_test, _ = reduce_data(X_test, X_test.shape[0], 500, y=y_test)
 
@@ -44,12 +44,12 @@ def binarized_mnist(K=10, structured_or_random='structured'):
 
     # plot original data X_test
     fig = plot_images(X_test, y_test, show_plot=False)
-    fig.savefig(f'{output_images_path}/Original Binarized Test Data.png', bbox_inches='tight')
+    fig.savefig(os.path.join(output_images_path, 'Original Binarized Test Data.png'), bbox_inches='tight')
     plt.close()
 
     # plot original data with missing values
     fig = plot_images(X_test_missing, y_test, show_plot=False)
-    fig.savefig(f'{output_images_path}/Test Data with Missing Values K={K}', bbox_inches='tight')
+    fig.savefig(os.path.join(output_images_path, f'Test Data with Missing Values K={K}.png'), bbox_inches='tight')
     plt.close()
 
     # Compute how sparse is the matrix X_test_missing.
@@ -71,7 +71,7 @@ def binarized_mnist(K=10, structured_or_random='structured'):
     print()
 
     fig = plot_images(X_test_predicted, y_test, show_plot=False)
-    fig.savefig(f'{output_images_path}/Predicted Test Data K={K}', bbox_inches='tight')
+    fig.savefig(os.path.join(output_images_path, f'Predicted Test Data K={K}.png'), bbox_inches='tight')
     plt.close()
 
     error1 = rmse(X_test, X_test_predicted)

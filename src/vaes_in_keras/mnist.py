@@ -14,7 +14,7 @@ from src.utilities.vae_in_keras import vae
 
 def mnist(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.001, digits_or_fashion='digits'):
     input_dim = 784
-    output_images_path = output_img_base_path + 'vaes_in_keras'
+    output_images_path = os.path.join(output_img_base_path, 'vaes_in_keras')
 
     if not os.path.exists(output_images_path):
         os.makedirs(output_images_path)
@@ -71,7 +71,7 @@ def mnist(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.001, digi
     print(f'encoded_imgs mean: {encoded_imgs.mean()}')
 
     fig = plot_original_vs_reconstructed_data(X_test, decoded_imgs, grayscale=True)
-    fig.savefig(f'{output_images_path}/mnist.png')
+    fig.savefig(os.path.join(output_images_path, 'mnist.png'))
 
     print()
 

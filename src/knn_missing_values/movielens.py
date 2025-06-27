@@ -15,7 +15,7 @@ from src.utilities.plot_utils import plot_movielens_data
 def movielens(K=10):
     missing_value = 0
 
-    output_data_path = movielens_output_data_base_path + 'knn_missing_values/'
+    output_data_path = os.path.join(movielens_output_data_base_path, 'knn_missing_values')
 
     if not os.path.exists(output_data_path):
         os.mkdir(output_data_path)
@@ -37,7 +37,7 @@ def movielens(K=10):
     X_df = pd.DataFrame(X_train)
     X_df = X_df.replace(to_replace=0.0, value='---')
     X_df.to_csv(
-        path_or_buf=output_data_path + '/users_movies_ratings_missing_values.csv',
+        path_or_buf=os.path.join(output_data_path, 'users_movies_ratings_missing_values.csv'),
         sep='\t',
         index=False,
         header=False
@@ -67,14 +67,14 @@ def movielens(K=10):
     X_merged_predicted_df = pd.DataFrame(X_merged_predicted)
     # X_merged_predicted_df = X_merged_predicted_df.replace(to_replace=0.0, value='---')
     X_merged_predicted_df.to_csv(
-        path_or_buf=output_data_path + '/users_movies_ratings_predicted_values.csv',
+        path_or_buf=os.path.join(output_data_path, 'users_movies_ratings_predicted_values.csv'),
         sep='\t',
         index=False,
         header=False
     )
 
     fig = plot_movielens_data(X_merged_predicted)
-    fig.savefig(output_data_path + '/average_movies_ratings.png', bbox_inches='tight')
+    fig.savefig(os.path.join(output_data_path, 'average_movies_ratings.png'), bbox_inches='tight')
     plt.close()
 
     X_merged_predicted[np.where(X_merged == 0)] = 0

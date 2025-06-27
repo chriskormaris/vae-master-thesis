@@ -15,10 +15,10 @@ def omniglot(K=10, structured_or_random='structured', language='English'):
     missing_value = 0.5
 
     if language.lower() == 'greek':
-        output_images_path = output_img_base_path + 'knn_missing_values/omniglot_greek'
+        output_images_path = os.path.join(output_img_base_path, 'knn_missing_values', 'omniglot_greek')
         alphabet = 20
     else:
-        output_images_path = output_img_base_path + 'knn_missing_values/omniglot_english'
+        output_images_path = os.path.join(output_img_base_path, 'knn_missing_values', 'omniglot_english')
         alphabet = 31
 
     if not os.path.exists(output_images_path):
@@ -26,13 +26,13 @@ def omniglot(K=10, structured_or_random='structured', language='English'):
 
     # LOAD OMNIGLOT DATASET #
     X_train, y_train = get_omniglot_dataset(
-        omniglot_dataset_path + '/chardata.mat',
+        os.path.join(omniglot_dataset_path, 'chardata.mat'),
         train_or_test='train',
         alphabet=alphabet,
         binarize=True
     )
     X_test, y_test = get_omniglot_dataset(
-        omniglot_dataset_path + '/chardata.mat',
+        os.path.join(omniglot_dataset_path, 'chardata.mat'),
         train_or_test='test',
         alphabet=alphabet,
         binarize=True
@@ -58,7 +58,7 @@ def omniglot(K=10, structured_or_random='structured', language='English'):
         n=10,
         show_plot=False
     )
-    fig.savefig(f'{output_images_path}/Binarized Merged Data Characters 1-10.png', bbox_inches='tight')
+    fig.savefig(os.path.join(output_images_path, 'Binarized Merged Data Characters 1-10.png'), bbox_inches='tight')
     plt.close()
     fig = plot_images(
         X_merged,
@@ -67,7 +67,7 @@ def omniglot(K=10, structured_or_random='structured', language='English'):
         n=10,
         show_plot=False
     )
-    fig.savefig(f'{output_images_path}/Binarized Merged Data Characters 11-20.png', bbox_inches='tight')
+    fig.savefig(os.path.join(output_images_path, 'Binarized Merged Data Characters 11-20.png'), bbox_inches='tight')
     plt.close()
     if language.lower() == 'greek':
         fig = plot_images(
@@ -77,7 +77,7 @@ def omniglot(K=10, structured_or_random='structured', language='English'):
             n=10,
             show_plot=False
         )
-        fig.savefig(f'{output_images_path}/Binarized Merged Data Characters 21-24.png', bbox_inches='tight')
+        fig.savefig(os.path.join(output_images_path, 'Binarized Merged Data Characters 21-24.png'), bbox_inches='tight')
     else:
         fig = plot_images(
             X_merged,
@@ -86,7 +86,7 @@ def omniglot(K=10, structured_or_random='structured', language='English'):
             n=10,
             show_plot=False
         )
-        fig.savefig(f'{output_images_path}/Binarized Merged Data Characters 21-26.png', bbox_inches='tight')
+        fig.savefig(os.path.join(output_images_path, 'Binarized Merged Data Characters 21-26.png'), bbox_inches='tight')
     plt.close()
 
     # plot original data with missing values
@@ -98,7 +98,7 @@ def omniglot(K=10, structured_or_random='structured', language='English'):
         show_plot=False
     )
     fig.savefig(
-        f'{output_images_path}/Merged Data with Missing Values K={K} Characters 1-10.png',
+        os.path.join(output_images_path, f'Merged Data with Missing Values K={K} Characters 1-10.png'),
         bbox_inches='tight'
     )
     plt.close()
@@ -110,7 +110,7 @@ def omniglot(K=10, structured_or_random='structured', language='English'):
         show_plot=False
     )
     fig.savefig(
-        f'{output_images_path}/Merged Data with Missing Values K={K} Characters 11-20.png',
+        os.path.join(output_images_path, f'Merged Data with Missing Values K={K} Characters 11-20.png'),
         bbox_inches='tight'
     )
     plt.close()
@@ -123,7 +123,7 @@ def omniglot(K=10, structured_or_random='structured', language='English'):
             show_plot=False
         )
         fig.savefig(
-            f'{output_images_path}/Merged Data with Missing Values K={K} Characters 21-24.png',
+            os.path.join(output_images_path, f'Merged Data with Missing Values K={K} Characters 21-24.png'),
             bbox_inches='tight'
         )
     else:
@@ -135,7 +135,7 @@ def omniglot(K=10, structured_or_random='structured', language='English'):
             show_plot=False
         )
         fig.savefig(
-            f'{output_images_path}/Merged Data with Missing Values K={K} Characters 21-26.png',
+            os.path.join(output_images_path, f'Merged Data with Missing Values K={K} Characters 21-26.png'),
             bbox_inches='tight'
         )
     plt.close()
@@ -166,7 +166,7 @@ def omniglot(K=10, structured_or_random='structured', language='English'):
         show_plot=False
     )
     fig.savefig(
-        f'{output_images_path}/Predicted Merged Data K={K} Characters 1-10.png',
+        os.path.join(output_images_path, f'Predicted Merged Data K={K} Characters 1-10.png'),
         bbox_inches='tight'
     )
     plt.close()
@@ -177,8 +177,10 @@ def omniglot(K=10, structured_or_random='structured', language='English'):
         n=10,
         show_plot=False
     )
-    fig.savefig(f'{output_images_path}/Predicted Merged Data K={K} Characters 11-20.png',
-                bbox_inches='tight')
+    fig.savefig(
+        os.path.join(output_images_path, f'Predicted Merged Data K={K} Characters 11-20.png'),
+        bbox_inches='tight'
+    )
     plt.close()
     if language.lower() == 'greek':
         fig = plot_images(
@@ -189,7 +191,7 @@ def omniglot(K=10, structured_or_random='structured', language='English'):
             show_plot=False
         )
         fig.savefig(
-            f'{output_images_path}/Predicted Merged Data K={K} Characters 21-24.png',
+            os.path.join(output_images_path, f'Predicted Merged Data K={K} Characters 21-24.png'),
             bbox_inches='tight'
         )
     else:
@@ -201,7 +203,7 @@ def omniglot(K=10, structured_or_random='structured', language='English'):
             show_plot=False
         )
         fig.savefig(
-            f'{output_images_path}/Predicted Merged Data K={K} Characters 21-26.png',
+            os.path.join(output_images_path, f'Predicted Merged Data K={K} Characters 21-26.png'),
             bbox_inches='tight'
         )
     plt.close()

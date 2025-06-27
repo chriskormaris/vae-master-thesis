@@ -1,3 +1,5 @@
+import os
+
 import numpy as np
 import pandas as pd
 
@@ -5,7 +7,7 @@ import pandas as pd
 def get_movielens_dataset(movielens_dataset_path):
     # TRAIN data
     dataframe = pd.read_csv(
-        movielens_dataset_path + '/ua.base',
+        os.path.join(movielens_dataset_path, 'ua.base'),
         sep='\t',
         header=None,
         names=['userID', 'movieId', 'rating', 'col3']
@@ -22,7 +24,7 @@ def get_movielens_dataset(movielens_dataset_path):
 
     # TEST data
     dataframe_test = pd.read_csv(
-        movielens_dataset_path + '/ua.test',
+        os.path.join(movielens_dataset_path, 'ua.test'),
         sep='\t',
         header=None,
         names=['userID', 'movieId', 'rating', 'col3']

@@ -14,7 +14,7 @@ from src.utilities.vae_in_pytorch import initialize_weights, train
 def binarized_mnist(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.01):
     missing_value = 0.5
 
-    output_images_path = output_img_base_path + 'vaes_missing_values_in_pytorch/binarized_mnist'
+    output_images_path = os.path.join(output_img_base_path, 'vaes_missing_values_in_pytorch', 'binarized_mnist')
 
     if not os.path.exists(output_images_path):
         os.makedirs(output_images_path)
@@ -23,8 +23,8 @@ def binarized_mnist(latent_dim=64, epochs=100, batch_size='250', learning_rate=0
         os.makedirs(binarized_dataset_path)
         obtain(binarized_dataset_path)
 
-    X_test = get_binarized_mnist_dataset(binarized_dataset_path + 'binarized_mnist_test.amat', 'TEST')
-    y_test = get_binarized_mnist_labels(binarized_dataset_path + 'binarized_mnist_test_labels.txt', 'TEST')
+    X_test = get_binarized_mnist_dataset(os.path.join(binarized_dataset_path, 'binarized_mnist_test.amat'), 'TEST')
+    y_test = get_binarized_mnist_labels(os.path.join(binarized_dataset_path, 'binarized_mnist_test_labels.txt'), 'TEST')
 
     # random shuffle the data
     np.random.seed(0)
@@ -55,12 +55,12 @@ def binarized_mnist(latent_dim=64, epochs=100, batch_size='250', learning_rate=0
 
     # plot X_test
     fig = plot_images(X_test, y_test, title='Original Data')
-    fig.savefig(f'{output_images_path}/original_data.png', bbox_inches='tight')
+    fig.savefig(os.path.join(output_images_path, 'original_data.png'), bbox_inches='tight')
     plt.close()
 
     # plot X_test_missing
     fig = plot_images(X_test_missing, y_test, title='Missing Data')
-    fig.savefig(f'{output_images_path}/missing_data.png', bbox_inches='tight')
+    fig.savefig(os.path.join(output_images_path, 'missing_data.png'), bbox_inches='tight')
     plt.close()
 
     #####
@@ -105,12 +105,12 @@ def binarized_mnist(latent_dim=64, epochs=100, batch_size='250', learning_rate=0
 
         if epoch == 1:
             fig = plot_images(masked_batch_data, batch_labels, title='Masked Data')
-            fig.savefig(f'{output_images_path}/masked_data.png', bbox_inches='tight')
+            fig.savefig(os.path.join(output_images_path, 'masked_data.png'), bbox_inches='tight')
             plt.close()
 
         if epoch % 10 == 0 or epoch == 1:
             fig = plot_images(cur_samples, batch_labels, title=f'Epoch {str(epoch).zfill(3)}')
-            fig.savefig(f'{output_images_path}/epoch_{str(epoch).zfill(3)}.png', bbox_inches='tight')
+            fig.savefig(os.path.join(output_images_path, f'epoch_{str(epoch).zfill(3)}.png'), bbox_inches='tight')
             plt.close()
 
     print()

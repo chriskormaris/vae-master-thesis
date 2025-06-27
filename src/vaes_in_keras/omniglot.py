@@ -13,7 +13,7 @@ from src.utilities.vae_in_keras import vae
 
 def omniglot(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.001, language='English'):
     input_dim = 784
-    output_images_path = output_img_base_path + 'vaes_in_keras'
+    output_images_path = os.path.join(output_img_base_path, 'vaes_in_keras')
 
     if not os.path.exists(output_images_path):
         os.makedirs(output_images_path)
@@ -31,13 +31,13 @@ def omniglot(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.001, l
 
     # LOAD OMNIGLOT DATASET #
     X_train, y_train = get_omniglot_dataset(
-        omniglot_dataset_path + '/chardata.mat',
+        os.path.join(omniglot_dataset_path, 'chardata.mat'),
         train_or_test='train',
         alphabet=alphabet,
         binarize=True
     )
     X_test, y_test = get_omniglot_dataset(
-        omniglot_dataset_path + '/chardata.mat',
+        os.path.join(omniglot_dataset_path, 'chardata.mat'),
         train_or_test='test',
         alphabet=alphabet,
         binarize=True
@@ -77,7 +77,7 @@ def omniglot(latent_dim=64, epochs=100, batch_size='250', learning_rate=0.001, l
     print(f'encoded_imgs mean: {encoded_imgs.mean()}')
 
     fig = plot_original_vs_reconstructed_data(X_test, decoded_imgs, grayscale=True)
-    fig.savefig(f'{output_images_path}/omniglot.png')
+    fig.savefig(os.path.join(output_images_path, 'omniglot.png'))
 
     print()
 

@@ -22,10 +22,10 @@ def omniglot(
     missing_value = 0.5
 
     if language.lower() == 'greek':
-        output_images_path = output_img_base_path + 'vaes_missing_values_in_pytorch/omniglot_greek'
+        output_images_path = os.path.join(output_img_base_path, 'vaes_missing_values_in_pytorch', 'omniglot_greek')
         alphabet = 20
     else:
-        output_images_path = output_img_base_path + 'vaes_missing_values_in_pytorch/omniglot_english'
+        output_images_path = os.path.join(output_img_base_path, 'vaes_missing_values_in_pytorch', 'omniglot_english')
         alphabet = 31
 
     if not os.path.exists(output_images_path):
@@ -33,13 +33,13 @@ def omniglot(
 
     # LOAD OMNIGLOT DATASET #
     X_train, y_train = get_omniglot_dataset(
-        omniglot_dataset_path + '/chardata.mat',
+        os.path.join(omniglot_dataset_path, 'chardata.mat'),
         train_or_test='train',
         alphabet=alphabet,
         binarize=True
     )
     X_test, y_test = get_omniglot_dataset(
-        omniglot_dataset_path + '/chardata.mat',
+        os.path.join(omniglot_dataset_path, 'chardata.mat'),
         train_or_test='test',
         alphabet=alphabet,
         binarize=True
@@ -119,7 +119,7 @@ def omniglot(
                 categories=list(range(1, 11)),
                 title='Original Data'
             )
-            fig.savefig(f'{output_images_path}/original_data_characters_1-10.png', bbox_inches='tight')
+            fig.savefig(os.path.join(output_images_path, 'original_data_characters_1-10.png'), bbox_inches='tight')
             plt.close()
             fig = plot_images(
                 X_merged[start_index:end_index, :],
@@ -127,7 +127,7 @@ def omniglot(
                 categories=list(range(11, 21)),
                 title='Original Data'
             )
-            fig.savefig(f'{output_images_path}/original_data_characters_11-20.png', bbox_inches='tight')
+            fig.savefig(os.path.join(output_images_path, 'original_data_characters_11-20.png'), bbox_inches='tight')
             plt.close()
             if language.lower() == 'greek':
                 fig = plot_images(
@@ -136,7 +136,7 @@ def omniglot(
                     categories=list(range(21, 24)),
                     title='Original Data'
                 )
-                fig.savefig(f'{output_images_path}/original_data_characters_21-24.png', bbox_inches='tight')
+                fig.savefig(os.path.join(output_images_path, 'original_data_characters_21-24.png'), bbox_inches='tight')
             else:
                 fig = plot_images(
                     X_merged[start_index:end_index, :],
@@ -144,7 +144,7 @@ def omniglot(
                     categories=list(range(21, 27)),
                     title='Original Data'
                 )
-                fig.savefig(f'{output_images_path}/original_data_characters_21-26.png', bbox_inches='tight')
+                fig.savefig(os.path.join(output_images_path, 'original_data_characters_21-26.png'), bbox_inches='tight')
             plt.close()
 
             fig = plot_images(
@@ -153,7 +153,7 @@ def omniglot(
                 categories=list(range(1, 11)),
                 title='Original Data'
             )
-            fig.savefig(f'{output_images_path}/missing_data_characters_1-10.png', bbox_inches='tight')
+            fig.savefig(os.path.join(output_images_path, 'missing_data_characters_1-10.png'), bbox_inches='tight')
             plt.close()
             fig = plot_images(
                 X_merged_missing[start_index:end_index, :],
@@ -161,7 +161,7 @@ def omniglot(
                 categories=list(range(11, 21)),
                 title='Original Data'
             )
-            fig.savefig(f'{output_images_path}/missing_data_characters_11-20.png', bbox_inches='tight')
+            fig.savefig(os.path.join(output_images_path, 'missing_data_characters_11-20.png'), bbox_inches='tight')
             plt.close()
             if language.lower() == 'greek':
                 fig = plot_images(
@@ -170,7 +170,7 @@ def omniglot(
                     categories=list(range(21, 25)),
                     title='Original Data'
                 )
-                fig.savefig(f'{output_images_path}/missing_data_characters_21-24.png', bbox_inches='tight')
+                fig.savefig(os.path.join(output_images_path, 'missing_data_characters_21-24.png'), bbox_inches='tight')
             else:
                 fig = plot_images(
                     X_merged_missing[start_index:end_index, :],
@@ -178,7 +178,7 @@ def omniglot(
                     categories=list(range(21, 27)),
                     title=f'Epoch {str(epoch).zfill(3)}'
                 )
-                fig.savefig(f'{output_images_path}/missing_data_characters_21-26.png', bbox_inches='tight')
+                fig.savefig(os.path.join(output_images_path, 'missing_data_characters_21-26.png'), bbox_inches='tight')
             plt.close()
 
             fig = plot_images(
@@ -188,7 +188,7 @@ def omniglot(
                 title='Masked Data'
             )
             fig.savefig(
-                f'{output_images_path}/masked_data_characters_1-10.png',
+                os.path.join(output_images_path, 'masked_data_characters_1-10.png'),
                 bbox_inches='tight'
             )
             plt.close()
@@ -198,7 +198,7 @@ def omniglot(
                 categories=list(range(1, 11)),
                 title='Masked Data'
             )
-            fig.savefig(f'{output_images_path}/masked_data_characters_11-20.png', bbox_inches='tight')
+            fig.savefig(os.path.join(output_images_path, 'masked_data_characters_11-20.png'), bbox_inches='tight')
             plt.close()
             if language.lower() == 'greek':
                 fig = plot_images(
@@ -207,7 +207,7 @@ def omniglot(
                     categories=list(range(1, 11)),
                     title='Masked Data'
                 )
-                fig.savefig(f'{output_images_path}/masked_data_characters_21-24.png', bbox_inches='tight')
+                fig.savefig(os.path.join(output_images_path, 'masked_data_characters_21-24.png'), bbox_inches='tight')
             else:
                 fig = plot_images(
                     masked_batch_data,
@@ -215,7 +215,7 @@ def omniglot(
                     categories=list(range(1, 11)),
                     title='Masked Data'
                 )
-                fig.savefig(f'{output_images_path}/masked_data_characters_21-26.png', bbox_inches='tight')
+                fig.savefig(os.path.join(output_images_path, 'masked_data_characters_21-26.png'), bbox_inches='tight')
             plt.close()
 
         if epoch % 10 == 0 or epoch == 1:
@@ -225,7 +225,10 @@ def omniglot(
                 categories=list(range(1, 11)),
                 title=f'Epoch {str(epoch).zfill(3)}'
             )
-            fig.savefig(f'{output_images_path}/epoch_{str(epoch).zfill(3)}_characters_1-10.png', bbox_inches='tight')
+            fig.savefig(
+                os.path.join(output_images_path, f'epoch_{str(epoch).zfill(3)}_characters_1-10.png'),
+                bbox_inches='tight'
+            )
             plt.close()
             fig = plot_images(
                 cur_samples,
@@ -233,7 +236,10 @@ def omniglot(
                 categories=list(range(11, 21)),
                 title=f'Epoch {str(epoch).zfill(3)}'
             )
-            fig.savefig(f'{output_images_path}/epoch_{str(epoch).zfill(3)}_characters_11-20.png', bbox_inches='tight')
+            fig.savefig(
+                os.path.join(output_images_path, f'epoch_{str(epoch).zfill(3)}_characters_11-20.png'),
+                bbox_inches='tight'
+            )
             plt.close()
             if language.lower() == 'greek':
                 fig = plot_images(
@@ -243,7 +249,7 @@ def omniglot(
                     title=f'Epoch {str(epoch).zfill(3)}'
                 )
                 fig.savefig(
-                    f'{output_images_path}/epoch_{str(epoch).zfill(3)}_characters_21-24.png',
+                    os.path.join(output_images_path, f'epoch_{str(epoch).zfill(3)}_characters_21-24.png'),
                     bbox_inches='tight'
                 )
             else:
@@ -254,7 +260,7 @@ def omniglot(
                     title=f'Epoch {str(epoch).zfill(3)}'
                 )
                 fig.savefig(
-                    f'{output_images_path}/epoch_{str(epoch).zfill(3)}_characters_21-26.png',
+                    os.path.join(output_images_path, f'epoch_{str(epoch).zfill(3)}_characters_21-26.png'),
                     bbox_inches='tight'
                 )
             plt.close()
